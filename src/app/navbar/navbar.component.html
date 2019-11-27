@@ -1,1 +1,56 @@
-<p>navbar works!</p>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <a class="navbar-brand" href="#">
+    <img src="assets/img/logo.jpg" width="30" height="30" class="rounded d-inline-block align-top" alt="">
+    Collapanse
+  </a>
+
+  <div class="collapse navbar-collapse" id="navbarColor01">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="#">Informations</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Contact</a>
+      </li>
+
+
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          Patients
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" href="#">Liste</a>
+          <a class="dropdown-item" href="#">Création d'un nouveau patient</a>
+          <a class="dropdown-item" href="#">Liste des Soins en cours</a>
+        </div>
+      </li>
+      <!--li class="nav-item">
+					<a class="nav-link" href="#">Votre profil</a>
+				</li-->
+
+
+    </ul>
+    <ul class="navbar-nav">
+
+
+      <li class="nav-item">
+        <a class="btn btn-warning mr-2 text-dark" href="#">Déconnexion</a>
+      </li>
+
+      <li class="nav-item">
+        <a class="btn btn-secondary mr-2" href="#">Inscription</a>
+      </li>
+      <li class="nav-item">
+        <a class="btn btn-success mr-2" href="#">Connexion</a>
+      </li>
+
+    </ul>
+
+    <form class="form-inline my-2 my-lg-0">
+      <input class="form-control mr-sm-2" type="text" placeholder="Rechercher un patient">
+      <button class="btn btn-secondary my-2 my-sm-0" type="submit">Chercher</button>
+    </form>
+
+  </div>
+</nav>
