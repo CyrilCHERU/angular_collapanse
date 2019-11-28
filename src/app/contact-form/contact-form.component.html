@@ -1,0 +1,35 @@
+<div class="container">
+  <div class="row alert alert-light mt-3">
+    <h1>Contact</h1>
+  </div>
+  <div class="row">
+    <div class="col text-center">
+      <img src="assets/img/contact.jpg" alt="">
+    </div>
+
+  </div>
+  <div class="row">
+    <div class="col form-group">
+      <form [formGroup]="form" (ngSubmit)="handleSubmit()">
+        <label>Votre nom</label>
+        <input type="text" formControlName="name" class="form-control mb-2"
+          [class.is-invalid]="form.getError('required', 'name')">
+        <p class="invalid-feedback" *ngIf="form.getError('required', 'name') as error">{{error}}</p>
+        <label>Votre email</label>
+        <input type="email" formControlName="email" class="form-control mb-2"
+          [class.is-invalid]="form.getError('required', 'email')">
+        <p class="invalid-feedback" *ngIf="form.getError('required', 'email') as error">{{error}}</p>
+        <label for="message">Votre message</label>
+        <textarea formControlName="message"
+          placeholder="Laissez nous vos commentaires ou posez votre question, nous y répondrons dans les meilleurs délais ..."
+          cols="30" rows="8" class="form-control"></textarea>
+
+      </form>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col text-center">
+      <button type="submit" class="btn btn-info mt-4">Soumettre</button>
+    </div>
+  </div>
+</div>

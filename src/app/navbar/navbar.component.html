@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-  <a class="navbar-brand" href="#">
+  <a class="navbar-brand" routerLink="/">
     <img src="assets/img/logo.jpg" width="30" height="30" class="rounded d-inline-block align-top" alt="">
     Collapanse
   </a>
@@ -7,24 +7,26 @@
   <div class="collapse navbar-collapse" id="navbarColor01">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
-        <a class="nav-link" href="#">Informations</a>
+        <a class="nav-link" routerLink="/informations">Informations</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Contact</a>
+        <a class="nav-link" routerLink="/contact">Contact</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/patients">Liste de Patients</a>
       </li>
 
-
-      <li class="nav-item dropdown">
+      <!--li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown"
           aria-haspopup="true" aria-expanded="false">
           Patients
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-          <a class="dropdown-item" href="#">Liste</a>
+          <a class="dropdown-item" href="/patients">Liste</a>
           <a class="dropdown-item" href="#">Création d'un nouveau patient</a>
           <a class="dropdown-item" href="#">Liste des Soins en cours</a>
         </div>
-      </li>
+      </li-->
       <!--li class="nav-item">
 					<a class="nav-link" href="#">Votre profil</a>
 				</li-->
@@ -39,7 +41,7 @@
       </li>
 
       <li class="nav-item">
-        <a class="btn btn-secondary mr-2" href="#">Inscription</a>
+        <a class="btn btn-secondary mr-2" routerLink="/inscription">Inscription</a>
       </li>
       <li class="nav-item">
         <a class="btn btn-success mr-2" href="#">Connexion</a>

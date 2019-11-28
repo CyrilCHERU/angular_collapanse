@@ -1,0 +1,24 @@
+body {
+  /* margin-top: 50px; */
+  background-image: url('../../assets/img/bkg/bkg-home.jpg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+.title {
+  background-color: #ededed;
+  padding: 20px;
+}
+
+.mt-150 {
+  margin-top: 150px;
+}
+
+.bkg {
+  background-color: #ededed;
+}
+
+p-max {
+  font-size:  !5rem;
+}
