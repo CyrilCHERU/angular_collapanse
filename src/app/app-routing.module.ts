@@ -1,3 +1,5 @@
+import { PatientFormComponent } from './patient-form/patient-form.component';
+import { LoginFormComponent } from './login-form/login-form.component';
 import { PatientDetailsComponent } from './patient-details/patient-details.component';
 import { PatientListComponent } from './patient-list/patient-list.component';
 import { UserFormComponent } from './user-form/user-form.component';
@@ -13,8 +15,11 @@ const routes: Routes = [
   { path: 'informations', component: InformationsComponent },
   { path: 'inscription', component: UserFormComponent },
   { path: 'contact', component: ContactFormComponent },
+  { path: 'patients/nouveau', component: PatientFormComponent },
   { path: 'patients', component: PatientListComponent },
-  { path: 'patients/:id', component: PatientDetailsComponent }
+  { path: 'patients/:id', component: PatientDetailsComponent },
+  { path: 'login', component: LoginFormComponent },
+  { path: 'patients/:id/edit', component: PatientFormComponent }
 ];
 
 @NgModule({

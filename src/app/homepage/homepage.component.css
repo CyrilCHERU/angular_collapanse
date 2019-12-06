@@ -1,10 +1,13 @@
-body {
+.background {
   /* margin-top: 50px; */
   background-image: url('../../assets/img/bkg/bkg-home.jpg');
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
+  min-height: 100vh;
+  max-width: 100%;
 }
+
 
 .title {
   background-color: #ededed;
@@ -12,7 +15,7 @@ body {
 }
 
 .mt-150 {
-  margin-top: 150px;
+  margin-top: 100px;
 }
 
 .bkg {

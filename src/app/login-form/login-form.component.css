@@ -1,0 +1,53 @@
+.background {
+  /* margin-top: 50px; */
+  background-image: url('../../assets/img/login.jpg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  /* min-height: 100vh;
+  max-width: 100%; */
+  padding: 20px;
+}
+
+/*
+body {
+  /* margin-top: 50px; */
+/* background-image: url('../../assets/img/login.jpg');
+background-repeat: no-repeat;
+background-position: center;
+background-size: cover;
+} */
+
+.title {
+  background-color: #ededed;
+  padding: 20px;
+}
+
+h1 {
+
+  color: black !important;
+}
+
+.mt-150 {
+  margin-top: 150px;
+}
+
+.bkg {
+  /* background-color: #ededed; */
+  background-color: rgba(255, 255, 255, 0.5);
+  padding: 20px;
+}
+
+p-max {
+  font-size: 5rem;
+}
+
+.minH {
+  min-height: 400px;
+}
+
+label {
+  color: black;
+  font-weight: bold;
+  font-style: italic;
+}

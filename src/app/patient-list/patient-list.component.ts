@@ -19,7 +19,14 @@ export class PatientListComponent implements OnInit {
 
   ngOnInit() {
 
-    this.patientService.findAll().subscribe(response => this.patients = response);
+    this.patientService.findAll().subscribe(response => {
+      console.log(response);
+      this.patients = response;
+    });
+  }
+
+  handlePageChanged(page: number) {
+    this.currentPage = page;
   }
 
 }

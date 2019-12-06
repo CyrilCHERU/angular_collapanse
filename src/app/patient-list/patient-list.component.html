@@ -1,17 +1,15 @@
 <div class="row m-4">
 
-  <h1>Liste des patients inscrits en BDD</h1>
+  <h1>Liste de vos patients</h1>
 </div>
-<div class="row m-5">
+<div class="row m-5 justify-content-center">
 
   <table class="table table-stripped">
     <thead class="thead-dark">
       <tr>
-        <th scope="col" class="text-center">#</th>
         <th scope="col">Nom</th>
         <th scope="col">Prénom</th>
         <th scope="col">Date de Naissance</th>
-        <th scope="col">Téléphone</th>
         <th scope="col">Adresse</th>
         <th scope="col">Médecin</th>
         <th scope="col">Infirmier(e)s</th>
@@ -20,14 +18,12 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let p of patients">
-        <th scope="row">{{ p.id }}</th>
+      <tr *ngFor="let p of patients | paginate: currentPage:itemsPerPage">
         <td>
           <a routerLink="/patients/{{ p.id }}">{{ p.lastName | uppercase }}</a>
         </td>
         <td>{{ p.firstName }}</td>
         <td class="text-center">{{ p.birthDate | date:"dd/MM/yyyy" }}</td>
-        <td>{{ p.phone | splitphone }}</td>
         <td>{{ p.address1 }}
           {{ p.address2 }}
           {{ p.zipCode }}
@@ -45,6 +41,11 @@
         <td class="text-center">{{ p.cares.length }}</td>
         <td class="text-center">
           <button class="btn btn-info mr-2">
+            <a routerLink="/patients/{{ p.id }}">
+              <i class="far fa-eye text-light"></i>
+            </a>
+          </button>
+          <button class="btn btn-warning mr-2">
             <a href="">
               <i class="far fa-edit text-light"></i>
             </a>
@@ -58,7 +59,13 @@
       </tr>
     </tbody>
   </table>
+  <div class="col-6 text-center alert alert-warning mt-5" *ngIf="patients.length === 0">
+    <div class="row justify-content-center">
+      Désolé, vous n'avez encore aucun
+      patient enregistré en base de données ;(</div>
+  </div>
 </div>
+
 <!--div class="row mt-2 mb-2">
   <div class="col-2">
     <select [(ngModel)]="itemsPerPage" class="form-control">

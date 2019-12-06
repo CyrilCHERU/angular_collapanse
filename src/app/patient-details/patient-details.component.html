@@ -1,6 +1,6 @@
 <div class="m-4">
   <div class="row m-4 alert alert-light">
-    <h1>Voici les informations du patient {{ patient.lastName }}
+    <h1>Informations sur le patient : {{ patient.lastName }}
       {{patient.firstName }}</h1>
   </div>
   <div class="row m-4">
@@ -23,6 +23,9 @@
                 {{ patient.lastName }}</p>
               <p>Prénom :
                 {{ patient.firstName }}</p>
+              <p>Date de Naissance :
+                {{ patient.birthDate | date: 'dd/MM/yyyy' }}
+              </p>
             </div>
           </div>
         </div>
@@ -58,7 +61,7 @@
           {{ patient.email }}</p>
       </div>
     </div>
-    <div class="col-5">
+    <div class="col-4">
       <div class="text-center mb-4">
         <div class="row">
           <h2>Médécin Traitant</h2>

@@ -1,3 +1,5 @@
+import { Professional } from './../Models/professional';
+import { UserService } from './../user.service';
 import { PatientService } from './../patient.service';
 import { Patient } from './../Models/patient';
 import { Component, OnInit } from '@angular/core';
@@ -11,16 +13,22 @@ import { ActivatedRoute } from '@angular/router';
 export class PatientDetailsComponent implements OnInit {
 
   patient: Patient;
+  doctor: Professional;
 
-  constructor(private patientService: PatientService, private route: ActivatedRoute) { }
+  constructor(private patientService: PatientService, private userService: UserService, private route: ActivatedRoute) { }
 
   ngOnInit() {
     const id = +this.route.snapshot.paramMap.get('id');
-    console.log(id);
+
     this.patientService.find(id).subscribe(response => {
       this.patient = response;
-      console.log(this.patient);
+
     });
+
+
+    console.log(this.patient);
+
+    // this.userService.findDoctorBy(doctorId).subscribe(response => this.doctor = response);
   }
 
 }
