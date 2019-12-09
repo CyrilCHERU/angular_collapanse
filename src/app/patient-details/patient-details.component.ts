@@ -27,8 +27,6 @@ export class PatientDetailsComponent implements OnInit {
 
 
     console.log(this.patient);
-
-    // this.userService.findDoctorBy(doctorId).subscribe(response => this.doctor = response);
   }
 
 }

@@ -1,0 +1,37 @@
+<div class="row m-4">
+  <h1>Mise ne place d'un nouveau soin pour :
+  </h1>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col-5">
+      <div class="form-group">
+        <form [formGroup]="careForm" (ngSubmit)="handleSubmit()">
+          <div id="care">
+            <div class="form-group">
+              <label for="createdAt" class="required">Ouverture du soin le</label>
+              <input type="date" id="createdAt" formControlName="createdAt" class="form-control" />
+            </div>
+            <div class="form-group">
+              <label for="endedAt">Fermeture du soin le</label>
+              <input type="date" id="endedAt" formControlName="endedAt" class="form-control"
+                placeholder="ne pas remplir" />
+            </div>
+            <div class="form-group">
+              <label for="woundType">Description de la plaie</label>
+              <input type="text" id="woundType" formControlName="woundType" class="form-control" />
+            </div>
+            <div class="form-group">
+              <label for="patient">Patient</label>
+              <select id="care_patient" formControlName="patient" class="form-control mt-2 js-select form-control">
+                <option value="" selected>-- Choisissez le patient --</option>
+                <option [ngValue]="patient.id" *ngFor="let patient of patients">{{ patient.fullName }}</option>
+              </select>
+            </div>
+            <button type="submit" class="btn btn-success mt-4">Ajouter</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

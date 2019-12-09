@@ -1,0 +1,38 @@
+<div class="row justify-content-center" *ngIf="!interventions">
+  <div class="col-2 alert alert-info mt-200 text-center">
+    <p>... Chargement en cours ....</p>
+  </div>
+</div>
+<div class="m-4" *ngIf="interventions">
+  <div class="row">
+    <h1>Liste de tous les interventions</h1>
+  </div>
+  <div class="row m-4">
+    <table class="table table-stripped">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col" width="5%">#</th>
+          <th scope="col-3" width="8%">Date</th>
+          <th scope="col" width="20%">Soin</th>
+          <th scope="col" width="50%">Commentaire</th>
+          <th scope="col" width="20%" class="text-center">Image(s)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let inter of interventions">
+          <td>{{ inter.id }}</td>
+          <td>{{ inter.date | date:"dd/MM/yyyy" }}</td>
+          <td>
+            <a href="">
+              {{ inter.care.woundType }}
+            </a>
+          </td>
+          <td>{{ inter.comment }}</td>
+          <td class="text-center">
+            {{ inter.images.length }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

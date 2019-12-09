@@ -1,0 +1,56 @@
+<div class="row justify-content-center" *ngIf="!cares">
+  <div class="col-2 alert alert-info mt-200 text-center">
+    <p>... Chargement en cours ....</p>
+  </div>
+</div>
+<div class="row m-4">
+  <h1>Liste de tous les soins</h1>
+</div>
+<div class="row m-4" *ngIf="cares">
+  <table class="table table-stripped">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">Patient</th>
+        <th scope="col">Type de plaie</th>
+        <th scope="col">Ouvert le</th>
+        <th scope="col">Fermé le</th>
+        <th scope="col" class="text-center">Nombre d'Interventions</th>
+        <th scope="col" class="text-center">Modification/Suppression</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let care of cares">
+        <td>
+          <a routerLink="/patients/{{ care.patient.id }}">{{ care.patient.fullName }}</a>
+        </td>
+        <td>
+          <a routerLink="/soins/{{ care.id }}">
+            {{ care.woundType }}
+          </a>
+        </td>
+        <td>{{ care.createdAt | date:"dd/MM/yyyy" }}</td>
+        <td>{{ care.endedAt | date:"dd/MM/yyyy" }}</td>
+        <td class="text-center">
+          {{ care.interventions.length }}
+        </td>
+        <td class="text-center">
+          <button class="btn btn-info mr-2">
+            <a routerLink="/soins/{{ care.id }}">
+              <i class="far fa-eye text-light"></i>
+            </a>
+          </button>
+          <button class="btn btn-warning mr-2">
+            <a routerLink="/soins/{{ care.id }}/edit">
+              <i class="far fa-edit text-light"></i>
+            </a>
+          </button>
+          <button class="btn btn-danger">
+            <a href="">
+              <i class="fas fa-trash text-light"></i>
+            </a>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

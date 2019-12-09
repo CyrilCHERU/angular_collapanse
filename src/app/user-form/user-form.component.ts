@@ -15,6 +15,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class UserFormComponent implements OnInit {
 
   error = false;
+  errormsg = '';
+  msg = 'Une Erreur est survenue, Merci de réessayer plus tard ;)';
 
   user: User;
 
@@ -60,8 +62,11 @@ export class UserFormComponent implements OnInit {
 
   handleSubmit() {
     // vérification du formulaire
+    console.log(this.form.getError('validation'));
     this.form.markAllAsTouched();
     if (this.form.invalid) {
+      this.error = true;
+      this.errormsg = 'Le formulaire est incomplet ou mal rempli :(';
       return;
     }
 
@@ -85,13 +90,15 @@ export class UserFormComponent implements OnInit {
 
   private onSuccess = (updatedUser: User) => {
     this.error = false;
-    this.router.navigateByUrl('/users/' + updatedUser.id);
+    // Redirection vers la page de login
+    this.router.navigateByUrl('/login');
   }
 
   private onError = (httpError: HttpErrorResponse) => {
     // si ce n'est pas une erreur 400 => message d'alerte
     if (httpError.status !== 400) {
       this.error = true;
+      this.errormsg = this.msg;
       return;
     }
     // si pas de violations sur les champs
@@ -100,6 +107,7 @@ export class UserFormComponent implements OnInit {
     }
 
     // apparition des erreurs sur les différents champs
+    console.log(httpError.error.violations);
     httpError.error.violations.forEach(violation => {
       this.form.get(violation.propertyPath).setErrors({
         validation: violation.message

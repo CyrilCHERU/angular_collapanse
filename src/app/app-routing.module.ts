@@ -1,3 +1,9 @@
+import { CareShowComponent } from './care-show/care-show.component';
+import { CaresPatientListComponent } from './cares-patient-list/cares-patient-list.component';
+import { InterListComponent } from './inter-list/inter-list.component';
+import { InterFormComponent } from './inter-form/inter-form.component';
+import { CareFormComponent } from './care-form/care-form.component';
+import { CareListComponent } from './care-list/care-list.component';
 import { PatientFormComponent } from './patient-form/patient-form.component';
 import { LoginFormComponent } from './login-form/login-form.component';
 import { PatientDetailsComponent } from './patient-details/patient-details.component';
@@ -18,8 +24,16 @@ const routes: Routes = [
   { path: 'patients/nouveau', component: PatientFormComponent },
   { path: 'patients', component: PatientListComponent },
   { path: 'patients/:id', component: PatientDetailsComponent },
+  { path: 'patients/:id/soins/nouveau', component: CareFormComponent },
   { path: 'login', component: LoginFormComponent },
-  { path: 'patients/:id/edit', component: PatientFormComponent }
+  { path: 'patients/:id/edit', component: PatientFormComponent },
+  { path: 'patients/:id/suivi', component: CaresPatientListComponent },
+  { path: 'soins/nouveau', component: CareFormComponent },
+  { path: 'soins', component: CareListComponent },
+  { path: 'soins/suivi/:id/detail', component: CareShowComponent },
+  { path: 'soins/:id/edit', component: CareFormComponent },
+  { path: 'interventions/nouveau', component: InterFormComponent },
+  { path: 'interventions', component: InterListComponent }
 ];
 
 @NgModule({

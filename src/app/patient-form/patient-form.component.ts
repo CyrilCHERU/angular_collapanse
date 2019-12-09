@@ -33,8 +33,8 @@ export class PatientFormComponent implements OnInit {
     city: new FormControl('', Validators.required),
     phone: new FormControl('', [Validators.required, Validators.minLength(10), Validators.maxLength(10)]),
     email: new FormControl('', Validators.email),
-    doctor: new FormControl(),
-    nurses: new FormControl()
+    doctor: new FormControl(''),
+    nurses: new FormControl('')
   });
 
   constructor(
@@ -47,9 +47,9 @@ export class PatientFormComponent implements OnInit {
     // Récupération de la liste des professionnels
     this.userService.findAll().subscribe(response => this.users = response);
     // Récupération de tous les users doctors
-    this.userService.findAllDoctors().subscribe(response => console.log(response));
+    this.userService.findAllDoctors().subscribe(response => this.doctors = response);
     // Récupération de tous les users nurses
-    // this.userService.findAllNurses().subscribe(response => this.nurses = response);
+    this.userService.findAllNurses().subscribe(response => this.nurses = response);
     // Récupération de l'id du patient (édition) sur la route
     const id = this.route.snapshot.paramMap.get('id');
     // si l'id est différent de null on va chercher le patient et on remplit les champs
@@ -72,7 +72,7 @@ export class PatientFormComponent implements OnInit {
     const patient: Patient = this.patientForm.value;
     patient.doctor = 'api/users/' + patient.doctor;
     console.log(patient.doctor);
-    // patient.nurses[] = ['api/users/' + patient.nurses];
+    patient.nurses = patient.nurses.map(id => '/api/users/' + id);
     console.log(patient.nurses);
 
 

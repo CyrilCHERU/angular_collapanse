@@ -4,6 +4,9 @@
     <h1>Inscrivez-vous pour accèder à toutes nos fonctionnalités</h1>
   </div>
   <div class="container rounded mt-1" id="register">
+    <div class="alert alert-danger" *ngIf="error">
+      <p>{{ errormsg }}</p>
+    </div>
     <div class="form-group">
       <form [formGroup]="form" (ngSubmit)="handleSubmit()" class="rounded">
         <div class="row">
@@ -11,32 +14,60 @@
             <div class="form-group">
               <label for="gender">Sexe</label>
               <br>
-              <input type="radio" formControlName="gender" value="Femme" class="ml-5 mr-2">Femme
-              <input type="radio" formControlName="gender" value="Homme" class="ml-3 mr-2">Homme
+              <input type="radio" formControlName="gender" value="Femme" class="ml-5 mr-2"
+                [class.is-invalid]="form.getError('required', 'gender') || form.getError('required', 'gender') && form.touched">Femme
+              <input type="radio" formControlName="gender" value="Homme" class="ml-3 mr-2"
+                [class.is-invalid]="form.getError('required', 'gender') || form.getError('required', 'gender') && form.touched">Homme
+              <p class="invalid-feedback" *ngIf="form.getError('required', 'gender')">Ce champ est requis !</p>
             </div>
             <div class="form-group">
-              <select class="form-control" formControlName="job">
-                <option value="0" selected>-- Choisissez votre Profession --</option>
+              <select class="form-control" formControlName="job"
+                [class.is-invalid]="form.getError('validation', 'job') || form.getError('required', 'job') && form.touched">
+                <option [ngValue]="null" disabled>-- Choisissez votre Profession --</option>
                 <option [ngValue]="job.id" *ngFor="let job of jobs">{{ job.title }}</option>
               </select>
+              <p class="invalid-feedback" *ngIf="form.getError('required', 'job')">Vous devez rentrer votre
+                profession !</p>
+              <p class="invalid-feedback" *ngIf="form.getError('validation', 'job') as error">
+                {{ error }}
+              </p>
             </div>
             <div class="form-group mt-4">
-              <input type="text" class="form-control" formControlName="lastName" placeholder="Nom">
+              <input type="text" class="form-control" formControlName="lastName" placeholder="Nom"
+                [class.is-invalid]="form.getError('validation', 'lastName') || form.getError('required', 'lastName') && form.touched">
+              <p class="invalid-feedback" *ngIf="form.getError('required', 'lastName')">Ce champ est requis !</p>
+              <p class="invalid-feedback" *ngIf="form.getError('validation', 'lastName') as error">
+                {{ error }}
+              </p>
             </div>
             <div class="form-group">
-              <input type="text" class="form-control" formControlName="firstName" placeholder="Prénom">
+              <input type="text" class="form-control" formControlName="firstName" placeholder="Prénom"
+                [class.is-invalid]="form.getError('validation', 'firstName') || form.getError('required', 'firstName') && form.touched">
+              <p class="invalid-feedback" *ngIf="form.getError('required', 'firstName')">Ce champ est requis !</p>
+              <p class="invalid-feedback" *ngIf="form.getError('validation', 'firstName') as error">
+                {{ error }}
+              </p>
             </div>
           </div>
           <div class="col mt-3">
             <div class="form-group">
-              <input type="text" class="form-control" formControlName="adeli" placeholder="Votre numéro ADELI">
+              <input type="text" class="form-control" formControlName="adeli" placeholder="Votre numéro ADELI"
+                [class.is-invalid]="form.getError('validation', 'adeli') || form.getError('maxLength', 'adeli') || form.getError('required', 'adeli') && form.touched">
+              <p class="invalid-feedback" *ngIf="form.getError('required', 'adeli')">Ce champ est requis !</p>
+              <p class="invalid-feedback" *ngIf="form.getError('maxLength', 'adeli')">Votre N° ADELI ne peut pas
+                comporter plus de 9 chiffres !</p>
+              <p class="invalid-feedback" *ngIf="form.getError('validation', 'adeli') as error">
+                {{ error }}
+              </p>
             </div>
             <div class="form-group">
               <input type="text" class="form-control mb-2" formControlName="phone"
-                placeholder="Votre numéro de téléphone">
+                placeholder="Votre numéro de téléphone"
+                [class.is-invalid]="form.getError('validation', 'phone') && form.getError('required', 'phone') || form.getError('maxLength', 'phone') && form.touched">
             </div>
             <div class="form-group mt-2">
-              <input type="text" class="form-control" formControlName="address1" placeholder="Adresse">
+              <input type="text" class="form-control" formControlName="address1" placeholder="Adresse"
+                [class.is-invalid]="form.getError('validation', 'address1') || form.getError('required', 'address1') && form.touched">
             </div>
             <div class="form-group">
               <input type="text" class="form-control" formControlName="address2" placeholder="Complément d'adresse">
@@ -46,23 +77,28 @@
         <div class="row">
           <div class="col">
             <div class="form-group">
-              <input type="email" class="form-control" formControlName="email" placeholder="Votre email">
+              <input type="email" class="form-control" formControlName="email" placeholder="Votre email"
+                [class.is-invalid]="form.getError('validation', 'email') || form.getError('required', 'email') && form.touched">
             </div>
             <div class="form-group">
-              <input type="password" class="form-control" formControlName="password" placeholder="Mot de passe">
+              <input type="password" class="form-control" formControlName="password" placeholder="Mot de passe"
+                [class.is-invalid]="form.getError('validation', 'password') || form.getError('required', 'password') && form.touched">
             </div>
             <div class="form-group">
               <input type="password" class="form-control" formControlName="confirmPassword"
-                placeholder="Merci de confirmer votre mot de passe">
+                placeholder="Merci de confirmer votre mot de passe"
+                [class.is-invalid]="form.getError('validation', 'confirmPassword') || form.getError('required', 'confirmPassword') && form.touched">
             </div>
 
           </div>
           <div class="col">
             <div class="form-group">
-              <input type="text" class="form-control" formControlName="zipCode" placeholder="Code Postal">
+              <input type="text" class="form-control" formControlName="zipCode" placeholder="Code Postal"
+                [class.is-invalid]="form.getError('validation', 'zipCode')  || form.getError('maxLength', 'zipCode') && form.getError('required', 'zipCode') && form.touched">
             </div>
             <div class="form-group">
-              <input type="text" class="form-control" formControlName="city" placeholder="Ville">
+              <input type="text" class="form-control" formControlName="city" placeholder="Ville"
+                [class.is-invalid]="form.getError('validation', 'city') || form.getError('required', 'city') && form.touched">
             </div>
           </div>
         </div>

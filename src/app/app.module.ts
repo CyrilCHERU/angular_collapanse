@@ -19,6 +19,12 @@ import { PatientListComponent } from './patient-list/patient-list.component';
 import { PatientDetailsComponent } from './patient-details/patient-details.component';
 import { LoginFormComponent } from './login-form/login-form.component';
 import { PatientFormComponent } from './patient-form/patient-form.component';
+import { CareListComponent } from './care-list/care-list.component';
+import { CareFormComponent } from './care-form/care-form.component';
+import { InterFormComponent } from './inter-form/inter-form.component';
+import { InterListComponent } from './inter-list/inter-list.component';
+import { CaresPatientListComponent } from './cares-patient-list/cares-patient-list.component';
+import { CareShowComponent } from './care-show/care-show.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +39,13 @@ import { PatientFormComponent } from './patient-form/patient-form.component';
     Splitphone,
     PatientDetailsComponent,
     LoginFormComponent,
-    PatientFormComponent
+    PatientFormComponent,
+    CareListComponent,
+    CareFormComponent,
+    InterFormComponent,
+    InterListComponent,
+    CaresPatientListComponent,
+    CareShowComponent,
   ],
   imports: [
     BrowserModule,

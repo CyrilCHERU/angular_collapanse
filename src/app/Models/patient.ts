@@ -15,7 +15,8 @@ export interface Patient {
   phone: string;
   email?: string;
   doctor: string;
-  nurses: User[];
+  nurses: string[];
   cares: Care[];
+  fullName: string;
 }
 

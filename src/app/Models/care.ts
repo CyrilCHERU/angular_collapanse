@@ -1,3 +1,4 @@
+import { Patient } from './patient';
 import { Intervention } from './intervention';
 
 export interface Care {
@@ -6,5 +7,6 @@ export interface Care {
   endedAt?: string;
   woundType: string;
   interventions: Intervention[];
+  patient: Patient;
 }
 
