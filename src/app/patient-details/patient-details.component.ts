@@ -1,6 +1,6 @@
 import { Professional } from './../Models/professional';
-import { UserService } from './../user.service';
-import { PatientService } from './../patient.service';
+import { UserService } from '../services/user.service';
+import { PatientService } from '../services/patient.service';
 import { Patient } from './../Models/patient';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';

@@ -1,6 +1,8 @@
+import { CareService } from './../services/care.service';
+import { PatientService } from './../services/patient.service';
+import { Patient } from './../Models/patient';
 import { ActivatedRoute } from '@angular/router';
 import { Care } from '../Models/care';
-import { CareService } from '../care.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -11,15 +13,21 @@ import { Component, OnInit } from '@angular/core';
 export class CaresPatientListComponent implements OnInit {
 
   cares: Care[] = [];
-  patient: string;
+  patient: Patient;
 
-  constructor(private route: ActivatedRoute, private careService: CareService) { }
+  constructor(
+    private route: ActivatedRoute,
+    private patientService: PatientService,
+    private careService: CareService) { }
 
   ngOnInit() {
     const id = +this.route.snapshot.paramMap.get('id');
 
-    this.careService.findForOnePatient(id).subscribe(response => this.cares = response);
-    this.patient = this.cares.patient.fullName;
+    this.patientService.find(id).subscribe(response => {
+      this.cares = response.cares;
+      this.patient = response;
+    });
+
     console.log(this.patient);
   }
 

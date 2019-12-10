@@ -1,5 +1,5 @@
 import { map } from 'rxjs/operators';
-import { Care } from './Models/care';
+import { Care } from '../Models/care';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
@@ -18,10 +18,7 @@ export class CareService {
   }
 
   public find(id: number) {
-    return this.http.get<Care>('http://localhost:8000/api/cares/' + id)
-      .pipe(
-        map(response => response['hydra:member'] as Care)
-      );
+    return this.http.get<Care>('http://localhost:8000/api/cares/' + id);
   }
 
   public findForOnePatient(patientId: number) {
@@ -32,10 +29,10 @@ export class CareService {
   }
 
   public createCare(care: Care) {
-    return this.http.post('http://localhost:8000/cares', care);
+    return this.http.post<Care>('http://localhost:8000/api/cares', care);
   }
 
   public update(care: Care) {
-    return this.http.put<Care>('http://localhost:8000/cares/' + care.id, care);
+    return this.http.put<Care>('http://localhost:8000/api/cares/' + care.id, care);
   }
 }

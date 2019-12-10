@@ -1,9 +1,9 @@
-import { CareService } from './../care.service';
+import { CareService } from '../services/care.service';
 import { Care } from './../Models/care';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Patient } from './../Models/patient';
-import { PatientService } from './../patient.service';
+import { PatientService } from '../services/patient.service';
 import { Component, OnInit } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import * as moment from 'moment';
@@ -55,6 +55,9 @@ export class CareFormComponent implements OnInit {
     }
     // Sinon récupération de tous les patients de l'utilisateur
     this.patientService.findAll().subscribe(response => this.patients = response);
+    this.careForm.patchValue({
+      createdAt: moment().format('YYYY-MM-dd')
+    });
   }
 
   public handleSubmit() {
@@ -78,8 +81,9 @@ export class CareFormComponent implements OnInit {
   }
 
   private onSuccess = (updatedCare: Care) => {
+    const patientId = +updatedCare.patient.id;
     this.error = false;
-    this.router.navigateByUrl('/patients/{{ patient.id }}/suivi');
+    this.router.navigateByUrl('/patients/' + patientId + '/suivi');
   }
 
   private onError = (httpError: HttpErrorResponse) => {

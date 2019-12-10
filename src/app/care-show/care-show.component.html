@@ -3,22 +3,22 @@
     <p>... Chargement en cours ....</p>
   </div>
 </div>
-<div class="row m-4">
+<div class="row m-4" *ngIf="care">
   <h1>
     {{ care.woundType }}
     chez :
-    {{ patient }}
+    {{ care.patient.fullName }}
   </h1>
 </div>
-<div class="row mr-5 text-right">
+<div class="row mr-5 text-right" *ngIf="care">
   <div class="col">
     <button class="btn btn-info mr-4">
-      <a href="" class="nav-link text-light">
+      <a routerLink="/soins/{{ care.id }}/interventions/nouveau" class="nav-link text-light">
         Ajouter une intervention
       </a>
     </button>
     <button class="btn btn-success mr-4">
-      <a routerLink="/patients/{{ patient.id }}/suivi" class="text-light nav-link">Retour soins du
+      <a routerLink="/patients/{{ care.patient.id }}/suivi" class="text-light nav-link">Retour soins du
         patient</a>
     </button>
     <button class="btn btn-primary mr-4">
@@ -27,26 +27,26 @@
 
   </div>
 </div>
-<div class="row m-5">
+<div class="row m-5" *ngIf="care">
   <table class="table table-stripped">
     <thead class="thead-dark">
       <th scope="col">#</th>
       <th scope="col">Débuté le</th>
+      <th scope="col" class="text-center">Nombre d'intervention(s)</th>
       <th scope="col">Clôturé le</th>
-      <th scope="col">Nombre d'intervention(s)</th>
     </thead>
     <tbody>
       <tr>
         <td>{{ care.id }}</td>
         <td>{{ care.createdAt | date:"dd/MM/yyyy" }}</td>
+        <td class="text-center">{{ care.interventions.length }}</td>
         <td *ngIf="care.endedAt">{{ care.endedAt | date:"dd/MM/yyyy" }}</td>
-        <td>{{ care.interventions.length }}</td>
       </tr>
     </tbody>
   </table>
 </div>
-<div class="row m-5">
-  <div class="col-6" *ngFor="let inter of care.interventions">
+<div class="row m-5 justify-content-center" *ngIf="care">
+  <div class="col-5 col-bkg ml-4 rounded" *ngFor="let inter of care.interventions">
     <h2>Intervention du :
       {{ inter.date  | date:"dd/MM/yyyy" }}</h2>
     <p>Commentaire :</p>
@@ -55,8 +55,8 @@
     <br>
     <h3 class="mt-2 mb-3">Nombre d'image(s) :
       {{ inter.images.length }}</h3>
-    <div class="row justify-content-center mt-3">
-      <div class="col-2">
+    <div class="row justify-content-center">
+      <div class="col-3">
         <button class="btn btn-info">
           <a href="" class="text-light">
             <i class="far fa-eye text-light"></i>
@@ -64,13 +64,13 @@
           </a>
         </button>
       </div>
-      <div class="col-2">
+      <div class="col-3">
         <button class="btn btn-warning">
           <i class="fas fa-edit text-light"></i>
           Editer
         </button>
       </div>
-      <div class="col">
+      <div class="col-4">
         <button class="btn btn-danger">
           <a href="" class="text-light">
             <i class="fas fa-trash  text-light"></i>

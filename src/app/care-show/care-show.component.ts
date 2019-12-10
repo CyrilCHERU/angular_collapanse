@@ -1,5 +1,5 @@
 import { Care } from './../Models/care';
-import { CareService } from './../care.service';
+import { CareService } from '../services/care.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
@@ -17,7 +17,8 @@ export class CareShowComponent implements OnInit {
   ngOnInit() {
     const id = +this.route.snapshot.paramMap.get('id');
 
-    this.careService.find(id).subscribe(response => console.log(response));
+    this.careService.find(id).subscribe(response => this.care = response);
+
   }
 
 }

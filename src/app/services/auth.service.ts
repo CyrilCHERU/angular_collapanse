@@ -1,7 +1,9 @@
+import jwtDecode from 'jwt-decode';
 import { map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
+
 
 export interface Credentials {
   email: string;
@@ -24,7 +26,7 @@ export class AuthService {
   constructor(private http: HttpClient) { }
 
   getLogUser(): LogUser {
-    return JSON.parse(window.localStorage.getItem('user'));
+    return jwtDecode(window.localStorage.getItem('token'));
   }
 
   /**

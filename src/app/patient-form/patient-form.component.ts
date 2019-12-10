@@ -1,7 +1,8 @@
+import { AuthService } from './../services/auth.service';
 import { Professional } from '../Models/professional';
-import { UserService } from './../user.service';
+import { UserService } from '../services/user.service';
 import { User } from './../Models/user';
-import { PatientService } from './../patient.service';
+import { PatientService } from '../services/patient.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Patient } from './../Models/patient';
 import { Component, OnInit } from '@angular/core';
@@ -15,6 +16,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class PatientFormComponent implements OnInit {
 
+  isSubmited = false;
   patient: Patient;
   users: User[] = [];
   doctor: string;
@@ -41,9 +43,11 @@ export class PatientFormComponent implements OnInit {
     private route: ActivatedRoute,
     private userService: UserService,
     private patientService: PatientService,
-    private router: Router) { }
+    private router: Router,
+    private auth: AuthService) { }
 
   ngOnInit() {
+
     // Récupération de la liste des professionnels
     this.userService.findAll().subscribe(response => this.users = response);
     // Récupération de tous les users doctors
@@ -62,18 +66,19 @@ export class PatientFormComponent implements OnInit {
   }
 
   public handleSubmit() {
+    this.isSubmited = true;
+    console.log(this.patientForm.value);
     // vérification du formulaire
     this.patientForm.markAllAsTouched();
     if (this.patientForm.invalid) {
       return;
     }
-
     // extraction des Données
     const patient: Patient = this.patientForm.value;
     patient.doctor = 'api/users/' + patient.doctor;
     console.log(patient.doctor);
-    patient.nurses = patient.nurses.map(id => '/api/users/' + id);
     console.log(patient.nurses);
+    patient.nurses = patient.nurses.map(id => '/api/users/' + id);
 
 
 

@@ -1,5 +1,5 @@
 import { map } from 'rxjs/operators';
-import { Job } from './Models/job';
+import { Job } from '../Models/job';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 

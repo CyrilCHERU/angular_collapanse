@@ -1,6 +1,6 @@
 
-import { Professional } from './Models/professional';
-import { User } from './Models/user';
+import { Professional } from '../Models/professional';
+import { User } from '../Models/user';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { filter, map } from 'rxjs/operators';

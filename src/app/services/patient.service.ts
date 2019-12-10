@@ -1,5 +1,5 @@
 import { map } from 'rxjs/operators';
-import { Patient } from './Models/patient';
+import { Patient } from '../Models/patient';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 

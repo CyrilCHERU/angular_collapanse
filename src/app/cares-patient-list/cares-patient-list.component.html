@@ -1,17 +1,22 @@
-<div class="row m-5">
+<div class="row justify-content-center" *ngIf="!patient">
+  <div class="col-2 alert alert-info mt-200 text-center">
+    <p>... Chargement en cours ....</p>
+  </div>
+</div>
+<div class="row m-5" *ngIf="patient">
   <div class="col">
     <h1>Soins et suivi chez :
-      {{ patient }}</h1>
+      {{ patient.fullName }}</h1>
   </div>
   <div class="col">
     <button class="btn btn-info">
-      <a routerLink="" class="nav-link text-light">Ajouter un soin</a>
+      <a routerLink="/soins/nouveau" class="nav-link text-light">Ajouter un soin</a>
     </button>
   </div>
 </div>
 
 
-<div class="row m-5">
+<div class="row m-5" *ngIf="cares">
   <table class="table table-stripped">
     <thead class="thead-dark">
       <th scope="col">#</th>
@@ -56,4 +61,9 @@
     </tbody>
 
   </table>
+</div>
+<div class="row justify-content-center" *ngIf="!cares">
+  <div class=" col-6 text-center alert alert-warning mt-5">
+    Désolé, il n'y a pas encore de soin(s) enregistré pour ce patient en base de données ;(
+  </div>
 </div>

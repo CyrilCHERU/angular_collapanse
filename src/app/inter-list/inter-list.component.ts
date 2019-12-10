@@ -1,6 +1,7 @@
+import { CareService } from './../services/care.service';
 import { Intervention } from './../Models/intervention';
-import { InterventionService } from './../intervention.service';
 import { Component, OnInit } from '@angular/core';
+import { Care } from '../Models/care';
 
 @Component({
   selector: 'app-inter-list',
@@ -9,12 +10,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class InterListComponent implements OnInit {
 
-  interventions: Intervention[] = [];
+  cares: Care[] = [];
 
-  constructor(private interService: InterventionService) { }
+  constructor(private careService: CareService) { }
 
   ngOnInit() {
-    this.interService.findAll().subscribe(response => console.log(response));
+    this.careService.findAll().subscribe(response => this.care = response);
+
   }
 
 }

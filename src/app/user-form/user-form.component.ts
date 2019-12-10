@@ -1,6 +1,6 @@
-import { UserService } from './../user.service';
+import { UserService } from '../services/user.service';
 import { Job } from './../Models/job';
-import { JobService } from './../job.service';
+import { JobService } from '../services/job.service';
 import { User } from './../Models/user';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';

@@ -32,8 +32,9 @@ const routes: Routes = [
   { path: 'soins', component: CareListComponent },
   { path: 'soins/suivi/:id/detail', component: CareShowComponent },
   { path: 'soins/:id/edit', component: CareFormComponent },
+  { path: 'soins/:id/interventions/nouveau', component: InterFormComponent },
+  { path: 'interventions', component: InterListComponent },
   { path: 'interventions/nouveau', component: InterFormComponent },
-  { path: 'interventions', component: InterListComponent }
 ];
 
 @NgModule({
