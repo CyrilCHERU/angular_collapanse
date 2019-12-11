@@ -1,3 +1,4 @@
+import { InterDetailComponent } from './inter-detail/inter-detail.component';
 import { CareShowComponent } from './care-show/care-show.component';
 import { CaresPatientListComponent } from './cares-patient-list/cares-patient-list.component';
 import { InterListComponent } from './inter-list/inter-list.component';
@@ -27,6 +28,7 @@ const routes: Routes = [
   { path: 'patients/:id/soins/nouveau', component: CareFormComponent },
   { path: 'login', component: LoginFormComponent },
   { path: 'patients/:id/edit', component: PatientFormComponent },
+  { path: 'patients/:id/soins/nouveau', component: CareFormComponent },
   { path: 'patients/:id/suivi', component: CaresPatientListComponent },
   { path: 'soins/nouveau', component: CareFormComponent },
   { path: 'soins', component: CareListComponent },
@@ -35,6 +37,7 @@ const routes: Routes = [
   { path: 'soins/:id/interventions/nouveau', component: InterFormComponent },
   { path: 'interventions', component: InterListComponent },
   { path: 'interventions/nouveau', component: InterFormComponent },
+  { path: 'interventions/:id/detail', component: InterDetailComponent }
 ];
 
 @NgModule({

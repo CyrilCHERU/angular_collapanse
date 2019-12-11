@@ -16,12 +16,32 @@
       <form [formGroup]="interForm" (ngSubmit)="handleSubmit()">
         <div class="form-group">
           <label for="">Date</label>
-          <input type="date" formControlName="date" id="" class="form-control col-4">
+          <input type="date" formControlName="date" id="" class="form-control col-4"
+            [class.is-invalid]="(interForm.getError('validation', 'date') || interForm.getError('required', 'date')) && isSubmited">
+          <p class="invalid-feedback" *ngIf="interForm.getError('required', 'date')">
+            Ce champ est requis !
+          </p>
+          <p *ngIf="interForm.getError('validation', 'date') as error">
+            {{ error }}
+          </p>
           <label for="">Commentaire</label>
           <textarea formControlName="comment" id="" class="form-control" cols="30" rows="10"
-            placeholder="Ici, votre commentaire"></textarea>
+            placeholder="Ici, votre commentaire"
+            [class.is-invalid]="(interForm.getError('validation', 'comment') || interForm.getError('required', 'comment')) && isSubmited"></textarea>
+          <p class="invalid-feedback" *ngIf="interForm.getError('required', 'comment')">
+            Vous devez saisir un commentaire !
+          </p>
+          <p *ngIf="interForm.getError('validation', 'date') as error">
+            {{ error }}
+          </p>
         </div>
-        <button type="submit" class="btn btn-success">Créer</button>
+        <button class="btn btn-warning" *ngIf="!plus" (click)="removeButton()">Ajouter une image</button>
+        <ng-container>
+          <app-image-form *ngIf="plus"></app-image-form>
+        </ng-container>
+        <div class="row mt-4 ml-1">
+          <button type="submit" class="btn btn-success">Créer</button>
+        </div>
       </form>
     </div>
   </div>

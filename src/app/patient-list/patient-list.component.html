@@ -3,6 +3,11 @@
     <p>... Chargement en cours ....</p>
   </div>
 </div>
+<div class="row justify-content-center" *ngIf="deleteMsg">
+  <div class="col-3 alert alert-success mt-150 text-center">
+    <p>... Ce patient a été supprimé ....</p>
+  </div>
+</div>
 <div *ngIf="patients">
 
   <div class="row m-4">
@@ -50,14 +55,14 @@
               </a>
             </button>
             <button class="btn btn-warning mr-2">
-              <a href="">
+              <a routerLink="/patients/{{ p.id }}/edit">
                 <i class="far fa-edit text-light"></i>
               </a>
             </button>
-            <button class="btn btn-danger">
-              <a href="#">
-                <i class="fas fa-trash text-light"></i>
-              </a>
+            <button class="btn btn-danger" (click)="remove(p.id)">
+
+              <i class="fas fa-trash text-light"></i>
+
             </button>
           </td>
         </tr>

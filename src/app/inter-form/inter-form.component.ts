@@ -1,10 +1,11 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { CareService } from './../services/care.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Intervention } from './../Models/intervention';
 import { Component, OnInit } from '@angular/core';
 import { Care } from '../Models/care';
+import { InterventionService } from '../services/intervention.service';
 
 @Component({
   selector: 'app-inter-form',
@@ -15,44 +16,49 @@ export class InterFormComponent implements OnInit {
 
   error = false;
   isSubmited = false;
+  plus = false;
   cares: Care[] = [];
   inter: Intervention;
   care: Care;
 
   interForm = new FormGroup({
-    date: new FormControl(),
-    comment: new FormControl(),
+    date: new FormControl('', Validators.required),
+    comment: new FormControl('', Validators.required),
     care: new FormControl()
   });
 
-  constructor(private route: ActivatedRoute, private careService: CareService, private router: Router) { }
+  constructor(
+    private route: ActivatedRoute,
+    private careService: CareService,
+    private interService: InterventionService,
+    private router: Router) { }
 
   ngOnInit() {
     const careId = +this.route.snapshot.paramMap.get('id');
     this.careService.find(careId).subscribe(response => this.care = response);
-    console.log(this.care);
+
   }
 
   public handleSubmit() {
-    const careId = +this.route.snapshot.paramMap.get('id');
     this.isSubmited = true;
     if (this.interForm.invalid) {
       return;
     }
-    console.log(careId);
 
-    if (careId) {
-      this.interForm.patchValue({
-        care: '/api/cares/' + careId
-      });
-      console.log(this.interForm.value);
-    }
+    // Extraction des données
+    this.interForm.patchValue({
+      care: '/api/cares/' + this.care.id
+    });
+    console.log(this.interForm.value);
+    const inter = this.interForm.value;
+    // Création de l'intervention
+    this.interService.create(inter).subscribe(this.onSuccess, this.onError);
 
   }
 
   private onSuccess = (updatedInter: Intervention) => {
     this.error = false;
-    this.router.navigateByUrl('/soins/suivi/' + updatedInter.id + '/detail');
+    this.router.navigateByUrl('/soins/suivi/' + this.care.id + '/detail');
   }
 
   private onError = (httpError: HttpErrorResponse) => {
@@ -74,6 +80,9 @@ export class InterFormComponent implements OnInit {
     });
   }
 
+  public removeButton() {
+    this.plus = true;
+  }
 
 
 }

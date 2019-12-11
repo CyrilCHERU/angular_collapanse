@@ -1,35 +1,50 @@
-<div class="row justify-content-center" *ngIf="!cares">
+<div class="row justify-content-center" *ngIf="!interventions">
   <div class="col-2 alert alert-info mt-200 text-center">
     <p>... Chargement en cours ....</p>
   </div>
 </div>
 <div class="m-4">
-  <div class="row" *ngIf="cares">
-    <h1>Liste de tous les interventions</h1>
+  <div class="row" *ngIf="interventions">
+    <h1>Liste de toutes les interventions</h1>
   </div>
   <div class="row m-4">
     <table class="table table-stripped">
       <thead class="thead-dark">
         <tr>
-          <th scope="col" width="5%">#</th>
-          <th scope="col-3" width="8%">Date</th>
+          <th scope="col" width="5%" class="text-center">#</th>
+          <th scope="col-3" width="5%" class="text-center">Date</th>
+          <th scope="col">Patient</th>
           <th scope="col" width="20%">Soin</th>
-          <th scope="col" width="50%">Commentaire</th>
+          <th scope="col" width="40%">Commentaire</th>
           <th scope="col" width="20%" class="text-center">Image(s)</th>
+          <th scope="col" width="5%"></th>
         </tr>
       </thead>
-      <tbody *ngFor="let care of cares">
-        <tr *ngFor="let inter of care.interventions">
-          <td>{{ care.id }}</td>
+      <tbody>
+        <tr *ngFor="let inter of interventions">
+          <td>{{ inter.care.id }}</td>
           <td>{{ inter.date | date:"dd/MM/yyyy" }}</td>
           <td>
-            <a href="">
-              {{ care.woundType }}
+            <a routerLink="/patients/{{ inter.care.patient.id }}"></a>
+            {{ inter.care.patient.fullName }}</td>
+          <td>
+            <a routerLink="/soins/{{ inter.care.id }}">
+              {{ inter.care.woundType }}
             </a>
           </td>
           <td>{{ inter.comment }}</td>
-          <td class="text-center" *ngFor="let image of inter.images">
-            {{ image.length }}
+          <td class="text-center" *ngIf="inter.images">
+            {{ inter.images.length }}
+          </td>
+          <td>
+            <button class="btn btn-info">
+              <a routerLink="/soins/{{ inter.care.id }}" class="nav-link text-light">
+                <i class="fas fa-eye"></i>
+              </a>
+            </button>
+            <button class="btn btn-danger" *ngIf="inter.images.length === 0">
+              <i class="fas fa-trash"></i>
+            </button>
           </td>
         </tr>
       </tbody>

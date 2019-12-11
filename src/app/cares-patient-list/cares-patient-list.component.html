@@ -5,12 +5,12 @@
 </div>
 <div class="row m-5" *ngIf="patient">
   <div class="col">
-    <h1>Soins et suivi chez :
-      {{ patient.fullName }}</h1>
+    <h1>{{ patient.fullName }} (Soin(s) et suivi)
+    </h1>
   </div>
   <div class="col">
     <button class="btn btn-info">
-      <a routerLink="/soins/nouveau" class="nav-link text-light">Ajouter un soin</a>
+      <a routerLink="/patients/{{ patient.id }}/soins/nouveau" class="nav-link text-light">Ajouter un soin</a>
     </button>
   </div>
 </div>
@@ -51,10 +51,10 @@
               <i class="fas fa-edit text-light"></i>
             </a>
           </button>
-          <button class="btn btn-danger">
-            <a href="">
-              <i class="fas fa-trash text-light"></i>
-            </a>
+          <button class="btn btn-danger" (click)="removeCare(care.id)">
+
+            <i class="fas fa-trash text-light"></i>
+
           </button>
         </td>
       </tr>

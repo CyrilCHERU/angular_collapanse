@@ -12,6 +12,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CaresPatientListComponent implements OnInit {
 
+  result: any;
   cares: Care[] = [];
   patient: Patient;
 
@@ -29,6 +30,10 @@ export class CaresPatientListComponent implements OnInit {
     });
 
     console.log(this.patient);
+  }
+
+  public removeCare(id: number) {
+    this.careService.delete(id).subscribe(response => this.result = response);
   }
 
 }

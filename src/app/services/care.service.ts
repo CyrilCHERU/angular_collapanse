@@ -35,4 +35,8 @@ export class CareService {
   public update(care: Care) {
     return this.http.put<Care>('http://localhost:8000/api/cares/' + care.id, care);
   }
+
+  public delete(id: number) {
+    return this.http.delete('http://localhost:8000/api/cares/' + id);
+  }
 }

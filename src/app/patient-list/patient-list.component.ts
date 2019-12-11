@@ -1,6 +1,7 @@
 import { PatientService } from '../services/patient.service';
 import { Patient } from './../Models/patient';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-patient-list',
@@ -9,13 +10,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PatientListComponent implements OnInit {
 
+  deleteMsg = false;
+  result: any;
   patients: Patient[] = [];
 
   pages: number[] = [];
   itemsPerPage = 10;
   currentPage = 1;
 
-  constructor(private patientService: PatientService) { }
+  constructor(private patientService: PatientService, private router: Router) { }
 
   ngOnInit() {
 
@@ -27,6 +30,12 @@ export class PatientListComponent implements OnInit {
 
   handlePageChanged(page: number) {
     this.currentPage = page;
+  }
+
+  remove(id: number) {
+    this.patientService.remove(id).subscribe(response => console.log(response));
+    this.deleteMsg = true;
+    this.router.navigateByUrl('/patients');
   }
 
 }

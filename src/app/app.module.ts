@@ -25,6 +25,8 @@ import { InterFormComponent } from './inter-form/inter-form.component';
 import { InterListComponent } from './inter-list/inter-list.component';
 import { CaresPatientListComponent } from './cares-patient-list/cares-patient-list.component';
 import { CareShowComponent } from './care-show/care-show.component';
+import { InterDetailComponent } from './inter-detail/inter-detail.component';
+import { ImageFormComponent } from './image-form/image-form.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +48,8 @@ import { CareShowComponent } from './care-show/care-show.component';
     InterListComponent,
     CaresPatientListComponent,
     CareShowComponent,
+    InterDetailComponent,
+    ImageFormComponent,
   ],
   imports: [
     BrowserModule,

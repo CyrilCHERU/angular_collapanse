@@ -1,7 +1,8 @@
+import { InterventionService } from './../services/intervention.service';
 import { Care } from './../Models/care';
 import { CareService } from '../services/care.service';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-care-show',
@@ -10,9 +11,14 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class CareShowComponent implements OnInit {
 
+  result: any;
   care: Care;
 
-  constructor(private route: ActivatedRoute, private careService: CareService) { }
+  constructor(
+    private route: ActivatedRoute,
+    private careService: CareService,
+    private interService: InterventionService,
+    private router: Router) { }
 
   ngOnInit() {
     const id = +this.route.snapshot.paramMap.get('id');
@@ -21,4 +27,7 @@ export class CareShowComponent implements OnInit {
 
   }
 
+  public remove(id: number) {
+    this.interService.delete(id).subscribe(response => this.result = response);
+  }
 }

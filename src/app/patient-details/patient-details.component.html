@@ -5,11 +5,10 @@
 </div>
 <div class="m-4" *ngIf="patient">
   <div class="row m-4 alert alert-light">
-    <h1>Informations sur le patient : {{ patient.lastName }}
-      {{patient.firstName }}</h1>
+    <h1>{{ patient.lastName | uppercase }} {{patient.firstName }} (Informations sur le patient)</h1>
   </div>
   <div class="row m-4">
-    <div class="col-6">
+    <div class="col-8">
       <div class="col-7">
         <div class="row">
           <h2>Civilités</h2>
@@ -25,7 +24,7 @@
               <p>Sexe :
                 {{ patient.gender }}</p>
               <p>Nom :
-                {{ patient.lastName }}</p>
+                {{ patient.lastName | uppercase }}</p>
               <p>Prénom :
                 {{ patient.firstName }}</p>
               <p>Date de Naissance :
@@ -96,7 +95,7 @@
         </div>
         <div class="col">
           <p *ngFor="let c of patient?.cares">
-            <a href="#">Soin du
+            <a routerLink="/soins/suivi/{{ c.id }}/detail">Soin du
               {{ c.createdAt | date:"dd/MM/yyyy" }}</a>
           </p>
         </div>
@@ -119,10 +118,10 @@
           <i class="far fa-edit text-light"></i>
         </a>
       </button>
-      <button class="btn btn-danger">
-        <a href="#">
-          <i class="fas fa-trash text-light"></i>
-        </a>
+      <button class="btn btn-danger" (click)="removePatient(patient.id)">
+
+        <i class="fas fa-trash text-light"></i>
+
       </button>
     </div>
   </div>

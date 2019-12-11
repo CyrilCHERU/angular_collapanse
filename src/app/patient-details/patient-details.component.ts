@@ -29,4 +29,8 @@ export class PatientDetailsComponent implements OnInit {
     console.log(this.patient);
   }
 
+  public removePatient(id: number) {
+    alert('Au click, on efface');
+  }
+
 }
