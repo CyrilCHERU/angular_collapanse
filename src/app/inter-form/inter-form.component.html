@@ -1,17 +1,21 @@
 <div class="container">
-  <div class="row m-4" *ngIf="care">
-    <div class="row">
-      <div class="col">
-        <h1>{{ care.patient.fullName}}</h1>
+  <div class="row m-4" *ngIf="intervention">
+    <div class="row d-flex flex-column mt-3">
+      <div class="col align-self-start heigth-40" *ngIf="create; else modification">
+        <h1>{{ care.patient.fullName}} - <em class="moreSmall">Nouvelle intervention :</em>
+        </h1>
+      </div>
+      <ng-template #modification>
+        <h1>{{ care.patient.fullName}} - <em class="moreSmall">Modifier une intervention :</em>
+        </h1>
+      </ng-template>
+      <div class="col text-center mb-3" *ngIf="care">
+        <h4>{{ care.woundType }}</h4>
       </div>
     </div>
-
-    <br>
-    <h3>Nouvelle intervention</h3>
-    <br>
-    <h4>{{ care.woundType }}</h4>
   </div>
-  <div class="row justify-content-center" *ngIf="care">
+
+  <div class="row justify-content-center" *ngIf="intervention || create">
     <div class="col-8">
       <form [formGroup]="interForm" (ngSubmit)="handleSubmit()">
         <div class="form-group">
@@ -35,7 +39,8 @@
             {{ error }}
           </p>
         </div>
-        <button class="btn btn-warning" *ngIf="!plus" (click)="removeButton()">Ajouter une image</button>
+        <!--button class="btn btn-warning" *ngIf="!plus" (click)="removeButton()">Ajouter une image</button-->
+
         <ng-container>
           <app-image-form *ngIf="plus"></app-image-form>
         </ng-container>

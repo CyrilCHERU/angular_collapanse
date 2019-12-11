@@ -36,13 +36,16 @@
   </div>
   <div class="row text-center-right mb-4">
     <button class="btn btn-warning mr-4">
-      <a href="" class="nav-link text-light">Modifier</a>
+      <a routerLink="/interventions/{{ intervention.id }}/edition" class="nav-link text-light">Modifier</a>
     </button>
     <p>ou</p>
-    <button class="btn btn-danger ml-4 mr-4" (click)="remove()">
-      <a href="" class="nav-link text-light">Supprimer</a>
+    <button class="btn btn-danger ml-4 mr-4 nav-link text-light" (click)="remove(intervention.id)">Supprimer</button>
+    <p>cette intervention.</p>
+    <button class="btn btn-warning ml-4" *ngIf="!plus"><a routerLink="/interventions/{{ intervention.id }}/images/ajout"
+        class="nav-link text-light">
+        Ajouter une image
+      </a>
     </button>
-    <p>ce commentaire</p>
   </div>
   <div *ngIf="intervention.images">
     <h2 class="thead-dark">Image(s) :</h2>
@@ -54,7 +57,7 @@
               <strong>Date :</strong>
               {{ image.date | date:"dd/MM/yyyy" }}</h5>
           </div>
-          <img src=".{{ image.url }}" class="card-img-top" alt="...">
+          <img src="{{ image.url }}" class="card-img-top img-fluid" alt="...">
           <div class="card-body">
             <p class="card-text">ID :
               {{ image.id }}
