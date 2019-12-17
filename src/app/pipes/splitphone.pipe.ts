@@ -15,5 +15,6 @@ export class Splitphone implements PipeTransform {
       temp = str.slice(0, 2);
       newPhone = temp + '.';
     }
+    return phone;
   }
 }

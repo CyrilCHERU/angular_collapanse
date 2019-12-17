@@ -16,6 +16,4 @@ export interface User {
   zipCode: string;
   city: string;
   slug: string;
-
-
 }

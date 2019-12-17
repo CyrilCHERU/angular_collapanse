@@ -3,4 +3,6 @@ export interface User {
   id: number;
   fullName: string;
   roles: string;
+  exp?: number;
+  jobTitle: string;
 }

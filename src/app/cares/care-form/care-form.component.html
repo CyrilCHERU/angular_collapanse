@@ -1,0 +1,40 @@
+<div class="row m-4" *ngIf="care || create == true">
+  <div *ngIf="!care; else modification">
+    <h1 *ngIf="patient">Mise en place d'un nouveau soin pour : {{ patient.fullName }}</h1>
+  </div>
+  <ng-template #modification>
+    <h1>Modification du soin {{ care.woundType }} pour <br />{{ patient.fullName }}</h1>
+  </ng-template>
+</div>
+
+<div class="container" *ngIf="care || create == true">
+  <div class="row">
+    <div class="col-5">
+      <div class="form-group">
+        <form [formGroup]="careForm" (ngSubmit)="handleSubmit()">
+          <div id="care">
+            <div class="form-group">
+              <label for="createdAt" class="required">Ouverture du soin le</label>
+              <input type="date" id="createdAt" formControlName="createdAt" class="form-control" />
+            </div>
+            <div class="form-group">
+              <label for="endedAt">Fermeture du soin le</label>
+              <input type="date" id="endedAt" formControlName="endedAt" class="form-control"
+                placeholder="ne pas remplir" />
+            </div>
+            <div class="form-group">
+              <label for="woundType">Description de la plaie</label>
+              <input type="text" id="woundType" formControlName="woundType" class="form-control" />
+            </div>
+            <button type="submit" class="btn btn-success mt-4" *ngIf="!care; else save">Ajouter</button>
+            <ng-template #save>
+              <button type="submit" class="btn btn-success mt-4">Modifier</button>
+              <button (click)="cancel(care.id)" class="btn btn-warning ml-3 mt-4">Annuler</button>
+
+            </ng-template>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

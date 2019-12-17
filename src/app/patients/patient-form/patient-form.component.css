@@ -1,0 +1,16 @@
+@import url(https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/css/select2.min.css);
+
+.background {
+
+  background-image: url('../../../assets/img/bkg/bkg-patient.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 1400px 1200px;
+  padding: 20px;
+  min-height: 900px;
+}
+
+form {
+  background-color: rgba(255, 255, 255, 0.6);
+  padding: 50px;
+}

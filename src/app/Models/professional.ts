@@ -1,4 +1,4 @@
-import { Job } from './job';
+
 export interface Professional {
 
   id: number;

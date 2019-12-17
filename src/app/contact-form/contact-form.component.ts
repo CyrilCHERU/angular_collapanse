@@ -1,3 +1,4 @@
+import { ContactService } from './../services/contact.service';
 import { Contact } from './../Models/contact';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
@@ -19,7 +20,7 @@ export class ContactFormComponent implements OnInit {
     message: new FormControl()
   });
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private contactService: ContactService) { }
 
   ngOnInit() {
   }

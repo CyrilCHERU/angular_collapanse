@@ -21,8 +21,8 @@ export class JwtAuthService {
       .pipe(
         map((resultat: any) => {
           console.log(resultat);
-          this.authChanged.next(true);
           window.localStorage.setItem('token', resultat.token);
+          this.authChanged.next(true);
           return jwtDecode(resultat.token) as User;
         })
       );
@@ -33,8 +33,7 @@ export class JwtAuthService {
       .pipe(
         map(
           resultat => {
-            this.authChanged.next(false);
-            window.localStorage.removeItem('token');
+            this.deleteToken();
             return resultat;
           }
         )
@@ -52,6 +51,21 @@ export class JwtAuthService {
   }
 
   isAuthenticated() {
-    return this.getUser() !== null;
+    const user = this.getUser();
+    if (!user) {
+      return false;
+    }
+    const now = ((new Date()).getTime()) / 1000;
+    if (user.exp < now) {
+      this.deleteToken();
+      return false;
+    }
+
+    return true;
+  }
+
+  deleteToken() {
+    this.authChanged.next(false);
+    window.localStorage.removeItem('token');
   }
 }

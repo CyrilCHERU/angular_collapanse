@@ -1,0 +1,130 @@
+<div class="background">
+  <div class="container" *ngIf="patient || create == true">
+    <div class="row justify-content-center" *ngIf="!patient">
+      <div class="col-4 alert alert-info mt-200 text-center">
+        <p>... Chargement en cours ....</p>
+      </div>
+    </div>
+    <div>
+      <h1 *ngIf="!patient">Création d'un nouveau patient</h1>
+      <h1 *ngIf="patient">Modification de le fiche patient</h1>
+    </div>
+    <form [formGroup]="patientForm" (ngSubmit)="handleSubmit()" class="rounded" *ngIf="start!=false">
+      <div class="row">
+        <div class="alert alert-danger" *ngIf="error">
+          <p>Une Erreur est survenue, Merci de réessayer plus tard ;)</p>
+        </div>
+        <div class="col form-group">
+          <label for="gender">Sexe</label>
+          <br>
+          <input type="radio" formControlName="gender" value="Femme" class="ml-5 mr-2">Femme
+          <input type="radio" formControlName="gender" value="Homme" class="ml-3 mr-2">Homme
+          <p class="invalid-feedback" *ngIf="patientForm.getError('validation', 'gender') as error">
+            {{ error }}
+          </p>
+          <br>
+          <label for="lastName" class="mt-3">Nom</label>
+          <input type="text" class="form-control" formControlName="lastName"
+            [class.is-invalid]="patientForm.getError('validation', 'lastName') || patientForm.getError('required', 'lastName') && isSubmited">
+          <p class="invalid-feedback" *ngIf="patientForm.getError('required', 'lastName')">Ce champ est requis !</p>
+          <p class="invalid-feedback" *ngIf="patientForm.getError('validation', 'lastName') as error">
+            {{ error }}
+          </p>
+          <label for="firstName">Prénom</label>
+          <input type="text" class="form-control" formControlName="firstName"
+            [class.is-invalid]="patientForm.getError('validation', 'firstName') || patientForm.getError('required', 'firstName') && isSubmited">
+          <p class="invalid-feedback" *ngIf="patientForm.getError('required', 'firstName')">Ce champ est requis !</p>
+          <p class="invalid-feedback" *ngIf="patientForm.getError('validation', 'firstName') as error">
+            {{ error }}
+          </p>
+          <label for="birthDate">Date de naissance</label>
+          <input type="date" class="form-control" formControlName="birthDate"
+            [class.is-invalid]="patientForm.getError('validation', 'birthDate') || patientForm.getError('required', 'birthDate') && isSubmited">
+          <p class="invalid-feedback" *ngIf="patientForm.getError('required', 'birthDate')">Ce champ est requis !</p>
+          <p class="invalid-feedback" *ngIf="patientForm.getError('validation', 'birthDate') as error">
+            {{ error }}
+          </p>
+        </div>
+        <div class="col form-group">
+          <label for="address1">Adresse</label>
+          <input type="text" class="form-control" formControlName="address1"
+            [class.is-invalid]="patientForm.getError('validation', 'address1') || patientForm.getError('required', 'address1') && isSubmited">
+          <p class="invalid-feedback" *ngIf="patientForm.getError('required', 'address1')">Ce champ est requis !</p>
+          <p class="invalid-feedback" *ngIf="patientForm.getError('validation', 'address1') as error">
+            {{ error }}
+          </p>
+          <label for="address2">Complément d'adresse</label>
+          <input type="text" class="form-control" formControlName="address2">
+          <label for="zipCode">Code postal</label>
+          <input type="text" class="form-control" formControlName="zipCode"
+            [class.is-invalid]="(patientForm.getError('validation', 'zipCode') || patientForm.getError('required', 'zipCode') || patientForm.getError('maxLength', 'zipCode')) && isSubmited">
+          <p class="invalid-feedback" *ngIf="patientForm.getError('required', 'zipCode')">
+            Ce champ est requis !
+          </p>
+          <p class="invalid-feedback" *ngIf="patientForm.getError('maxLength', 'zipCode')">
+            Le code postal doit comporter 5 chiffres !
+          </p>
+          <p class="invalid-feedback" *ngIf="patientForm.getError('validation', 'zipCode') as error">
+            {{ error }}
+          </p>
+          <label for="city">Ville</label>
+          <input type="text" class="form-control" formControlName="city"
+            [class.is-invalid]="(patientForm.getError('validation', 'city') || patientForm.getError('required', 'city')) && isSubmited">
+          <p class="invalid-feedback" *ngIf="patientForm.getError('required', 'city')">
+            Ce champ est requis !
+          </p>
+          <p class="invalid-feedback" *ngIf="patientForm.getError('validation', 'city') as error">
+            {{ error }}
+          </p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col form-group">
+          <label for="phone">Téléphone</label>
+          <input type="phone" class="form-control" formControlName="phone"
+            [class.is-invalid]="patientForm.getError('validation', 'phone') || patientForm.getError('required', 'phone') && isSubmited">
+          <p class="invalid-feedback" *ngIf="patientForm.getError('required', 'phone')">
+            Ce champ est requis !
+          </p>
+          <p class="invalid-feedback" *ngIf="patientForm.getError('maxLength', 'phone')">
+            Un numéro de téléphone doit comporter 10 chiffres !
+          </p>
+          <p class="invalid-feedback" *ngIf="patientForm.getError('validation', 'phone') as error">
+            {{ error }}
+          </p>
+          <label for="email">Email</label>
+          <input type="email" class="form-control" formControlName="email"
+            [class.is-invalid]="patientForm.getError('validation', 'email') || patientForm.getError('required', 'email') && isSubmited">
+          <p class="invalid-feedback" *ngIf="patientForm.getError('validation', 'email') as error">
+            {{ error }}
+          </p>
+        </div>
+        <div class="col form-group">
+          <label for="doctor">Médecin Traitant</label>
+          <select class="form-control" formControlName="doctor"
+            [class.is-invalid]="patientForm.getError('validation', 'doctor') || patientForm.getError('required', 'doctor') && isSubmited">
+            <option value="">-- Choisissez un docteur --</option>
+            <option [ngValue]="user.id" *ngFor="let user of doctors">{{ user.lastName }} {{ user.firstName }}</option>
+          </select>
+          <p class="invalid-feedback" *ngIf="patientForm.getError('required', 'doctor')">Ce champ est requis !</p>
+          <p class="invalid-feedback" *ngIf="patientForm.getError('validation', 'doctor') as error">
+            {{ error }}
+          </p>
+          <label for="nurses">Infirmier(e)s</label>
+          <select class="form-control" formControlName="nurses" multiple
+            [class.is-invalid]="patientForm.getError('validation', 'nurses') || patientForm.getError('required', 'nurses') && isSubmited">
+            <option value="">-- Choisissez un(e) ou des infirmier(e)s --</option>
+            <option [ngValue]="user.id" *ngFor="let user of nurses">{{ user.lastName }} {{ user.firstName }}</option>
+          </select>
+          <p class="invalid-feedback" *ngIf="patientForm.getError('validation', 'nurses') as error">
+            {{ error }}
+          </p>
+        </div>
+      </div>
+      <div class="text-right">
+        <button type="submit" class="btn btn-success" *ngIf="!patient">Enregistrer</button>
+        <button type="submit" class="btn btn-success" *ngIf="patient">Modifier</button>
+        <button (click)="cancel(patient.id)" class="btn btn-danger ml-3" *ngIf="patient">Annuler</button>
+      </div>
+    </form>
+  </div>
