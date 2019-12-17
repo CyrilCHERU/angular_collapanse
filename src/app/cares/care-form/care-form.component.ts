@@ -7,7 +7,6 @@ import { PatientService } from '../../services/patient.service';
 import { Component, OnInit } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import * as moment from 'moment';
-import { URLSearchParams } from 'url';
 
 @Component({
   selector: 'app-care-form',
@@ -61,6 +60,10 @@ export class CareFormComponent implements OnInit {
         this.careForm.patchValue({
           createdAt: this.care.createdAt.substr(0, 10)
         });
+
+        this.careForm.patchValue({
+          createdAt: moment(Date.now()).format('YYYY-MM-DD')
+        })
 
         // Si on a un careId, il faut récupérer le patient
         this.patient = this.care.patient;

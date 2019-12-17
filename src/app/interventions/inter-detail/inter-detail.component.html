@@ -1,79 +1,63 @@
-<div class="row justify-content-center" *ngIf="!intervention">
-  <div class="col-2 alert alert-info mt-200 text-center">
-    <p>... Chargement en cours ....</p>
+<div class="container mb-5" *ngIf="intervention">
+  <div class="row justify-content-center" *ngIf="!intervention">
+    <div class="col-2 alert alert-info mt-200 text-center">
+      <p>... Chargement en cours ....</p>
+    </div>
   </div>
-</div>
-<div class="container" *ngIf="intervention">
-  <div class="row mt-5 mb-5">
-    <h1>Détails d'une intervention sur un soin de :
-      {{ patient }}</h1>
+  <div class="col mt-5 mb-5 alert alert-light">
+    <div class="alert alert-light">
+      <h1 class="alert-title">{{ intervention.care.patient.fullName }}</h1>
+      <br>
+      <h3>Détails de l'intervention du :
+        {{ intervention.date | date:"dd/MM/yyyy"}}</h3>
+    </div>
   </div>
-
-
-  <div class="row m-5">
-    <table class="table table-stripped">
-      <thead class="thead-dark">
-        <tr>
-          <th scope="col" width="5%">#</th>
-          <th scope="col" width="8%">Date</th>
-          <th scope="col" width="50%">Commentaire</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>
-            {{ intervention.id }}
-          </td>
-          <td>
-            {{ intervention.date | date:"dd/MM/yyyy" }}
-          </td>
-          <td>
-            {{ intervention.comment }}
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-  <div class="row text-center-right mb-4">
-    <button class="btn btn-warning mr-4">
-      <a routerLink="/interventions/{{ intervention.id }}/edition" class="nav-link text-light">Modifier</a>
-    </button>
-    <p>ou</p>
-    <button class="btn btn-danger ml-4 mr-4 nav-link text-light" (click)="remove(intervention.id)">Supprimer</button>
-    <p>cette intervention.</p>
-    <button class="btn btn-warning ml-4" *ngIf="!plus"><a routerLink="/interventions/{{ intervention.id }}/images/ajout"
-        class="nav-link text-light">
+  <div class="row">
+    <div class="col-4">
+      <h3>Plaie</h3>
+      <hr>
+      <a routerLink="/interventions/{{ intervention.id }}/edition" class="btn btn-warning">
+        Modifier
+      </a>
+      <br>
+      <button class="btn btn-danger mt-2 text-light" (click)="remove(intervention.id)">
+        Supprimer
+      </button>
+      <br>
+      <a routerLink="/interventions/{{ intervention.id }}/images/ajout" class="btn btn-primary mt-2" *ngIf="!plus">
         Ajouter une image
       </a>
-    </button>
+
+    </div>
+    <div class="col-8">
+      <h3>Commentaire</h3>
+      <hr>
+      <p>{{ intervention.comment }}</p>
+    </div>
   </div>
-  <div *ngIf="intervention.images">
-    <h2 class="thead-dark">Image(s) :</h2>
-    <div class="row m-5 justify-content-arround">
-      <div class="col mb-3" *ngFor="let image of intervention.images">
-        <div class="card" style="width: 18rem;">
-          <div class="card-title p-3">
-            <h5 class="card-title">
-              <strong>Date :</strong>
-              {{ image.date | date:"dd/MM/yyyy" }}</h5>
-          </div>
-          <img src="{{ image.url }}" class="card-img-top img-fluid" alt="...">
-          <div class="card-body">
-            <p class="card-text">ID :
-              {{ image.id }}
-            </p>
-            <p>Légende :
-              {{ image.caption }}
-            </p>
-            <p>
-              <button class="btn btn-danger align-items-right" (click)="removeImage(image.id)">
-                <i class="fas fa-trash"></i>
-              </button>
-            </p>
-          </div>
+  <div class="row mt-3 justify-content-arround" *ngIf="intervention.images">
+    <div class="col alert alert-light">
+      <h2 class="thead-dark alert-light">Image(s) :</h2>
+    </div>
+  </div>
+  <div class="mb-5">
+    <div class="col mb-3" *ngFor="let image of intervention.images">
+      <div class="card" style="width: 18rem;">
+        <div class="card-title p-3">
+          <h5 class="card-title">
+            <strong>Légende :</strong>
+            {{ image.caption }}</h5>
+        </div>
+        <img src="{{ image.url }}" class="card-img-top img-fluid" alt="...">
+        <div class="card-body">
+          <p>
+            <button class="btn btn-danger align-items-right" (click)="removeImage(image.id)">
+              <i class="fas fa-trash"></i>
+            </button>
+          </p>
         </div>
       </div>
     </div>
-
   </div>
+
 </div>

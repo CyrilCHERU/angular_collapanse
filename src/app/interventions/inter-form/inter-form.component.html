@@ -1,3 +1,16 @@
+<div class="container" *ngIf="intervention || create === true">
+  <div class="alert alert-light">
+    <h1 class="alert-title" *ngIf="create; else modification">
+      {{ care.patient.fullName}} - <em class="moreSmall">Nouvelle intervention :</em>
+    </h1>
+    <ng-template #modification>
+      <h1>{{ care.patient.fullName}} - <em class="moreSmall">Modifier une intervention :</em>
+      </h1>
+    </ng-template>
+  </div>
+</div>
+
+
 <div class="container">
   <div class="row m-4" *ngIf="intervention">
     <div class="row d-flex flex-column mt-3">
