@@ -1,3 +1,4 @@
+import { JwtAuthService } from './../../authentication/jwt-auth.service';
 import { AuthService } from '../../services/auth.service';
 import { Professional } from '../../Models/professional';
 import { UserService } from '../../services/user.service';
@@ -46,7 +47,7 @@ export class PatientFormComponent implements OnInit {
     private userService: UserService,
     private patientService: PatientService,
     private router: Router,
-    private auth: AuthService) { }
+    private auth: JwtAuthService) { }
 
   ngOnInit() {
 
@@ -67,9 +68,10 @@ export class PatientFormComponent implements OnInit {
           birthDate: moment(response.birthDate).format('YYYY-MM-DD'),
           doctor: response.doctor
         });
-        console.log(response);
       });
     }
+    const user = this.auth.getUser();
+
     this.create = true;
   }
 
@@ -88,6 +90,15 @@ export class PatientFormComponent implements OnInit {
     console.log(patient.nurses);
     patient.nurses = patient.nurses.map(id => '/api/users/' + id);
 
+    if (patient.gender === 'Homme') {
+      const id = Math.floor(Math.random() * 100);
+      const pictureId = id + '.jpg';
+      patient.avatar = 'http://randomuser.me/api/portraits/men/' + pictureId;
+    } else {
+      const id = Math.floor(Math.random() * 100);
+      const pictureId = id + '.jpg';
+      patient.avatar = 'http://randomuser.me/api/portraits/women/' + pictureId;
+    }
 
 
     // si on a un patient (édition)

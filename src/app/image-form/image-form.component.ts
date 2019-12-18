@@ -6,6 +6,7 @@ import { InterventionService } from './../services/intervention.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-image-form',
@@ -45,7 +46,12 @@ export class ImageFormComponent implements OnInit {
         intervention: '/api/interventions/' + this.intervention.id
       });
     });
-
+    this.create = false;
+    // Création de la date du jour par défaut
+    const today = new Date();
+    this.imageForm.patchValue({
+      date: moment(today).format('YYYY-MM-DD')
+    });
   }
 
   public handleSubmit() {

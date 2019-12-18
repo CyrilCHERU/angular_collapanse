@@ -1,78 +1,81 @@
 <div class="row justify-content-center" *ngIf="!patients">
-  <div class="col-4 alert alert-info mt-150">
+  <div class="col-4 alert alert-info mt-200 text-center">
     <p>... Chargement en cours ....</p>
   </div>
 </div>
-<div class="row justify-content-center" *ngIf="deleteMsg">
-  <div class="col-3 alert alert-success mt-150 text-center">
-    <p>... Ce patient a été supprimé ....</p>
-  </div>
-</div>
-<div *ngIf="patients !='' ">
-
-  <div class="row m-4">
-
-    <h1>Liste de vos patients</h1>
-  </div>
-  <div class="row m-5 justify-content-center" *ngIf="patients">
-    <table class="table table-stripped">
-      <thead class="thead-dark">
-        <tr>
-          <th scope="col">Patient</th>
-          <th scope="col">Date de Naissance</th>
-          <th scope="col">Adresse</th>
-          <th scope="col">Médecin</th>
-          <th scope="col">Infirmier(e)s</th>
-          <th scope="col">Soin(s)</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let p of patients | paginate: currentPage:itemsPerPage">
-          <td>
-            <a routerLink="/patients/{{ p.id }}">{{ p.fullName }}</a>
-          </td>
-          <td class="text-center">{{ p.birthDate | date:"dd/MM/yyyy" }}</td>
-          <td>{{ p.address1 }}
-            {{ p.address2 }}
-            {{ p.zipCode }}
-            {{ p.city }}
-          </td>
-          <td>Dr
-            {{ p.doctor.lastName }}
-            {{ p.doctor.firstName }}
-          </td>
-          <td>
-            <p *ngFor="let n of p.nurses">
-              {{ n.lastName}}
-              {{ n.firstName}}</p>
-          </td>
-          <td class="text-center">{{ p.cares.length }}</td>
-          <td class="text-center">
-            <button class="btn btn-info mr-2">
-              <a routerLink="/patients/{{ p.id }}">
-                <i class="far fa-eye text-light"></i>
-              </a>
-            </button>
-            <button class="btn btn-warning mr-2">
-              <a routerLink="/patients/{{ p.id }}/edit">
-                <i class="far fa-edit text-light"></i>
-              </a>
-            </button>
-            <button class="btn btn-danger" (click)="remove(p.id)">
-              <i class="fas fa-trash text-light"></i>
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    <app-bootstrap-pagination [items]="patients" [currentPage]="currentPage" [itemsPerPage]="itemsPerPage"
-      (pageChanged)="handlePageChanged($event)">Coco</app-bootstrap-pagination>
-
-    <div class="col-6 text-center alert alert-warning mt-5" *ngIf="!patients">
-      <div class="row justify-content-center">
-        Désolé, vous n'avez encore aucun
-        patient enregistré en base de données ;(</div>
+<div class="container-fluid" *ngIf="patients">
+  <div class="row justify-content-center" *ngIf="deleteMsg">
+    <div class="col-3 alert alert-success mt-150 text-center">
+      <p>... Ce patient a été supprimé ....</p>
     </div>
   </div>
+  <div *ngIf="patients">
+
+    <div class="row m-4 alert alert-light justify-content-between">
+      <h1 class="alert-title">Liste de vos patients</h1>
+      <a routerLink="/patients/nouveau" class="btn btn-primary mt-4"><i class="fas fa-plus"> Nouveau patient</i></a>
+    </div>
+    <div class="row m-5 justify-content-center" *ngIf="patients">
+      <table class="table table-stripped">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">Patient</th>
+            <th scope="col">Date de Naissance</th>
+            <th scope="col">Adresse</th>
+            <th scope="col" class="d-xs-none">Médecin</th>
+            <th scope="col" class="d-xs-none">Infirmier(e)s</th>
+            <th scope="col" class="d-xs-none">Soin(s)</th>
+            <th class="d-xs-none"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let p of patients | paginate: currentPage:itemsPerPage">
+            <td>
+              <a routerLink="/patients/{{ p.id }}">{{ p.fullName }}</a>
+            </td>
+            <td class="text-center">{{ p.birthDate | date:"dd/MM/yyyy" }}</td>
+            <td>{{ p.address1 }}
+              {{ p.address2 }}
+              {{ p.zipCode }}
+              {{ p.city }}
+            </td>
+            <td class="d-xs-none">Dr
+              {{ p.doctor.lastName }}
+              {{ p.doctor.firstName }}
+            </td>
+            <td class="d-xs-none">
+              <p *ngFor="let n of p.nurses">
+                {{ n.lastName}}
+                {{ n.firstName}}</p>
+            </td>
+            <td class="text-center d-xs-none">{{ p.cares.length }}</td>
+            <td class="text-center d-xs-none">
+              <button class="btn btn-info mr-2">
+                <a routerLink="/patients/{{ p.id }}">
+                  <i class="far fa-eye text-light"></i>
+                </a>
+              </button>
+              <button class="btn btn-warning mr-2">
+                <a routerLink="/patients/{{ p.id }}/edit">
+                  <i class="far fa-edit text-light"></i>
+                </a>
+              </button>
+              <button class="btn btn-danger" (click)="remove(p.id)">
+                <i class="fas fa-trash text-light"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <app-bootstrap-pagination [items]="patients" [currentPage]="currentPage" [itemsPerPage]="itemsPerPage"
+        (pageChanged)="handlePageChanged($event)"></app-bootstrap-pagination>
+
+      <div class="col-6 text-center alert alert-warning mt-5" *ngIf="!patients">
+        <div class="row justify-content-center">
+          Désolé, vous n'avez encore aucun
+          patient enregistré en base de données ;(</div>
+      </div>
+    </div>
+  </div>
+
 </div>

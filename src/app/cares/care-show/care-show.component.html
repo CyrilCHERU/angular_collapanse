@@ -22,17 +22,19 @@
       <a routerLink="/soins/{{ care.id }}/interventions/nouveau" class="btn btn-info">
         Ajouter une intervention
       </a>
-      <br>
-      <a routerLink="/patients/{{ care.patient.id }}/suivi" class="btn btn-success mt-2">Liste des soins</a>
+
       <br>
       <a routerLink="/patients" class="btn btn-primary mt-2">Liste des patients</a>
+      <br>
+      <a routerLink="/patients/{{ care.patient.id }}/suivi" class="btn btn-success mt-2">Liste des soins</a>
     </div>
     <div class="col-6">
       <div class="d-flex justify-content-between">
         <h2>Liste des interventions: ({{ care.interventions.length }})</h2>
       </div>
       <hr>
-      <div class="card border-light mb-3" style="width: 100%;" *ngFor="let inter of care.interventions">
+      <div class="card border-light mb-3" style="width: 100%;"
+        *ngFor="let inter of care.interventions | paginate: currentPage:itemsPerPage">
         <div class="d-flex card-header justify-content-between">
           <strong>{{ inter.date  | date:"dd/MM/yyyy" }}</strong>
           <p>Nombre d'image(s) :
@@ -64,6 +66,8 @@
           </div>
         </div>
       </div>
+      <app-bootstrap-pagination [items]="care.interventions" [currentPage]="currentPage" [itemsPerPage]="itemsPerPage"
+        (pageChanged)="handlePageChanged($event)"></app-bootstrap-pagination>
     </div>
   </div>
 </div>

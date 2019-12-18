@@ -1,15 +1,15 @@
 <div class="background">
-  <div class="container" *ngIf="patient || create == true">
-    <div class="row justify-content-center" *ngIf="!patient">
+  <div class="container" *ngIf="!patient || create">
+    <div class="row justify-content-center" *ngIf="!create">
       <div class="col-4 alert alert-info mt-200 text-center">
         <p>... Chargement en cours ....</p>
       </div>
     </div>
-    <div>
+    <div *ngIf="patient || create === true">
       <h1 *ngIf="!patient">Création d'un nouveau patient</h1>
-      <h1 *ngIf="patient">Modification de le fiche patient</h1>
+      <h1 *ngIf="patient">Modification de la fiche patient</h1>
     </div>
-    <form [formGroup]="patientForm" (ngSubmit)="handleSubmit()" class="rounded" *ngIf="start!=false">
+    <form [formGroup]="patientForm" (ngSubmit)="handleSubmit()" class="rounded" *ngIf="create">
       <div class="row">
         <div class="alert alert-danger" *ngIf="error">
           <p>Une Erreur est survenue, Merci de réessayer plus tard ;)</p>

@@ -1,5 +1,5 @@
 <div class="container" *ngIf="intervention || create === true">
-  <div class="alert alert-light">
+  <div class="alert alert-light mt-4">
     <h1 class="alert-title" *ngIf="create; else modification">
       {{ care.patient.fullName}} - <em class="moreSmall">Nouvelle intervention :</em>
     </h1>
@@ -12,28 +12,12 @@
 
 
 <div class="container">
-  <div class="row m-4" *ngIf="intervention">
-    <div class="row d-flex flex-column mt-3">
-      <div class="col align-self-start heigth-40" *ngIf="create; else modification">
-        <h1>{{ care.patient.fullName}} - <em class="moreSmall">Nouvelle intervention :</em>
-        </h1>
-      </div>
-      <ng-template #modification>
-        <h1>{{ care.patient.fullName}} - <em class="moreSmall">Modifier une intervention :</em>
-        </h1>
-      </ng-template>
-      <div class="col text-center mb-3" *ngIf="care">
-        <h4>{{ care.woundType }}</h4>
-      </div>
-    </div>
-  </div>
-
   <div class="row justify-content-center" *ngIf="intervention || create">
     <div class="col-8">
       <form [formGroup]="interForm" (ngSubmit)="handleSubmit()">
         <div class="form-group">
           <label for="">Date</label>
-          <input type="date" formControlName="date" id="" class="form-control col-4"
+          <input type="date" formControlName="date" class="form-control col-4"
             [class.is-invalid]="(interForm.getError('validation', 'date') || interForm.getError('required', 'date')) && isSubmited">
           <p class="invalid-feedback" *ngIf="interForm.getError('required', 'date')">
             Ce champ est requis !
@@ -42,7 +26,7 @@
             {{ error }}
           </p>
           <label for="">Commentaire</label>
-          <textarea formControlName="comment" id="" class="form-control" cols="30" rows="10"
+          <textarea formControlName="comment" class="form-control" cols="30" rows="10"
             placeholder="Ici, votre commentaire"
             [class.is-invalid]="(interForm.getError('validation', 'comment') || interForm.getError('required', 'comment')) && isSubmited"></textarea>
           <p class="invalid-feedback" *ngIf="interForm.getError('required', 'comment')">
@@ -53,7 +37,6 @@
           </p>
         </div>
         <!--button class="btn btn-warning" *ngIf="!plus" (click)="removeButton()">Ajouter une image</button-->
-
         <ng-container>
           <app-image-form *ngIf="plus"></app-image-form>
         </ng-container>

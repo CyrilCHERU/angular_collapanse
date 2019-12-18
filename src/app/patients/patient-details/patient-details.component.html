@@ -27,19 +27,27 @@
         </span>
       </div>
       <hr>
-
-      <div class="col-4 float-left">
-        <img class="rounded-circle" src="http://avatars.io/twitter/{{ patient.firstName }}/medium" alt="avatar">
+      <div class="row">
+        <div class="col-4">
+          <img src="{{ patient.avatar }}" alt="" class="rounded-circle">
+        </div>
+        <div class="col-6">
+          <strong>{{ patient.lastName | uppercase }} {{ patient.firstName }} </strong> ({{ patient.gender }}) <br>
+          <p *ngIf=" patient.gender==='Homme'">Né le {{ patient.birthDate | date: 'dd/MM/yyyy' }}</p>
+          <p *ngIf=" patient.gender==='Femme'">Née le {{ patient.birthDate | date: 'dd/MM/yyyy' }}</p>
+          <p><i class=" fas fa-map-marker-alt"></i> {{ patient.address1 }}</p><br>
+          <p *ngIf="patient.address2">{{ patient.address2 }}</p><br>
+          <p>{{ patient.zipCode }} {{ patient.city }}</p>
+          <p>
+            <i class="fas fa-phone"></i>
+            {{ patient.phone }}</p>
+          <p>
+            <i class="fas fa-at"></i>
+            {{ patient.email }}</p>
+        </div>
 
       </div>
-      <div class="col-4">
-        <strong>{{ patient.lastName | uppercase }} {{ patient.firstName }} </strong> ({{ patient.gender }}) <br>
-        <p *ngIf="patient.gender === 'Homme'">Né le {{ patient.birthDate | date: 'dd/MM/yyyy' }}</p>
-        <p *ngIf="patient.gender === 'Femme'">Née le {{ patient.birthDate | date: 'dd/MM/yyyy' }}</p>
-      </div>
-      <p>{{ patient.address1 }}</p><br>
-      <p *ngIf="patient.address2">{{ patient.address2 }}</p><br>
-      <p>{{ patient.zipCode }} {{ patient.city }}</p>
+
     </div>
     <div class="col-6">
       <div class="d-flex justify-content-between">

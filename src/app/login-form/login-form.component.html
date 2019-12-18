@@ -1,4 +1,11 @@
 <div class="background mt-150">
+  <div class="row justify-content-center">
+    <div class="col-4">
+      <div class="alert alert-danger text-center" *ngIf="hasError">L'email et/ou le mot de passe ne sont pas valides :(
+        !</div>
+    </div>
+  </div>
+
   <div class="m-5">
     <div class="row justify-content-center">
       <div class="col-4 bkg rounded minH">

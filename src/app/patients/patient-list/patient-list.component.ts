@@ -4,7 +4,7 @@ import { PatientService } from '../../services/patient.service';
 import { Patient } from '../../Models/patient';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { userInfo } from 'os';
+
 
 @Component({
   selector: 'app-patient-list',

@@ -1,4 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
+import * as moment from 'moment';
 
 @Pipe({
   name: 'age'
@@ -13,20 +14,9 @@ export class AgePipe implements PipeTransform {
    */
   transform(date: any): any {
 
+    const age = moment(date, 'YYYYMMDD').fromNow(); // il y a 7 ans
 
-    date = date.split('/');
-    const birthMonth = date[1] - 1; // (les mois commencent à 0)
-    const birthDay = date[0];
-    const now = new Date();
-    const nowMonth = now.getMonth();
-    const nowDay = now.getDate();
-    let age = now.getFullYear() - date[2];
-
-    // Si la date d'anniversaire n'est pas encore passée, on corrige l'age
-    if (nowMonth < birthMonth || nowMonth === birthMonth && nowDay < birthDay) {
-      age--;
-    }
-    return age;
+    return age.substr(0, 2);
 
   }
 }

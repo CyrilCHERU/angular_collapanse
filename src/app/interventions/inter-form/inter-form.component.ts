@@ -8,6 +8,7 @@ import { Intervention } from '../../Models/intervention';
 import { Component, OnInit } from '@angular/core';
 import { Care } from '../../Models/care';
 import { InterventionService } from '../../services/intervention.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-inter-form',
@@ -64,12 +65,14 @@ export class InterFormComponent implements OnInit {
         // Si on a un interId, il faut récupérer le soin et le patient
         this.care = this.intervention.care;
         this.patient = this.care.patient;
-        console.log(this.patient);
-
-
       });
     }
 
+    // Création de la date du jour par défaut
+    const today = new Date();
+    this.interForm.patchValue({
+      date: moment(today).format('YYYY-MM-DD')
+    });
   }
 
   public handleSubmit() {
@@ -83,11 +86,8 @@ export class InterFormComponent implements OnInit {
       return;
     }
 
-
-    console.log(this.interForm.value);
     const updatedInter = this.interForm.value;
 
-    console.log(updatedInter);
     if (this.intervention) {
       updatedInter.id = this.intervention.id;
       this.interService.update(updatedInter).subscribe(this.onSuccess, this.onError);

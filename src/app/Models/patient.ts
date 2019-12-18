@@ -1,5 +1,5 @@
 import { Care } from './care';
-import { User } from './user';
+
 
 export interface Patient {
 
@@ -18,5 +18,6 @@ export interface Patient {
   nurses: string[];
   cares: Care[];
   fullName: string;
+  avatar: string;
 }
 

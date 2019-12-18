@@ -13,6 +13,8 @@ export class CareShowComponent implements OnInit {
 
   result: any;
   care: Care;
+  itemsPerPage = 1;
+  currentPage = 1;
 
   constructor(
     private route: ActivatedRoute,
@@ -29,5 +31,9 @@ export class CareShowComponent implements OnInit {
 
   public remove(id: number) {
     this.interService.delete(id).subscribe(response => this.result = response);
+  }
+
+  handlePageChanged(page: number) {
+    this.currentPage = page;
   }
 }

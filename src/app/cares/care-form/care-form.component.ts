@@ -16,7 +16,7 @@ import * as moment from 'moment';
 export class CareFormComponent implements OnInit {
 
   error = false;
-  create: boolean;
+  create = true;
 
   patients: Patient[] = [];
   patient: Patient;
@@ -44,9 +44,13 @@ export class CareFormComponent implements OnInit {
       const patientId = +url[1];
       this.patientService.find(patientId).subscribe(patient => {
         this.patient = patient;
-        this.create = true;
+        //this.create = false;
+        this.careForm.patchValue({
+          patient: this.patient.id
+        });
+        console.log(this.careForm.value);
       });
-    } else if (url[0].path === 'soins') {
+    } else if (url[0].path === 'soins' && url[1].path !== 'nouveau') {
       const careId = +url[1];
       this.careService.find(careId).subscribe(care => {
         this.care = care;
@@ -61,38 +65,35 @@ export class CareFormComponent implements OnInit {
           createdAt: this.care.createdAt.substr(0, 10)
         });
 
-        this.careForm.patchValue({
-          createdAt: moment(Date.now()).format('YYYY-MM-DD')
-        })
-
         // Si on a un careId, il faut récupérer le patient
         this.patient = this.care.patient;
-        console.log(this.patient);
 
+      });
+
+    } else if (url[0].path === 'soins' && url[1].path === 'nouveau') {
+      this.patientService.findAll().subscribe(response => {
+        this.patients = response;
+        console.log(response);
       });
     }
 
     // Création de la date du jour par défaut
-    // const todayDate = new Date();
-    // todayDate = Date.now();
-
-
-    // Sinon récupération de tous les patients de l'utilisateur
-    // this.patientService.findAll().subscribe(response => this.patients = response);
-    // this.careForm.patchValue({
-    //   createdAt: moment().format('YYYY-MM-dd')
-    // });
+    const today = new Date();
+    this.careForm.patchValue({
+      createdAt: moment(today).format('YYYY-MM-DD')
+    });
   }
 
   public handleSubmit() {
-    console.log(this.care, this.patient);
-    this.careForm.patchValue({
-      patient: '/api/patients/' + this.patient.id
-    });
-
     this.careForm.markAllAsTouched();
     if (this.careForm.invalid) {
       return;
+    }
+
+    if (this.patient) {
+      this.careForm.patchValue({
+        patient: '/api/patients/' + this.patient.id
+      });
     }
 
     const updatedCare = this.careForm.value;
@@ -106,13 +107,14 @@ export class CareFormComponent implements OnInit {
       return;
     }
 
+    updatedCare.patient = updatedCare.patient;
     this.careService.createCare(updatedCare).subscribe(this.onSuccess, this.onError);
   }
 
   private onSuccess = (updatedCare: Care) => {
     const patientId = +updatedCare.patient.id;
     this.error = false;
-    this.router.navigateByUrl('/patients/' + this.patient.id + '/suivi');
+    this.router.navigateByUrl('/patients/' + patientId + '/suivi');
   }
 
   private onError = (httpError: HttpErrorResponse) => {

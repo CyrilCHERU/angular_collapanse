@@ -19,14 +19,15 @@
       <a routerLink="/interventions/{{ intervention.id }}/edition" class="btn btn-warning">
         Modifier
       </a>
-      <br>
-      <button class="btn btn-danger mt-2 text-light" (click)="remove(intervention.id)">
+      <button class="btn btn-danger ml-2 text-light" (click)="remove(intervention.id)">
         Supprimer
       </button>
       <br>
       <a routerLink="/interventions/{{ intervention.id }}/images/ajout" class="btn btn-primary mt-2" *ngIf="!plus">
         Ajouter une image
       </a>
+      <br>
+      <a routerLink="/soins/suivi/{{ intervention.care.id }}/detail" class="btn btn-info mt-2">Retour Fiche Soin</a>
 
     </div>
     <div class="col-8">
@@ -41,8 +42,8 @@
     </div>
   </div>
   <div class="mb-5">
-    <div class="col mb-3" *ngFor="let image of intervention.images">
-      <div class="card" style="width: 18rem;">
+    <div class="row mb-3">
+      <div class="card ml-2" style="width: 18rem;" *ngFor="let image of intervention.images">
         <div class="card-title p-3">
           <h5 class="card-title">
             <strong>Légende :</strong>
