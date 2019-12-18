@@ -22,6 +22,7 @@ export class CareFormComponent implements OnInit {
   patient: Patient;
 
   care: Care;
+  isSubmited = false;
 
   careForm = new FormGroup({
     createdAt: new FormControl('', Validators.required),
@@ -85,6 +86,7 @@ export class CareFormComponent implements OnInit {
   }
 
   public handleSubmit() {
+    this.isSubmited = true;
     this.careForm.markAllAsTouched();
     if (this.careForm.invalid) {
       return;
@@ -107,13 +109,14 @@ export class CareFormComponent implements OnInit {
       return;
     }
 
-    updatedCare.patient = updatedCare.patient;
+    updatedCare.patient = '/api/patients/' + updatedCare.patient;
     this.careService.createCare(updatedCare).subscribe(this.onSuccess, this.onError);
   }
 
   private onSuccess = (updatedCare: Care) => {
     const patientId = +updatedCare.patient.id;
     this.error = false;
+    //this.router.navigateByUrl('/cares/' + updatedCare.id);
     this.router.navigateByUrl('/patients/' + patientId + '/suivi');
   }
 
