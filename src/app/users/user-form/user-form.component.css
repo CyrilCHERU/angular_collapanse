@@ -1,0 +1,14 @@
+.background {
+
+  background-image: url('../../../assets/img/bkg/bkg-register.jpg');
+  background-repeat: no-repeat;
+  background-position: top;
+  background-size: 80% 80%;
+  padding: 20px;
+  /* min-height: 600px; */
+}
+
+form {
+  background-color: rgba(255, 255, 255, 0.6);
+  padding: 30px;
+}

@@ -5,7 +5,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Patient } from '../../Models/patient';
 import { PatientService } from '../../services/patient.service';
 import { Component, OnInit } from '@angular/core';
-import { HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse, HttpRequest } from '@angular/common/http';
 import * as moment from 'moment';
 
 @Component({
@@ -17,6 +17,7 @@ export class CareFormComponent implements OnInit {
 
   error = false;
   create = true;
+  result: any;
 
   patients: Patient[] = [];
   patient: Patient;
@@ -94,7 +95,7 @@ export class CareFormComponent implements OnInit {
 
     if (this.patient) {
       this.careForm.patchValue({
-        patient: '/api/patients/' + this.patient.id
+        patient: this.patient.id
       });
     }
 
@@ -114,10 +115,10 @@ export class CareFormComponent implements OnInit {
   }
 
   private onSuccess = (updatedCare: Care) => {
-    const patientId = +updatedCare.patient.id;
+    const newCareId = updatedCare.id;
     this.error = false;
-    //this.router.navigateByUrl('/cares/' + updatedCare.id);
-    this.router.navigateByUrl('/patients/' + patientId + '/suivi');
+
+    this.router.navigateByUrl('/soins/suivi/' + newCareId + '/detail');
   }
 
   private onError = (httpError: HttpErrorResponse) => {

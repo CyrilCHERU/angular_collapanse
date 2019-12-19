@@ -26,11 +26,18 @@ export class UserService {
       );
   }
 
+  public find(id: number) {
+    return this.http.get<User>('http://localhot:8000/api/users')
+      .pipe(
+        map(response => response['hydra:member'] as User)
+      );
+  }
+
   public findAllDoctors() {
     return this.http.get<Professional>('http://localhost:8000/api/users')
       .pipe(
         map((response: Professional) => response['hydra:member'] as Professional[]),
-        map(professionals => professionals.filter(pro => pro.jobTitle === "Docteur"))
+        map(professionals => professionals.filter(pro => pro.jobTitle === 'Docteur'))
       )
       ;
   }
@@ -39,7 +46,7 @@ export class UserService {
     return this.http.get<Professional>('http://localhost:8000/api/users')
       .pipe(
         map(response => response['hydra:member'] as Professional[]),
-        map(professionals => professionals.filter(pro => pro.jobTitle === "Infirmier(e)"))
+        map(professionals => professionals.filter(pro => pro.jobTitle === 'Infirmier(e)'))
       );
   }
 

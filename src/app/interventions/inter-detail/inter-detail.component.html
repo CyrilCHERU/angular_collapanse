@@ -1,13 +1,13 @@
 <div class="container mb-5" *ngIf="intervention">
   <div class="row justify-content-center" *ngIf="!intervention">
-    <div class="col-2 alert alert-info mt-200 text-center">
+    <div class="col-2 alert alert-info mt-200 text-center animated flip">
       <p>... Chargement en cours ....</p>
     </div>
   </div>
   <div class="col mt-5 mb-5 alert alert-light">
     <div class="alert alert-light">
       <h1 class="alert-title">{{ intervention.care.patient.fullName }}</h1>
-      <br>
+      <hr>
       <h3>Détails de l'intervention du :
         {{ intervention.date | date:"dd/MM/yyyy"}}</h3>
     </div>
@@ -16,16 +16,14 @@
     <div class="col-4">
       <h3>Plaie</h3>
       <hr>
-      <a routerLink="/interventions/{{ intervention.id }}/edition" class="btn btn-warning">
+      <strong class="alert-title">{{ intervention.care.woundType }}</strong>
+      <br>
+      <a routerLink="/interventions/{{ intervention.id }}/edition" class="btn btn-warning mt-2">
         Modifier
       </a>
-      <button class="btn btn-danger ml-2 text-light" (click)="remove(intervention.id)">
+      <button class="btn btn-danger mt-2 ml-2 text-light" (click)="remove(intervention.id)">
         Supprimer
       </button>
-      <br>
-      <a routerLink="/interventions/{{ intervention.id }}/images/ajout" class="btn btn-primary mt-2" *ngIf="!plus">
-        Ajouter une image
-      </a>
       <br>
       <a routerLink="/soins/suivi/{{ intervention.care.id }}/detail" class="btn btn-info mt-2">Retour Fiche Soin</a>
 
@@ -36,10 +34,12 @@
       <p>{{ intervention.comment }}</p>
     </div>
   </div>
-  <div class="row mt-3 justify-content-arround" *ngIf="intervention.images">
-    <div class="col alert alert-light">
-      <h2 class="thead-dark alert-light">Image(s) :</h2>
-    </div>
+  <div class="row mt-3 alert alert-light justify-content-between" *ngIf="intervention.images">
+    <h2 class="thead-dark alert-light">Image(s) :</h2>
+    <a routerLink="/interventions/{{ intervention.id }}/images/ajout" class="btn btn-primary mt-2" *ngIf="!plus">
+      <i class="fas fa-plus"></i>
+      Ajouter une image
+    </a>
   </div>
   <div class="mb-5">
     <div class="row mb-3">

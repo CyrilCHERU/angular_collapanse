@@ -1,10 +1,9 @@
 <div class="container" *ngIf="intervention">
   <div class="row">
-
   </div>
   <div class="row m-4" *ngIf="intervention">
     <div class="row d-flex flex-column mt-3">
-      <div class="col align-self-start alert alert-light" *ngIf="create; else add">
+      <div class="col align-self-start alert alert-light" *ngIf="create">
         <h1 class="alert-title">Vous allez ajouter une image pour {{ patient }}</h1>
       </div>
       <div>

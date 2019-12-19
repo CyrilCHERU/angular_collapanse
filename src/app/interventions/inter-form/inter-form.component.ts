@@ -1,3 +1,4 @@
+import { PatientService } from './../../services/patient.service';
 import { Image } from '../../Models/image';
 import { Patient } from '../../Models/patient';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -25,6 +26,7 @@ export class InterFormComponent implements OnInit {
   intervention: Intervention;
   care: Care;
   patient: Patient;
+  patients: Patient[] = [];
   images: Image[] = [];
 
   interForm = new FormGroup({
@@ -38,6 +40,7 @@ export class InterFormComponent implements OnInit {
     private route: ActivatedRoute,
     private careService: CareService,
     private interService: InterventionService,
+    private patientService: PatientService,
     private router: Router) { }
 
   ngOnInit() {
@@ -51,7 +54,7 @@ export class InterFormComponent implements OnInit {
         this.create = true;
         console.log(care);
       });
-    } else if (url[0].path === 'interventions') {
+    } else if (url[0].path === 'interventions' && url[1].path !== 'nouveau') {
       const interId = +url[1];
       this.interService.find(interId).subscribe(intervention => {
         this.intervention = intervention;
@@ -65,6 +68,12 @@ export class InterFormComponent implements OnInit {
         // Si on a un interId, il faut récupérer le soin et le patient
         this.care = this.intervention.care;
         this.patient = this.care.patient;
+      });
+    }
+    else if (url[0].path === 'soins' && url[1].path === 'nouveau') {
+      this.patientService.findAll().subscribe(response => {
+        this.patients = response;
+        console.log(response);
       });
     }
 
@@ -99,8 +108,9 @@ export class InterFormComponent implements OnInit {
   }
 
   private onSuccess = (updatedInter: Intervention) => {
+    const newInterId = updatedInter.id;
     this.error = false;
-    this.router.navigateByUrl('/soins/suivi/' + this.care.id + '/detail');
+    this.router.navigateByUrl('/interventions/' + newInterId + '/detail');
   }
 
   private onError = (httpError: HttpErrorResponse) => {

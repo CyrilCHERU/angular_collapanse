@@ -37,4 +37,8 @@ export class PatientDetailsComponent implements OnInit {
     alert('Au click, on efface');
   }
 
+  removeCare(id: number) {
+    alert('click');
+  }
+
 }

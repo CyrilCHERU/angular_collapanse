@@ -1,77 +1,123 @@
 <div class="row justify-content-center" *ngIf="!patient">
-  <div class="col-4 alert alert-info mt-200 text-center">
+  <div class="col-4 alert alert-info mt-200 text-center animated flip">
     <p>... Chargement en cours ....</p>
   </div>
 </div>
-<div class="container" *ngIf="patient">
-
-  <div class="alert alert-light mt-3">
-    <h1 class="alert-title">{{ patient.lastName | uppercase }} {{patient.firstName }} ({{ patient.birthDate | age }}
-      ans)
-    </h1>
-  </div>
-  <div class="row">
-    <div class="col-6">
-      <div class="d-flex justify-content-between">
-        <h2>Informations</h2>
-        <span class="float-right">
-          <a routerLink="/patients" class="btn btn-info">
-            <i class="fas fa-backward"></i>
-          </a>
-          <a [routerLink]="['edit']" class="btn btn-warning  ml-2 mr-2">
-            <i class="far fa-edit text-light"></i>
-          </a>
-          <button class="btn btn-danger" (click)="removePatient(patient.id)">
-            <i class="fas fa-trash text-light"></i>
-          </button>
-        </span>
-      </div>
-      <hr>
+<div *ngIf="patient">
+  <div class="container-fluid">
+    <!-- Header -->
+    <div class="header pb-8 pt-2 pt-lg-2 d-flex align-items-center"
+      style="min-height: 200px; background-size: cover; background-position: center top;">
+      <!-- Mask -->
+      <span class="mask bg-gradient-default opacity-8"></span>
+    </div>
+    <!-- Page content -->
+    <div class=" mt--7">
       <div class="row">
-        <div class="col-4">
-          <img src="{{ patient.avatar }}" alt="" class="rounded-circle">
+        <div class="col-xl-3 mb-5 mb-xl-0">
+          <div class="card card-profile shadow">
+            <div class="row justify-content-center">
+              <div class="col-lg-3 order-lg-2">
+                <div class="card-profile-image">
+                  <a href="#">
+                    <img src="{{ patient.avatar }}" class="rounded-circle">
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
+
+            </div>
+            <div class="card-body pt-0 pt-md-4">
+              <div class="row">
+                <div class="col">
+                  <div class="card-profile-stats d-flex justify-content-center mt-md-5">
+                    <div>
+                      <span class="heading">{{ patient.cares.length }}</span>
+                      <span class="description">Soin(s)</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="text-center">
+                <h3>
+                  {{ patient.fullName }}<span class="font-weight-light">, {{ patient.birthDate | age }} ans</span>
+                </h3>
+                <div class="h5 font-weight-300">
+                  <p *ngIf=" patient.gender==='Homme'">Né le {{ patient.birthDate | date: 'dd/MM/yyyy' }}</p>
+                  <p *ngIf=" patient.gender==='Femme'">Née le {{ patient.birthDate | date: 'dd/MM/yyyy' }}</p>
+                  <i class="ni location_pin mr-2"></i>{{ patient.address1 }} <br> {{ patient.address2 }} <br>
+                  {{ patient.zipCode }} - {{ patient.city }}
+                </div>
+                <div class="h5 mt-4">
+                  <i class="fas fa-phone"></i> {{ patient.phone }}
+                </div>
+                <div>
+                  <i class="fas fa-at"></i> {{ patient.email }}
+                </div>
+                <hr class="my-4" />
+
+                <a href="#">Modifier</a>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="col-6">
-          <strong>{{ patient.lastName | uppercase }} {{ patient.firstName }} </strong> ({{ patient.gender }}) <br>
-          <p *ngIf=" patient.gender==='Homme'">Né le {{ patient.birthDate | date: 'dd/MM/yyyy' }}</p>
-          <p *ngIf=" patient.gender==='Femme'">Née le {{ patient.birthDate | date: 'dd/MM/yyyy' }}</p>
-          <p><i class=" fas fa-map-marker-alt"></i> {{ patient.address1 }}</p><br>
-          <p *ngIf="patient.address2">{{ patient.address2 }}</p><br>
-          <p>{{ patient.zipCode }} {{ patient.city }}</p>
-          <p>
-            <i class="fas fa-phone"></i>
-            {{ patient.phone }}</p>
-          <p>
-            <i class="fas fa-at"></i>
-            {{ patient.email }}</p>
+        <div class="col-xl-4">
+          <div class="card shadow">
+            <div class="card-header border-0">
+              <div class="row align-items-center">
+                <div class="col">
+                  <h3 class="mb-0">Soin(s) et suivi</h3>
+                </div>
+              </div>
+            </div>
+            <div class="table-responsive">
+              <!-- Projects table -->
+              <table class="table align-items-center table-flush">
+                <thead class="thead-light">
+                  <tr>
+                    <th scope="col">Type de plaie</th>
+                    <th scope="col">Intervention(s)</th>
+                    <th scope="col"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let care of patient.cares">
+                    <td>
+                      {{ care.woundType }}
+                    </td>
+                    <td>
+                      <div class="d-flex align-items-center">
+                        <span class="mr-2">{{ care.interventions.length }}</span>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="dropdown">
+                        <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown"
+                          aria-haspopup="true" aria-expanded="false">
+                          <i class="fas fa-ellipsis-v"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                          <a routerLink="/soins/suivi/{{ care.id }}/detail" class="dropdown-item">
+                            <i class="far fa-eye text-light"></i> Voir le soin
+                          </a>
+                          <a routerLink="/soins/{{ care.id }}/edit" class="dropdown-item">
+                            <i class="far fa-edit text-light"></i> Modifier le soin
+                          </a>
+                          <button class="dropdown-item" (click)="removeCare(care.id)">
+                            <i class="fas fa-trash text-light"></i> Supprimer ce soin
+                          </button>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
 
       </div>
 
-    </div>
-    <div class="col-6">
-      <div class="d-flex justify-content-between">
-        <h2 class="">Soin(s) et suivi</h2>
-        <span class="float-right">
-          <a routerLink="/patients/{{ patient.id }}/soins/nouveau" class="btn btn-success">
-            <i class="fas fa-plus">
-              Ajouter un soin</i>
-          </a>
-        </span>
-      </div>
-
-      <hr>
-      <table class="table table-hover">
-        <tbody>
-          <tr *ngFor="let c of patient?.cares">
-            <td class="border-top-0 border-bottom">{{ c.woundType }}</td>
-            <td class="border-top-0 border-bottom">{{ c.createdAt | date:"dd/MM/yyyy" }}</td>
-            <td class="border-top-0 border-bottom">
-              <a routerLink="/soins/suivi/{{ c.id }}/detail" class="btn btn-info"><i class="fas fa-eye"></i></a>
-            </td>
-          </tr>
-        </tbody>
-      </table>
     </div>
   </div>
-</div>

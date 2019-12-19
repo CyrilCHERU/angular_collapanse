@@ -19,7 +19,7 @@ export class PatientListComponent implements OnInit {
   result: any;
   patients: Patient[] = [];
 
-  itemsPerPage = 6;
+  itemsPerPage = 5;
   currentPage = 1;
 
   constructor(
@@ -44,9 +44,14 @@ export class PatientListComponent implements OnInit {
   }
 
   remove(id: number) {
-    this.patientService.remove(id).subscribe(response => console.log(response));
-    this.deleteMsg = true;
-    this.router.navigateByUrl('/patients');
+    console.log(this.patients);
+    this.patientService.remove(id).subscribe(response => {
+      this.result = response;
+      const deletePatientId = this.patients.findIndex(patient => patient.id === id);
+      this.patients.splice(deletePatientId, 1);
+    });
+
+    console.log(this.patients);
   }
 
 }

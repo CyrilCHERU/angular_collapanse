@@ -1,3 +1,5 @@
+import { UserEditComponent } from './users/user-edit/user-edit.component';
+import { UserPasswordEditComponent } from './users/user-password-edit/user-password-edit.component';
 import { AuthGuard } from './authentication/auth.guard';
 import { ImageFormComponent } from './image-form/image-form.component';
 import { InterDetailComponent } from './interventions/inter-detail/inter-detail.component';
@@ -11,10 +13,10 @@ import { PatientFormComponent } from './patients/patient-form/patient-form.compo
 import { LoginFormComponent } from './login-form/login-form.component';
 import { PatientDetailsComponent } from './patients/patient-details/patient-details.component';
 import { PatientListComponent } from './patients/patient-list/patient-list.component';
-import { UserFormComponent } from './user-form/user-form.component';
-import { ContactFormComponent } from './contact-form/contact-form.component';
-import { InformationsComponent } from './informations/informations.component';
-import { HomepageComponent } from './homepage/homepage.component';
+import { UserFormComponent } from './users/user-form/user-form.component';
+import { ContactFormComponent } from './public_pages/contact-form/contact-form.component';
+import { InformationsComponent } from './public_pages/informations/informations.component';
+import { HomepageComponent } from './public_pages/homepage/homepage.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
@@ -41,7 +43,9 @@ const routes: Routes = [
   { path: 'interventions/nouveau', component: InterFormComponent, canActivate: [AuthGuard] },
   { path: 'interventions/:id/detail', component: InterDetailComponent, canActivate: [AuthGuard] },
   { path: 'interventions/:id/edition', component: InterFormComponent, canActivate: [AuthGuard] },
-  { path: 'interventions/:id/images/ajout', component: ImageFormComponent, canActivate: [AuthGuard] }
+  { path: 'interventions/:id/images/ajout', component: ImageFormComponent, canActivate: [AuthGuard] },
+  { path: 'profile/password/edit', component: UserPasswordEditComponent, canActivate: [AuthGuard] },
+  { path: 'profile/edit', component: UserEditComponent, canActivate: [AuthGuard] }
 ];
 
 @NgModule({

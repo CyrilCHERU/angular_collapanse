@@ -10,6 +10,7 @@ import { Care } from '../../Models/care';
 })
 export class InterListComponent implements OnInit {
 
+  result: any;
   interventions: Intervention[] = [];
 
   constructor(private interService: InterventionService) { }
@@ -19,4 +20,12 @@ export class InterListComponent implements OnInit {
 
   }
 
+  public removeInter(id: number) {
+    this.interService.delete(id).subscribe(response => {
+      this.result = response;
+      const deleteInterId = this.interventions.findIndex(inter => inter.id === id);
+      this.interventions.splice(deleteInterId, 1);
+    }
+    );
+  }
 }

@@ -10,6 +10,6 @@ export class ContactService {
   constructor(private http: HttpClient) { }
 
   sendMail(contact: Contact) {
-    return this.http.post<Contact>('http://localhost:8000/api/contact', contact);
+    return this.http.post('http://localhost:8000/api/contact', contact);
   }
 }

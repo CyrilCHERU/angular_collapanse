@@ -33,7 +33,12 @@ export class CaresPatientListComponent implements OnInit {
   }
 
   public removeCare(id: number) {
-    this.careService.delete(id).subscribe(response => this.result = response);
+    this.careService.delete(id).subscribe(response => {
+      this.result = response;
+      const deleteCareId = this.cares.findIndex(care => care.id === id);
+      this.cares.splice(deleteCareId, 1);
+    }
+    );
   }
 
 }

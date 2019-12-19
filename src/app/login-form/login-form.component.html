@@ -1,44 +1,74 @@
-<div class="background mt-150">
-  <div class="row justify-content-center">
-    <div class="col-4">
-      <div class="alert alert-danger text-center" *ngIf="hasError">L'email et/ou le mot de passe ne sont pas valides :(
-        !</div>
-    </div>
-  </div>
-
-  <div class="m-5">
-    <div class="row justify-content-center">
-      <div class="col-4 bkg rounded minH">
-        <div class="row justify-content-center">
-          <div class="col text-center">
-            <h1 class="alert alert-light">Connexion</h1>
+<div class="bg-default">
+  <div class="main-content">
+    <!-- Header -->
+    <div class="header bg-gradient-primary py-8 py-lg-8">
+      <div class="container">
+        <div class="header-body text-center mb-7">
+          <div class="row justify-content-center">
+            <div class="col-lg-5 col-md-6">
+              <h1 class="text-white">Bienvenue !</h1>
+              <p class="text-lead text-light">Utilisez vos identifiants pour vous connecter !</p>
+            </div>
           </div>
         </div>
-        <form [formGroup]="loginForm" (ngSubmit)="handleSubmit()">
-          <div class="mt-3">
-            <div class="form-group">
-              <label for="email">Votre Email</label>
-              <input type="email" formControlName="email" class="form-control"
-                [class.is-invalid]="loginForm.get('email').errors && loginForm.get('email').touched">
-              <p class="invalid-feedback" *ngIf="loginForm.getError('invalid', 'email') as error">
-                {{ error }}
-              </p>
+      </div>
+      <div class="separator separator-bottom separator-skew zindex-100">
+        <svg x="0" y="0" viewBox="0 0 2560 100" preserveAspectRatio="none" version="1.1"
+          xmlns="http://www.w3.org/2000/svg">
+          <polygon class="fill-default" points="2560 0 2560 100 0 100"></polygon>
+        </svg>
+      </div>
+    </div>
+    <!-- Page content -->
+    <div class="container mt--8 pb-8">
+      <div class="row justify-content-center">
+        <div class="col-lg-5 col-md-7">
+          <div class="card bg-secondary shadow border-0">
+            <div class="card-header bg-transparent pb-3">
+              <div class="text-dark text-center mt-2">Connexion</div>
             </div>
-            <div class="form-group">
-              <label for="password">Votre Mot de Passe</label>
-              <input type="password" formControlName="password" class="form-control"
-                [class.is-invalid]="loginForm.get('password').errors && loginForm.get('password').touched">
-              <p class="invalid-feedback" *ngIf="loginForm.getError('invalid', 'password') as error">
-                {{ error }}
-              </p>
+            <div class="card-body px-lg-5 py-lg-5">
+              <form role="form" [formGroup]="loginForm" (ngSubmit)="handleSubmit()">
+                <div class=" form-group mb-3">
+                  <div class="input-group input-group-alternative">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="ni ni-email-83"></i></span>
+                    </div>
+                    <input type="email" formControlName="email" class="form-control" placeholder="Email"
+                      [class.is-invalid]="loginForm.get('email').errors && loginForm.get('email').touched">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="input-group input-group-alternative">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
+                    </div>
+                    <input type="password" formControlName="password" class="form-control"
+                      [class.is-invalid]="loginForm.get('password').errors && loginForm.get('password').touched"
+                      placeholder="Mot de passe">
+                  </div>
+                </div>
+                <div class="custom-control custom-control-alternative custom-checkbox">
+                  <input class="custom-control-input" id=" customCheckLogin" type="checkbox">
+                  <label class="custom-control-label" for=" customCheckLogin">
+                    <span class="text-muted">Se souvenir de moi</span>
+                  </label>
+                </div>
+                <div class="text-center">
+                  <button type="submit" class="btn btn-primary my-4">Connectez-vous</button>
+                </div>
+              </form>
             </div>
           </div>
-          <div class="row mt-4">
-            <div class="col text-center">
-              <button class="btn btn-success">Connexion</button>
+          <div class="row mt-3">
+            <div class="col-6">
+              <a href="#" class="text-light"><small>Mot de passe oublié ?</small></a>
+            </div>
+            <div class="col-6 text-right">
+              <a routerLink="/inscription" class="text-light"><small>Créer un nouveau compte</small></a>
             </div>
           </div>
-        </form>
+        </div>
       </div>
     </div>
   </div>

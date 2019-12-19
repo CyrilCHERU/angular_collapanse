@@ -38,8 +38,8 @@ export class PatientFormComponent implements OnInit {
     city: new FormControl('', Validators.required),
     phone: new FormControl('', [Validators.required, Validators.minLength(10), Validators.maxLength(10)]),
     email: new FormControl('', Validators.email),
-    doctor: new FormControl(''),
-    nurses: new FormControl('')
+    doctor: new FormControl(null),
+    nurses: new FormControl(null)
   });
 
   constructor(
@@ -54,7 +54,10 @@ export class PatientFormComponent implements OnInit {
     // Récupération de la liste des professionnels
     this.userService.findAll().subscribe(response => this.users = response);
     // Récupération de tous les users doctors
-    this.userService.findAllDoctors().subscribe(response => this.doctors = response);
+    this.userService.findAllDoctors().subscribe(response => {
+      this.doctors = response;
+      console.log(response);
+    });
     // Récupération de tous les users nurses
     this.userService.findAllNurses().subscribe(response => this.nurses = response);
     // Récupération de l'id du patient (édition) sur la route

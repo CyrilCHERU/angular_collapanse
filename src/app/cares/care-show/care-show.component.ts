@@ -1,3 +1,5 @@
+import { Patient } from './../../Models/patient';
+import { PatientService } from './../../services/patient.service';
 import { InterventionService } from '../../services/intervention.service';
 import { Care } from '../../Models/care';
 import { CareService } from '../../services/care.service';
@@ -13,6 +15,7 @@ export class CareShowComponent implements OnInit {
 
   result: any;
   care: Care;
+  patient: Patient;
   itemsPerPage = 1;
   currentPage = 1;
 
@@ -20,12 +23,16 @@ export class CareShowComponent implements OnInit {
     private route: ActivatedRoute,
     private careService: CareService,
     private interService: InterventionService,
+    private patientService: PatientService,
     private router: Router) { }
 
   ngOnInit() {
     const id = +this.route.snapshot.paramMap.get('id');
 
-    this.careService.find(id).subscribe(response => this.care = response);
+    this.careService.find(id).subscribe(response => {
+      this.care = response;
+
+    });
 
   }
 

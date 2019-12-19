@@ -20,7 +20,10 @@ export class NavbarComponent implements OnInit {
 
     this.user = this.auth.getUser();
 
-    this.auth.authChanged.subscribe(status => this.isAuthenticated = status);
+    this.auth.authChanged.subscribe(status => {
+      this.isAuthenticated = status;
+      this.user = this.auth.getUser()
+    });
   }
 
   handleLogout() {

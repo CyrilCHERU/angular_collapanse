@@ -10,6 +10,7 @@ import { Component, OnInit } from '@angular/core';
 export class CareListComponent implements OnInit {
 
   cares: Care[] = [];
+  result: any;
 
   constructor(private careService: CareService) { }
 
@@ -17,4 +18,12 @@ export class CareListComponent implements OnInit {
     return this.careService.findAll().subscribe(response => this.cares = response);
   }
 
+  removeCare(id: number) {
+    this.careService.delete(id).subscribe(response => {
+      this.result = response;
+      const deleteCareId = this.cares.findIndex(care => care.id === id);
+      this.cares.splice(deleteCareId, 1);
+    }
+    );
+  }
 }

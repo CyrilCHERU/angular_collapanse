@@ -1,73 +1,126 @@
-<div class="row justify-content-center" *ngIf="!care">
-  <div class="col-2 alert alert-info mt-200 text-center">
-    <p>... Chargement en cours ....</p>
+<!-- Header -->
+<div class="header pb-2 pt-2 pt-lg-2 d-flex align-items-center"
+  style="min-height: 200px;">
+  <!-- Mask -->
+  <span class="mask bg-gradient-default opacity-8"></span>
+  <!-- Header container -->
+  <div class="container-fluid d-flex align-items-center">
+    <div class="row">
+      <div class="col-xl-3 mb-5 mb-xl-0">
+
+      </div>
+
+    </div>
   </div>
 </div>
-<div class="container" *ngIf="care">
-  <div class="alert alert-light mt-3">
-    <h1 class="alert-title">Suivi : {{ care.woundType }}
-    </h1>
-  </div>
+<!-- Page content -->
+<div class="container-fluid mt--7" *ngIf="care">
   <div class="row">
-    <div class="col-6">
-      <div class="d-flex justify-content-between">
-        <h2>Patient</h2>
-
-      </div>
-      <hr>
-      <p><strong>{{ care.patient.fullName }}</strong></p>
-      <br>
-      <p>Début : {{ care.createdAt | date: 'dd/MM/yyyy' }}</p>
-      <p *ngIf="care.endedAt">Fin : {{ care.endedAt | date: 'dd/MM/yyyy' }}</p>
-      <a routerLink="/soins/{{ care.id }}/interventions/nouveau" class="btn btn-info">
-        Ajouter une intervention
-      </a>
-
-      <br>
-      <a routerLink="/patients" class="btn btn-primary mt-2">Liste des patients</a>
-      <br>
-      <a routerLink="/patients/{{ care.patient.id }}/suivi" class="btn btn-success mt-2">Liste des soins</a>
-    </div>
-    <div class="col-6">
-      <div class="d-flex justify-content-between">
-        <h2>Liste des interventions: ({{ care.interventions.length }})</h2>
-      </div>
-      <hr>
-      <div class="card border-light mb-3" style="width: 100%;"
-        *ngFor="let inter of care.interventions | paginate: currentPage:itemsPerPage">
-        <div class="d-flex card-header justify-content-between">
-          <strong>{{ inter.date  | date:"dd/MM/yyyy" }}</strong>
-          <p>Nombre d'image(s) :
-            {{ inter.images.length }}</p>
+    <div class="col-xl-4 mb-5 mb-xl-0">
+      <div class="card card-profile shadow">
+        <div class="row justify-content-center">
+          <div class="col-lg-3">
+            <div class="card-profile-image">
+              <a href="#">
+                <img src="{{ care.patient.avatar }}" class="rounded-circle">
+              </a>
+            </div>
+          </div>
         </div>
-        <div class="card-body">
-          <h4 class="card-title">Commentaire</h4>
-          <p class="card-text">{{ inter.comment }}</p>
-          <br>
-          <div class="d-flex justify-content-between">
-            <div class="col-3">
-              <a routerLink="/interventions/{{ inter.id }}/detail" class="btn btn-info">
-                <i class="far fa-eye text-light"></i>
-                Voir
-              </a>
+        <div class="card-body pt-0 pt-md-4">
+          <div class="row">
+            <div class="col">
+              <div class="card-profile-stats d-flex justify-content-center mt-md-5">
+                <div>
+                  <span class="heading" *ngIf="care.interventions">{{ care.interventions.length }}</span>
+                  <span class="description">Intervention(s)</span>
+                </div>
+              </div>
             </div>
-            <div class="col-4">
-              <a routerLink="/interventions/{{ inter.id }}/edition" class="btn btn-warning">
-                <i class="fas fa-edit text-light"></i>
-                Editer
-              </a>
+          </div>
+          <div class="text-center">
+            <h3>
+              {{ care.patient.fullName }}<span class="font-weight-light">, {{ care.patient.birthDate | age }}
+                ans</span>
+            </h3>
+            <div>
+              Débuté le : {{ care.createdAt | date: 'dd/MM/yyyy' }}
             </div>
-            <div class="col-4">
-              <button class="btn btn-danger" (click)="remove(inter.id)">
-                <i class="fas fa-trash  text-light"></i>
-                Supprimer
-              </button>
+            <div>
+              Cloturé le : {{ care.endedAt | date: 'dd/MM/yyyy' }}
+            </div>
+            <hr class="my-4" />
+
+            <a href="#">Modifier</a>
+          </div>
+        </div>
+      </div>
+      <div class="row mt-2 d-flex wrap">
+        <div class="col-xl-4 mb-5 mb-xl-0">
+          <a routerLink="/soins/{{ care.id }}/interventions/nouveau" class="btn btn-info">
+            Ajouter une intervention
+          </a>
+        </div>
+
+        <div class="col-xl-4 mb-5 mb-xl-0">
+          <a routerLink="/patients/{{ care.patient.id }}/suivi" class="btn btn-success">Soins du patient</a>
+        </div>
+
+      </div>
+    </div>
+    <div class="col-xl-8">
+      <div class="card bg-secondary shadow">
+        <div class="card-header bg-white">
+          <div class="row align-items-center">
+            <div class="col-8">
+              <h3 class="mb-0">Liste des Interventions : ({{ care.interventions.length }})</h3>
+            </div>
+            <hr>
+            <div class="row mb-4">
+              <div class="col">
+                <div class="card mb-3" style="width: 100%;"
+                  *ngFor="let inter of care.interventions | paginate: currentPage:itemsPerPage">
+                  <div class="d-flex card-header justify-content-between">
+                    <strong>{{ inter.date  | date:"dd/MM/yyyy" }}</strong>
+                    <p>Nombre d'image(s) :
+                      {{ inter.images.length }}</p>
+                  </div>
+                  <div class="card-body">
+                    <h4 class="card-title">Commentaire</h4>
+                    <p class="card-text">{{ inter.comment }}</p>
+                    <br>
+                    <div class="d-flex justify-content-between">
+                      <div class="col-3">
+                        <a routerLink="/interventions/{{ inter.id }}/detail" class="btn btn-info">
+                          <i class="far fa-eye text-light"></i>
+                          Voir
+                        </a>
+                      </div>
+                      <div class="col-4">
+                        <a routerLink="/interventions/{{ inter.id }}/edition" class="btn btn-warning">
+                          <i class="fas fa-edit text-light"></i>
+                          Editer
+                        </a>
+                      </div>
+                      <div class="col-4">
+                        <button class="btn btn-danger" (click)="remove(inter.id)">
+                          <i class="fas fa-trash  text-light"></i>
+                          Supprimer
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <app-bootstrap-pagination [items]="care.interventions" [currentPage]="currentPage"
+                  [itemsPerPage]="itemsPerPage"
+                  (pageChanged)="handlePageChanged($event)"></app-bootstrap-pagination>
+              </div>
             </div>
           </div>
         </div>
       </div>
-      <app-bootstrap-pagination [items]="care.interventions" [currentPage]="currentPage" [itemsPerPage]="itemsPerPage"
-        (pageChanged)="handlePageChanged($event)"></app-bootstrap-pagination>
     </div>
+
+
   </div>
 </div>

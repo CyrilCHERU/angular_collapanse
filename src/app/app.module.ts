@@ -11,11 +11,11 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './partials/navbar/navbar.component';
 import { FooterComponent } from './partials/footer/footer.component';
-import { HomepageComponent } from './homepage/homepage.component';
-import { InformationsComponent } from './informations/informations.component';
-import { ContactFormComponent } from './contact-form/contact-form.component';
+import { HomepageComponent } from './public_pages/homepage/homepage.component';
+import { InformationsComponent } from './public_pages/informations/informations.component';
+import { ContactFormComponent } from './public_pages/contact-form/contact-form.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { UserFormComponent } from './user-form/user-form.component';
+import { UserFormComponent } from './users/user-form/user-form.component';
 import { PatientListComponent } from './patients/patient-list/patient-list.component';
 import { PatientDetailsComponent } from './patients/patient-details/patient-details.component';
 import { LoginFormComponent } from './login-form/login-form.component';
@@ -28,6 +28,16 @@ import { CaresPatientListComponent } from './cares/cares-patient-list/cares-pati
 import { CareShowComponent } from './cares/care-show/care-show.component';
 import { InterDetailComponent } from './interventions/inter-detail/inter-detail.component';
 import { ImageFormComponent } from './image-form/image-form.component';
+import { NgZorroAntdModule, NZ_I18N, fr_FR } from 'ng-zorro-antd';
+import { registerLocaleData } from '@angular/common';
+import { NzSelectModule } from 'ng-zorro-antd/select';
+import fr from '@angular/common/locales/fr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { UserEditComponent } from './users/user-edit/user-edit.component';
+import { UserPasswordEditComponent } from './users/user-password-edit/user-password-edit.component';
+
+
+registerLocaleData(fr);
 
 @NgModule({
   declarations: [
@@ -52,6 +62,8 @@ import { ImageFormComponent } from './image-form/image-form.component';
     CareShowComponent,
     InterDetailComponent,
     ImageFormComponent,
+    UserEditComponent,
+    UserPasswordEditComponent
   ],
   imports: [
     BrowserModule,
@@ -60,12 +72,18 @@ import { ImageFormComponent } from './image-form/image-form.component';
     FormsModule,
     HttpClientModule,
     PaginationModule,
-    JwtAuthModule
+    JwtAuthModule,
+    NgZorroAntdModule,
+    NzSelectModule,
+    BrowserAnimationsModule
+
   ],
   providers: [
     {
       provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true
-    }
+    },
+    { provide: NZ_I18N, useValue: fr_FR },
+
   ],
   bootstrap: [AppComponent]
 })

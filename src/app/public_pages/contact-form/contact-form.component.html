@@ -1,0 +1,83 @@
+<div class="bg-default">
+  <div class="main-content">
+    <!-- Header -->
+    <div class="header bg-gradient-primary py-6 py-lg-6">
+      <div class="container">
+        <div class="header-body text-center mb-7">
+          <div class="row justify-content-center">
+            <div class="col-lg-5 col-md-6">
+              <h1 class="text-white">Contact</h1>
+              <p class="text-lead text-light">Pour toute question ou toute information, merci de nous contacter.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="separator separator-bottom separator-skew zindex-100">
+        <svg x="0" y="0" viewBox="0 0 2560 100" preserveAspectRatio="none" version="1.1"
+          xmlns="http://www.w3.org/2000/svg">
+          <polygon class="fill-default" points="2560 0 2560 100 0 100"></polygon>
+        </svg>
+      </div>
+    </div>
+    <!-- Page content -->
+    <div class="container mt--6 pb-8">
+      <div class="row justify-content-center">
+        <div class="col-lg-10 col-md-12">
+          <div class="card bg-secondary shadow border-0">
+            <div class="card-body px-lg-5 py-lg-4">
+              <form role="form" [formGroup]="contactForm" (ngSubmit)="handleSubmit()">
+                <div class=" form-group mb-3">
+                  <label>Votre nom</label>
+                  <div class="input-group input-group-alternative">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="ni ni-user-83"></i></span>
+                    </div>
+                    <input type="text" formControlName="name" class="form-control mb-2"
+                      [class.is-invalid]="contactForm.getError('required', 'name') && isSubmited">
+                    <p class="invalid-feedback" *ngIf="contactForm.getError('required', 'name')">Ce champ est requis !
+                    </p>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label>Votre email</label>
+                  <div class="input-group input-group-alternative">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="ni ni-email"></i></span>
+                    </div>
+                    <input type="email" formControlName="email" class="form-control mb-2"
+                      [class.is-invalid]="contactForm.getError('required', 'email') && contactForm.getError('email', 'email') && isSubmited">
+                    <p class="invalid-feedback" *ngIf="contactForm.getError('required', 'email')">Vous devez saisir
+                      votre email 😉
+                    </p>
+                    <p class="invalid-feedback" *ngIf="contactForm.getError('email', 'email')">Cet email n'est pas au
+                      format valide
+                      !</p>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="message">Votre message</label>
+                  <div class="input-group input-group-alternative">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="ni ni-email"></i></span>
+                    </div>
+                    <textarea formControlName="message"
+                      placeholder="Laissez nous vos commentaires ou posez votre question, nous y répondrons dans les meilleurs délais ..."
+                      cols="30" rows="6" class="form-control"
+                      [class.is-invalid]="contactForm.getError('required', 'email') && isSubmited"></textarea>
+                    <p class="invalid-feedback" *ngIf="contactForm.getError('required', 'message')">Posez votre
+                      question ou laissez
+                      nous un petit commentaire 😭</p>
+                  </div>
+                </div>
+
+                <div class="text-center">
+                  <button type="submit" class="btn btn-primary my-4">Envoyer</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

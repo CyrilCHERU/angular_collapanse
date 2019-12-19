@@ -1,0 +1,87 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <a class="navbar-brand" routerLink="/">
+    <img src="assets/img/logo.jpg" width="30" height="30" class="rounded d-inline-block align-top" alt="">
+    Collapanse
+  </a>
+
+  <div class="collapse navbar-collapse" id="navbarColor01">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/informations">Informations</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/contact">Contact</a>
+      </li>
+      <ng-container *ngIf="isAuthenticated">
+        <li class="ml-4 nav-item">
+          <i class="fas fa-hand-point-right nav-link mb-2 text-light"></i>
+        </li>
+        <li class="nav-item dropdown ml-4">
+          <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id="patientDropdownLink">Patients</a>
+          <div class="dropdown-menu dropdown-menu-center" aria-labelledby="patientDropdownLink">
+            <a routerLink="/patients" class="dropdown-item">Liste des patients</a>
+            <a routerLink="/patients/nouveau" class="dropdown-item">Nouveau patient</a>
+          </div>
+        </li>
+        <li class="nav-item dropdown ml-4">
+          <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id="careDropdownLink">Soins</a>
+          <div class="dropdown-menu dropdown-menu-center" aria-labelledby="careDropdownLink">
+            <a routerLink="/soins" class="dropdown-item">Liste des soins</a>
+            <a routerLink="/soins/nouveau" class="dropdown-item">Nouveau soin</a>
+          </div>
+        </li>
+      </ng-container>
+
+      <!--li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          Patients
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" href="/patients">Liste</a>
+          <a class="dropdown-item" href="#">Création d'un nouveau patient</a>
+          <a class="dropdown-item" href="#">Liste des Soins en cours</a>
+        </div>
+      </li-->
+      <!--li class="nav-item">
+					<a class="nav-link" href="#">Votre profil</a>
+				</li-->
+
+
+    </ul>
+    <ul class="navbar-nav">
+      <ng-container *ngIf="!isAuthenticated">
+        <li class="nav-item">
+          <a class="btn btn-secondary mr-2" routerLink="/inscription">Inscription</a>
+        </li>
+        <li class="nav-item">
+          <a class="btn btn-success mr-2" routerLink="/login">Connexion</a>
+        </li>
+      </ng-container>
+      <ng-container *ngIf="isAuthenticated">
+        <li class="btn btn-info mr-3 dropdown">
+          <a class="nav-link dropdown-toggle" href="" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            {{ user.fullName }}
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item" href="#">Modifiez votre profile</a>
+            <a class="dropdown-item" href="#">Modifiez votre mot de passe</a>
+
+          </div>
+        </li>
+        <li class="nav-item">
+          <button class="btn btn-warning mt-2 mr-2 text-dark" (click)="handleLogout()">
+            <i class="fas fa-sign-out-alt"></i>
+          </button>
+        </li>
+      </ng-container>
+    </ul>
+
+    <!--form class="form-inline my-2 my-lg-0">
+      <input class="form-control mr-sm-2" type="text" placeholder="Rechercher un patient">
+      <button class="btn btn-secondary my-2 my-sm-0" type="submit">Chercher</button>
+    </form-->
+
+  </div>
+</nav>
