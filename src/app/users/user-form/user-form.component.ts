@@ -7,6 +7,25 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 
+function MustMatch(controlName: string, matchingControlName: string) {
+  return (formGroup: FormGroup) => {
+    const control = formGroup.controls[controlName];
+    const matchingControl = formGroup.controls[matchingControlName];
+
+    if (matchingControl.errors && !matchingControl.errors.mustMatch) {
+      // return if another validator has already found an error on the matchingControl
+      return;
+    }
+
+    // set error on matchingControl if validation fails
+    if (control.value !== matchingControl.value) {
+      matchingControl.setErrors({ mustMatch: true });
+    } else {
+      matchingControl.setErrors(null);
+    }
+  }
+}
+
 @Component({
   selector: 'app-user-form',
   templateUrl: './user-form.component.html',
@@ -17,6 +36,7 @@ export class UserFormComponent implements OnInit {
   error = false;
   errormsg = '';
   msg = 'Une Erreur est survenue, Merci de réessayer plus tard ;)';
+  isSubmited = false;
 
   user: User;
 
@@ -34,21 +54,19 @@ export class UserFormComponent implements OnInit {
     address2: new FormControl(),
     zipCode: new FormControl('', [
       Validators.required,
-      Validators.minLength(5),
-      Validators.maxLength(5)
+      Validators.minLength(5)
     ]),
     city: new FormControl('', Validators.required),
     phone: new FormControl('', [
       Validators.required,
-      Validators.minLength(10),
-      Validators.maxLength(10)
+      Validators.minLength(10)
     ]),
     adeli: new FormControl('', [
       Validators.required,
-      Validators.minLength(9),
-      Validators.maxLength(9)
+      Validators.minLength(9)
     ]),
-  });
+  }
+  );
 
   constructor(
     private jobService: JobService,
@@ -61,12 +79,22 @@ export class UserFormComponent implements OnInit {
   }
 
   handleSubmit() {
+    // Passage à soumission
+    this.isSubmited = true;
+
     // vérification du formulaire
-    console.log(this.form.getError('validation'));
     this.form.markAllAsTouched();
     if (this.form.invalid) {
       this.error = true;
       this.errormsg = 'Le formulaire est incomplet ou mal rempli :(';
+      return;
+    }
+
+    console.log(this.form.get('password').value, this.form.get('confirmPassword').value);
+
+    if (this.form.get('password').value !== this.form.get('confirmPassword').value) {
+      this.error = true;
+      this.errormsg = 'Les deux mots de passe doivent être identiques !';
       return;
     }
 

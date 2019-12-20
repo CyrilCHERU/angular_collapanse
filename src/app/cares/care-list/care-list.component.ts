@@ -11,6 +11,9 @@ export class CareListComponent implements OnInit {
 
   cares: Care[] = [];
   result: any;
+  deleteMsg = false;
+  currentPage = 1;
+  itemsPerPage = 7;
 
   constructor(private careService: CareService) { }
 
@@ -26,4 +29,9 @@ export class CareListComponent implements OnInit {
     }
     );
   }
+
+  handlePageChanged(page: number) {
+    this.currentPage = page;
+  }
+
 }

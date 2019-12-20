@@ -13,6 +13,11 @@
     </div>
   </div>
 </div>
+<div class="row justify-content-center" *ngIf="!care">
+  <div class="col-4 alert alert-default mt-200 text-center animated flip">
+    <p>... Chargement en cours ....</p>
+  </div>
+</div>
 <!-- Page content -->
 <div class="container-fluid mt--7" *ngIf="care">
   <div class="row">
@@ -46,27 +51,28 @@
             <div>
               Débuté le : {{ care.createdAt | date: 'dd/MM/yyyy' }}
             </div>
-            <div>
+            <div *ngIf="care.endedAt">
               Cloturé le : {{ care.endedAt | date: 'dd/MM/yyyy' }}
             </div>
             <hr class="my-4" />
-
-            <a href="#">Modifier</a>
+            <div class="text-center">
+              <div class="row mt-2">
+                <div class="col">
+                  <a routerLink="/soins/{{ care.id }}/interventions/nouveau" class="btn btn-info">
+                    Ajouter une intervention
+                  </a>
+                </div>
+              </div>
+              <div class="row mt-2">
+                <div class="col">
+                  <a routerLink="/patients/{{ care.patient.id }}/suivi" class="btn btn-success">Soins du patient</a>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-      <div class="row mt-2 d-flex wrap">
-        <div class="col-xl-4 mb-5 mb-xl-0">
-          <a routerLink="/soins/{{ care.id }}/interventions/nouveau" class="btn btn-info">
-            Ajouter une intervention
-          </a>
-        </div>
 
-        <div class="col-xl-4 mb-5 mb-xl-0">
-          <a routerLink="/patients/{{ care.patient.id }}/suivi" class="btn btn-success">Soins du patient</a>
-        </div>
-
-      </div>
     </div>
     <div class="col-xl-8">
       <div class="card bg-secondary shadow">
@@ -76,6 +82,7 @@
               <h3 class="mb-0">Liste des Interventions : ({{ care.interventions.length }})</h3>
             </div>
             <hr>
+
             <div class="row mb-4">
               <div class="col">
                 <div class="card mb-3" style="width: 100%;"
@@ -118,6 +125,9 @@
             </div>
           </div>
         </div>
+      </div>
+      <div class="col alert-warning" *ngIf="care.interventions.length === 0">
+        <p class="text-center p-4">Le soin de ce patient ne comporte pas encore d'intervention</p>
       </div>
     </div>
 

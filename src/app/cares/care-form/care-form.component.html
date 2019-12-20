@@ -1,53 +1,94 @@
-<div class="container" *ngIf="(care || create == true) && patients ">
-  <div class="row mt-4">
-    <div class="col alert alert-light" *ngIf="!care; else modification">
-      <h1 class="alert-title">Mise en place d'un nouveau soin :</h1>
-      <br>
-      <h3 class="text-center" *ngIf="patient">{{ patient.fullName }}</h3>
-    </div>
-    <ng-template #modification>
-      <div class="col alert alert-light">
-        <h1 class="alert-title">Modification du soin {{ care.woundType }} pour :</h1>
-        <br>
-        <h3 class="text-center">{{ patient.fullName }}</h3>
+<div class="bg-default" style="min-height: 900px;">
+  <div class="main-content">
+    <!-- Header -->
+    <div class="header bg-gradient-primary py-4 py-lg-4">
+      <div class="container">
+        <div class="header-body text-center mb-7">
+          <div class="row justify-content-center">
+            <div class="col-lg-5 col-md-6" *ngIf="!care || create; else modification">
+              <h1 class="text-white">Mise en place d'un nouveau soin :</h1>
+              <br>
+              <h3 class="text-white text-center" *ngIf="patient">{{ patient.fullName }}</h3>
+            </div>
+            <ng-template #modification>
+              <div class="col-lg-5 col-md-6">
+                <h1 class="text-white">Modification du soin {{ care.woundType }} pour :</h1>
+                <br>
+                <h3 class="text-white text-center">{{ patient.fullName }}</h3>
+              </div>
+            </ng-template>
+          </div>
+        </div>
       </div>
-    </ng-template>
+      <div class="separator separator-bottom separator-skew zindex-100">
+        <svg x="0" y="0" viewBox="0 0 2560 100" preserveAspectRatio="none" version="1.1"
+          xmlns="http://www.w3.org/2000/svg">
+          <polygon class="fill-default" points="2560 0 2560 100 0 100"></polygon>
+        </svg>
+      </div>
+    </div>
+    <!-- Page content -->
+    <div class="container mt--6 pb-8">
+      <div class="row d-flex justify-content-center">
+        <div class="col-6 alert alert-danger text-center" *ngIf="error">
+          Une erreur est survenue, merci de réessayer plus tard :(
+        </div>
+      </div>
+      <div class="row justify-content-center">
+        <div class="col-lg-6 col-md-10">
+          <div class="card bg-secondary shadow border-0">
+            <div class="card-body px-lg-5 py-lg-4">
+              <form
+                [formGroup]="careForm"
+                (ngSubmit)="handleSubmit()"
+                class="form-group"
+                *ngIf="patients">
+                <div class="form-group">
+                  <label for="createdAt" class="required">Ouverture du soin le</label>
+                  <input type="date" id="createdAt" formControlName="createdAt" class="form-control"
+                    [class.is-invalid]="(careForm.getError('validation', 'createdAt') || careForm.getError('required', 'createdAt')) && isSubmited" />
+                </div>
+                <div class="form-group" *ngIf="create">
+                  <label for="endedAt">Fermeture du soin le</label>
+                  <input type="date" formControlName="endedAt" class="form-control"
+                    [class.is-invalid]="careForm.getError('validation', 'endedAt') && isSubmited" />
+                </div>
+                <div class="form-group">
+                  <label for="woundType">Description de la plaie</label>
+                  <input type="text" id="woundType" formControlName="woundType" class="form-control"
+                    [class.is-invalid]="(careForm.getError('validation', 'woundType') || careForm.getError('required', 'woundType')) && isSubmited" />
+                  <p class="invalid-feedback"
+                    *ngIf="careForm.getError('validation', 'woundType') || careForm.getError('required', 'woundType')">
+                    Ce champ est requis !
+                  </p>
+                </div>
+                <div class="form-group">
+                  <label for="patient">Patient</label>
+                  <select formControlName="patient" class="form-control" *ngIf="patient">
+                    <option value="{{ patient.id }}">{{ patient.fullName }}</option>
+                  </select>
+                  <select formControlName="patient" class="form-control" *ngIf="!patient"
+                    [class.is-invalid]="(careForm.getError('validation', 'patient') || careForm.getError('required', 'patient')) && isSubmited">
+                    <option value="">-- Choisissez le Patient --</option>
+                    <option *ngFor="let patient of patients" value="{{ patient.id }}">{{ patient.fullName }}</option>
+                  </select>
+                  <p class="invalid-feedback"
+                    *ngIf="careForm.getError('validation', 'patient') || careForm.getError('required', 'patient')">Vous
+                    devez attribuer ce soin à un patient :(
+                  </p>
+                </div>
+                <div class="rowcol my-4 text-right">
+                  <button type="submit" class="btn btn-success mt-4" *ngIf="!care; else save">Ajouter</button>
+                  <ng-template #save>
+                    <button type="submit" class="btn btn-success mt-4 mb-4">Modifier</button>
+                    <button (click)="cancel(care.id)" class="btn btn-warning ml-3 mt-4 mb-4">Annuler</button>
+                  </ng-template>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-  <div class="col col-md-6">
-    <form [formGroup]="careForm" (ngSubmit)="handleSubmit()" class="form-group" *ngIf="patients">
-      <label for="createdAt" class="required">Ouverture du soin le</label>
-      <input type="date" id="createdAt" formControlName="createdAt" class="form-control"
-        [class.is-invalid]="(careForm.getError('validation', 'createdAt') || careForm.getError('required', 'createdAt')) && isSubmited" />
-      <label for="endedAt">Fermeture du soin le</label>
-      <input type="date" formControlName="endedAt" class="form-control"
-        [class.is-invalid]="careForm.getError('validation', 'endedAt') && isSubmited" />
-      <label for="woundType">Description de la plaie</label>
-      <input type="text" id="woundType" formControlName="woundType" class="form-control"
-        [class.is-invalid]="(careForm.getError('validation', 'woundType') || careForm.getError('required', 'woundType')) && isSubmited" />
-      <p class="invalid-feedback"
-        *ngIf="careForm.getError('validation', 'woundType') || careForm.getError('required', 'woundType')">Ce champ est
-        requis !</p>
-      <label for="">Patient</label>
-      <select formControlName="patient" class="form-control" *ngIf="patient">
-        <option value="{{ patient.id }}">{{ patient.fullName }}</option>
-      </select>
-      <select formControlName="patient" class="form-control" *ngIf="!patient"
-        [class.is-invalid]="(careForm.getError('validation', 'patient') || careForm.getError('required', 'patient')) && isSubmited">
-        <option value="">-- Choisissez le Patient --</option>
-        <option *ngFor="let patient of patients" value="{{ patient.id }}">{{ patient.fullName }}</option>
-      </select>
-      <p class="invalid-feedback"
-        *ngIf="careForm.getError('validation', 'patient') || careForm.getError('required', 'patient')">Vous devez
-        attribuer ce soin à un patient :(</p>
-      <button type="submit" class="btn btn-success mt-4" *ngIf="!care; else save">Ajouter</button>
-      <ng-template #save>
-        <button type="submit" class="btn btn-success mt-4 mb-4">Modifier</button>
-        <button (click)="cancel(care.id)" class="btn btn-warning ml-3 mt-4 mb-4">Annuler</button>
-
-      </ng-template>
-
-    </form>
-
-  </div>
-
 </div>

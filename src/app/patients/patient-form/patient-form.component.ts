@@ -50,6 +50,11 @@ export class PatientFormComponent implements OnInit {
     private auth: JwtAuthService) { }
 
   ngOnInit() {
+    // Récupération de la route et Analyse de la route
+    const url = this.route.snapshot.url;
+    if (url[1].path === 'nouveau') {
+      this.create = true;
+    }
 
     // Récupération de la liste des professionnels
     this.userService.findAll().subscribe(response => this.users = response);
@@ -71,11 +76,12 @@ export class PatientFormComponent implements OnInit {
           birthDate: moment(response.birthDate).format('YYYY-MM-DD'),
           doctor: response.doctor
         });
+        this.create = true;
       });
     }
     const user = this.auth.getUser();
 
-    this.create = true;
+    //this.create = true;
   }
 
   public handleSubmit() {

@@ -1,20 +1,29 @@
+<!-- Header -->
+<div class="header pb-2 pt-2 pt-lg-2 d-flex align-items-center"
+  style="min-height: 200px;">
+  <!-- Mask -->
+  <span class="mask bg-gradient-default opacity-8"></span>
+  <!-- Header container -->
+  <div class="container-fluid d-flex align-items-center">
+    <div class="row">
+      <div class="col-xl-3 mb-5 mb-xl-0">
+
+      </div>
+
+    </div>
+  </div>
+</div>
 <div class="row justify-content-center" *ngIf="!patient">
-  <div class="col-4 alert alert-info mt-200 text-center animated flip">
+  <div class="col-4 alert alert-default mt-200 text-center animated flip">
     <p>... Chargement en cours ....</p>
   </div>
 </div>
 <div *ngIf="patient">
-  <div class="container-fluid">
-    <!-- Header -->
-    <div class="header pb-8 pt-2 pt-lg-2 d-flex align-items-center"
-      style="min-height: 200px; background-size: cover; background-position: center top;">
-      <!-- Mask -->
-      <span class="mask bg-gradient-default opacity-8"></span>
-    </div>
+  <div class="container">
     <!-- Page content -->
     <div class=" mt--7">
       <div class="row">
-        <div class="col-xl-3 mb-5 mb-xl-0">
+        <div class="col-xl-4 mb-5 mb-xl-0">
           <div class="card card-profile shadow">
             <div class="row justify-content-center">
               <div class="col-lg-3 order-lg-2">
@@ -57,18 +66,23 @@
                 </div>
                 <hr class="my-4" />
 
-                <a href="#">Modifier</a>
+                <a routerLink="/patients/{{ patient.id }}/edit">Modifier</a>
               </div>
             </div>
           </div>
         </div>
-        <div class="col-xl-4">
+        <div class="col-xl-8">
           <div class="card shadow">
             <div class="card-header border-0">
               <div class="row align-items-center">
                 <div class="col">
                   <h3 class="mb-0">Soin(s) et suivi</h3>
                 </div>
+                <a routerLink="/patients/{{ patient.id }}/soins/nouveau" class="btn btn-default">
+                  <i class="fas fa-plus">
+                    Nouveau soin
+                  </i>
+                </a>
               </div>
             </div>
             <div class="table-responsive">
@@ -92,7 +106,7 @@
                       </div>
                     </td>
                     <td>
-                      <div class="dropdown">
+                      <div class="dropdown border-light">
                         <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown"
                           aria-haspopup="true" aria-expanded="false">
                           <i class="fas fa-ellipsis-v"></i>

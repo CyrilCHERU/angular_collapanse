@@ -1,57 +1,104 @@
+<!-- Header -->
+<div class="header bg-gradient-primary pb-8 pt-2 pt-md-2">
+  <div class="container-fluid">
+
+    <div class="header-body">
+      <div class="row justify-content-center" *ngIf="deleteMsg">
+        <div class="col-3 alert alert-success mt-150 text-center">
+          <p>... Ce patient a été supprimé ....</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 <div class="row justify-content-center" *ngIf="cares.length === 0">
-  <div class="col-2 alert alert-info mt-200 text-center animated flip">
+  <div class="col-4 alert alert-primary mt-200 text-center animated flip">
     <p>... Chargement en cours ....</p>
   </div>
 </div>
-<div class="container-fluid" *ngIf="cares.length > 0">
-  <div class="row m-4">
-    <h1>Liste de tous les soins</h1>
-  </div>
-  <div class="row m-4">
-    <table class="table table-stripped">
-      <thead class="thead-dark">
-        <tr>
-          <th scope="col">Patient</th>
-          <th scope="col">Type de plaie</th>
-          <th scope="col">Ouvert le</th>
-          <th scope="col">Fermé le</th>
-          <th scope="col" class="text-center">Intervention(s)</th>
-          <th scope="col"></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let care of cares">
-          <td>
-            <a routerLink="/patients/{{ care.patient.id }}" class="text-primary">{{ care.patient.fullName }}</a>
-          </td>
-          <td>
-            <a routerLink="/soins/{{ care.id }}" class="text-info">
-              {{ care.woundType }}
-            </a>
-          </td>
-          <td>{{ care.createdAt | date:"dd/MM/yyyy" }}</td>
-          <td>{{ care.endedAt | date:"dd/MM/yyyy" }}</td>
-          <td class="text-center">
-            {{ care.interventions.length }}
-          </td>
-          <td class="text-center">
-            <button class="btn btn-info mr-2">
-              <a routerLink="/soins/suivi/{{ care.id }}/detail">
-                <i class="far fa-eye text-light"></i>
-              </a>
-            </button>
-            <button class="btn btn-warning mr-2">
-              <a routerLink="/soins/{{ care.id }}/edit">
-                <i class="far fa-edit text-light"></i>
-              </a>
-            </button>
-            <button class="btn btn-danger" (click)="removeCare(care.id)">
-              <i class="fas fa-trash text-light"></i>
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+<div class="container-fluid mt--7" *ngIf="cares.length > 0">
+  <div class="row">
+    <div class="col">
+      <div class="card shadow">
+        <div class="card-header d-flex border-0 justify-content-between align-items-center">
+          <h3 class="mb-0">Liste de tous les soins</h3>
+          <a routerLink="/cares/nouveau" class="btn btn-primary"><i class="fas fa-plus"> Nouveau
+              soin</i></a>
+        </div>
+        <div class="table-responsive">
+          <table class="table align-items-center table-flush">
+            <thead class="thead-light">
+              <tr>
+                <th scope="col">Patient</th>
+                <th scope="col">Type de plaie</th>
+                <th scope="col">Ouvert le</th>
+                <th scope="col">Fermé le</th>
 
+                <th scope="col">Intervention(s)</th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let care of cares | paginate: currentPage:itemsPerPage">
+                <th scope="row">
+                  <div class="media align-items-center">
+                    <a href="#" class="avatar rounded-circle mr-3">
+                      <img alt="Image placeholder" src="{{ care.patient.avatar }}">
+                    </a>
+                    <div class="media-body">
+                      <a routerLink="/patients/{{ care.patient.id }}">
+                        <span class="mb-0 text-sm">{{ care.patient.fullName }}</span>
+                      </a>
+                    </div>
+                  </div>
+                </th>
+                <td>
+                  <a routerLink="/soins/{{ care.id }}" class="text-info">
+                    {{ care.woundType }}
+                  </a>
+                </td>
+                <td>
+                  {{ care.createdAt | date:"dd/MM/yyyy"}}
+                </td>
+                <td>
+                  {{ care.endedAt | date:"dd/MM/yyyy"}}
+                </td>
+                <td class="text-center">
+                  {{ care.interventions.length }}
+                </td>
+                <td class="text-right">
+                  <div class="dropdown">
+                    <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false">
+                      <i class="fas fa-ellipsis-v"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                      <a routerLink="/cares/{{ care.id }}" class="dropdown-item">
+                        <i class="far fa-eye text-light"></i> Voir ce soin
+                      </a>
+                      <a routerLink="/cares/{{ care.id }}/edit" class="dropdown-item">
+                        <i class="far fa-edit text-light"></i> Modifier le soin
+                      </a>
+                      <button class="dropdown-item" (click)="removeCare(care.id)">
+                        <i class="fas fa-trash text-light"></i> Supprimer ce patient
+                      </button>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card-footer py-4 text-center mb-5">
+          <app-bootstrap-pagination [items]="cares" [currentPage]="currentPage" [itemsPerPage]="itemsPerPage"
+            (pageChanged)="handlePageChanged($event)"></app-bootstrap-pagination>
+        </div>
+        <div class="col-6 text-center alert alert-warning mt-5" *ngIf="cares.length === 0">
+          <div class="row justify-content-center">
+            Désolé, vous n'avez encore aucun
+            soin enregistré en base de données ;(</div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

@@ -21,6 +21,11 @@
     </div>
     <!-- Page content -->
     <div class="container mt--6 pb-8">
+      <div class="row d-flex justify-content-center">
+        <div class="col-6 alert alert-danger text-center" *ngIf="!error">
+          Une erreur est survenue, merci de réessayer plus tard :(
+        </div>
+      </div>
       <div class="row justify-content-center">
         <div class="col-lg-10 col-md-12">
           <div class="card bg-secondary shadow border-0">
@@ -45,7 +50,7 @@
                       <span class="input-group-text"><i class="ni ni-email"></i></span>
                     </div>
                     <input type="email" formControlName="email" class="form-control mb-2"
-                      [class.is-invalid]="contactForm.getError('required', 'email') && contactForm.getError('email', 'email') && isSubmited">
+                      [class.is-invalid]="(contactForm.getError('required', 'email') || contactForm.getError('email', 'email')) && isSubmited">
                     <p class="invalid-feedback" *ngIf="contactForm.getError('required', 'email')">Vous devez saisir
                       votre email 😉
                     </p>

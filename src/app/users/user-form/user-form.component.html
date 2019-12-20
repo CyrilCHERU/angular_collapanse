@@ -1,229 +1,297 @@
-<!-- Header -->
-<div class="header bg-gradient-primary py-7 py-lg-8">
-  <div class="container">
-    <div class="header-body text-center mb-2">
-      <div class="row justify-content-center">
-        <div class="col-lg-5 col-md-6">
-          <h1 class="text-white">Bienvenue !</h1>
-          <p class="text-lead text-light">
-            Inscrivez-vous pour profiter de toutes les fonctionnalités de cette
-            application.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="separator separator-bottom separator-skew zindex-100">
-    <svg x="0" y="0" viewBox="0 0 2560 100" preserveAspectRatio="none" version="1.1"
-      xmlns="http://www.w3.org/2000/svg">
-      <polygon class="fill-default" style="min-height: 1000px;" points="2560 0 2560 100 0 100"></polygon>
-    </svg>
-  </div>
-</div>
-<!-- Page content -->
-<div class="container mt--6 pb-8">
-  <div class="row justify-content-center">
-    <div class="col-xl-10">
-      <div class="card bg-secondary shadow">
-        <div class="card-header bg-white border-0">
-          <div class="row align-items-center">
-            <div class="col-8">
-              <h3 class="mb-0">Merci de remplir le formulaire d'inscription</h3>
+<div class="bg-default">
+  <div class="main-content">
+    <!-- Header -->
+    <div class="header bg-gradient-primary py-7 py-lg-5">
+      <div class="container">
+        <div class="header-body text-center mb-2">
+          <div class="row justify-content-center">
+            <div class="col-lg-6 col-md-6 mb-5">
+              <h1 class="text-white">Bienvenue !</h1>
+              <p class="text-lead text-light">
+                Inscrivez-vous pour profiter de toutes les fonctionnalités de cette
+                application.</p>
             </div>
           </div>
         </div>
-        <div class="card-body">
-          <form [formGroup]="form" (ngSubmit)="handleSubmit()">
-            <div class="pl-lg-4">
-              <div class="row">
-                <div class="col-lg-6">
-                  <div class="form-group ml-2 mt-3">
-                    <label class="form-control-label" for="input-username">Sexe</label>
-                    <input
-                      type="radio"
-                      formControlName="gender"
-                      value="Femme" class="ml-5 mr-2"
-                      [class.is-invalid]="form.getError('required', 'gender') || form.getError('required', 'gender') && form.touched">Femme
-                    <input
-                      type="radio"
-                      formControlName="gender"
-                      value="Homme" class="ml-3 mr-2"
-                      [class.is-invalid]="form.getError('required', 'gender') || form.getError('required', 'gender') && form.touched">Homme
-                    <p class="invalid-feedback" *ngIf="form.getError('required', 'gender')">Ce champ est requis !</p>
-                  </div>
-                </div>
-                <div class="col-lg-6">
-                  <div class="form-group">
-                    <input
-                      type="email"
-                      class="form-control"
-                      formControlName="email"
-                      placeholder="email@email.fr"
-                      [class.is-invalid]="form.getError('validation', 'email') || form.getError('required', 'email') && form.touched">
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-lg-6">
-                  <div class="form-group">
-                    <input
-                      type="text"
-                      class="form-control"
-                      formControlName="lastName"
-                      placeholder="Nom"
-                      [class.is-invalid]="form.getError('validation', 'lastName') || form.getError('required', 'lastName') && form.touched">
-                    <p class="invalid-feedback" *ngIf="form.getError('required', 'lastName')">Ce champ est requis !</p>
-                    <p class="invalid-feedback" *ngIf="form.getError('validation', 'lastName') as error">
-                      {{ error }}
-                    </p>
-                  </div>
-                </div>
-                <div class="col-lg-6">
-                  <div class="form-group">
-                    <input
-                      type="password"
-                      class="form-control"
-                      formControlName="password"
-                      placeholder="Choisissez un mot de passe assez sûr"
-                      [class.is-invalid]="form.getError('validation', 'password') || form.getError('required', 'password') && form.touched">
-                  </div>
-                </div>
-                <div class="col-lg-6">
-                  <div class="form-group">
-                    <input
-                      type="text"
-                      class="form-control"
-                      formControlName="firstName"
-                      placeholder="Votre prénom"
-                      [class.is-invalid]="form.getError('validation', 'firstName') || form.getError('required', 'firstName') && form.touched">
-                    <p class="invalid-feedback" *ngIf="form.getError('required', 'firstName')">Ce champ est requis !</p>
-                    <p class="invalid-feedback" *ngIf="form.getError('validation', 'firstName') as error">
-                      {{ error }}
-                    </p>
-                  </div>
-                </div>
-                <div class=" col-lg-6">
-                  <div class="form-group">
-                    <input
-                      type="password"
-                      class="form-control"
-                      formControlName="confirmPassword"
-                      placeholder="Merci de confirmer votre mot de passe"
-                      [class.is-invalid]="form.getError('validation', 'confirmPassword') || form.getError('required', 'confirmPassword') && form.touched">
-                  </div>
+      </div>
+      <div class="separator separator-bottom separator-skew zindex-100">
+        <svg x="0" y="0" viewBox="0 0 2560 100" preserveAspectRatio="none" version="1.1"
+          xmlns="http://www.w3.org/2000/svg">
+          <polygon class="fill-default" points="2560 0 2560 100 0 100"></polygon>
+        </svg>
+      </div>
+    </div>
+    <!-- Page content -->
+    <div class="container mt--6 pb-8">
+      <div class="row d-flex justify-content-center">
+        <div class="col-6 alert alert-danger text-center" *ngIf="error && errormsg === ''">
+          Une erreur est survenue, merci de réessayer plus tard :(
+        </div>
+        <div class="col-6 alert alert-danger text-center" *ngIf="error && errormsg">
+          {{ errormsg }}
+        </div>
+      </div>
+      <div class="row justify-content-center">
+        <div class="col-lg-10 col-md-12">
+          <div class="card bg-secondary shadow">
+            <div class="card-body px-lg-5 py-lg-4">
+              <div class="row align-items-center">
+                <div class="col-8">
+                  <h3 class="mb-0">Merci de remplir le formulaire d'inscription</h3>
                 </div>
               </div>
             </div>
-            <hr class="my-4" />
-            <!-- Address -->
-            <h6 class="heading-small text-muted mb-4">Votre Adresse</h6>
-            <div class="pl-lg-4">
-              <div class="row">
-                <div class="col-lg-6">
-                  <div class="form-group">
-                    <input
-                      formControlName="address1"
-                      class="form-control form-control-alternative"
-                      placeholder="Rue, Lieudit, ..."
-                      value="" type="text">
+            <div class="card-body">
+              <form [formGroup]="form" (ngSubmit)="handleSubmit()">
+                <div class="pl-lg-4">
+                  <div class="row">
+                    <div class="col-lg-6">
+                      <div class="form-group ml-2 mt-3">
+                        <label class="form-control-label" for="input-username">Sexe</label>
+                        <input
+                          type="radio"
+                          formControlName="gender"
+                          value="Femme" class="ml-5 mr-2"
+                          [class.is-invalid]="form.getError('required', 'gender') && isSubmited">
+                        Femme
+                        <input
+                          type="radio"
+                          formControlName="gender"
+                          value="Homme" class="ml-3 mr-2"
+                          [class.is-invalid]="form.getError('required', 'gender') && isSubmited">
+                        Homme
+                        <p class="invalid-feedback" *ngIf="form.getError('required', 'gender')">Ce champ est requis !
+                        </p>
+                      </div>
+                    </div>
+                    <div class="col-lg-6">
+                      <div class="form-group">
+                        <input
+                          type="email"
+                          class="form-control"
+                          formControlName="email"
+                          placeholder="email@email.fr"
+                          [class.is-invalid]="form.getError('validation', 'email') || form.getError('required', 'email') && isSubmited">
+                        <p class="invalid-feedback" *ngIf="form.getError('required', 'email')">Ce champ est requis !</p>
+                        <p class="invalid-feedback" *ngIf="form.getError('email', 'email')">Cet email n'est pas au
+                          format valide !</p>
+                        <p class="invalid-feedback" *ngIf="form.getError('validation', 'email') as error">
+                          {{ error }}
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-6">
+                      <div class="form-group">
+                        <input
+                          type="text"
+                          class="form-control"
+                          formControlName="lastName"
+                          placeholder="Nom"
+                          [class.is-invalid]="(form.getError('validation', 'lastName') || form.getError('required', 'lastName') || form.getError('minLength', 'lastName')) && isSubmited">
+                        <p class="invalid-feedback" *ngIf="form.getError('required', 'lastName')">Ce champ est requis !
+                        </p>
+                        <p class="invalid-feedback" *ngIf="form.getError('validation', 'lastName') as error">
+                          {{ error }}
+                        </p>
+                      </div>
+                    </div>
+                    <div class="col-lg-6">
+                      <div class="form-group">
+                        <input
+                          type="password"
+                          class="form-control"
+                          formControlName="password"
+                          placeholder="Choisissez un mot de passe assez sûr"
+                          [class.is-invalid]="(form.getError('validation', 'password') || form.getError('required', 'password') || form.getError('minLength', 'password')) && isSubmited">
+                        <p class="invalid-feedback" *ngIf="form.getError('required', 'password')">Sans mot de passe
+                          l'ami, pas d'identification possible ;)</p>
+                        <p class="invalid-feedback" *ngIf="form.getError('minLength', 'password')">
+                          Votre mot de passe doit comporter au moins 8 caractères !</p>
+                        <p class="invalid-feedback" *ngIf="form.getError('validation', 'password') as error">
+                          {{ error }}
+                        </p>
+                      </div>
+                    </div>
+                    <div class="col-lg-6">
+                      <div class="form-group">
+                        <input
+                          type="text"
+                          class="form-control"
+                          formControlName="firstName"
+                          placeholder="Votre prénom"
+                          [class.is-invalid]="(form.getError('validation', 'firstName') || form.getError('required', 'firstName') || form.getError('minLength', 'firstName')) && isSubmited">
+                        <p class="invalid-feedback" *ngIf="form.getError('required', 'firstName')">Ce champ est requis !
+                        </p>
+                        <p class="invalid-feedback" *ngIf="form.getError('validation', 'firstName') as error">
+                          {{ error }}
+                        </p>
+                      </div>
+                    </div>
+                    <div class=" col-lg-6">
+                      <div class="form-group">
+                        <input
+                          type="password"
+                          class="form-control"
+                          formControlName="confirmPassword"
+                          placeholder="Merci de confirmer votre mot de passe"
+                          [class.is-invalid]="(form.getError('validation', 'confirmPassword') || form.getError('required', 'confirmPassword') || form.getError('minLength', 'confirmPassword')) && isSubmited">
+                        <p class="invalid-feedback" *ngIf="form.getError('required', 'confirmPassword')">
+                          Vous devez confirmez votre mot de passe ;)
+                        </p>
+                        <p class="invalid-feedback" *ngIf="form.getError('minLength', 'confirmPassword')">
+                          Votre mot de passe doit comporter au moins 8 caractères !</p>
+                      </div>
+                    </div>
                   </div>
                 </div>
-                <div class="col-lg-6">
-                  <div class="form-group">
-                    <input
-                      type="text"
-                      formControlName="zipCode"
-                      class="form-control form-control-alternative"
-                      placeholder="Votre code postal">
+                <hr class="my-4" />
+                <!-- Address -->
+                <h6 class="heading-small text-muted mb-4">Votre Adresse</h6>
+                <div class="pl-lg-4">
+                  <div class="row">
+                    <div class="col-lg-6">
+                      <div class="form-group">
+                        <input
+                          formControlName="address1"
+                          class="form-control form-control-alternative"
+                          placeholder="Rue, Lieudit, ..."
+                          value="" type="text"
+                          [class.is-invalid]="(form.getError('validation', 'address1') || form.getError('required', 'address1')) && isSubmited">
+                        <p class="invalid-feedback" *ngIf="form.getError('required', 'address1')">Ce champ est requis !
+                        </p>
+                        <p class="invalid-feedback" *ngIf="form.getError('validation', 'address1') as error">
+                          {{ error }}
+                        </p>
+                      </div>
+                    </div>
+                    <div class="col-lg-6">
+                      <div class="form-group">
+                        <input
+                          type="text"
+                          formControlName="zipCode"
+                          class="form-control form-control-alternative"
+                          placeholder="Votre code postal"
+                          [class.is-invalid]="(form.getError('validation', 'zipCode') || form.getError('required', 'zipCode') || form.getError('minLength', 'zipCode')) && isSubmited">
+                        <p class="invalid-feedback" *ngIf="form.getError('required', 'zipCode')">Ce champ est requis !
+                        </p>
+                        <p class="invalid-feedback" *ngIf="form.getError('minLength', 'zipCode')">
+                          Le code postal doit comporter 5 chiffres !
+                        </p>
+                        <p class="invalid-feedback" *ngIf="form.getError('validation', 'zipCode') as error">
+                          {{ error }}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-6">
+                      <div class="form-group">
+                        <input
+                          formControlName="address2"
+                          class="form-control form-control-alternative"
+                          placeholder="Complément d'adresse"
+                          value="" type="text"
+                          [class.is-invalid]="form.getError('validation', 'adresse2') && isSubmited">
+                        <p class="invalid-feedback" *ngIf="form.getError('required', 'address2')">Ce champ est requis !
+                        </p>
+                        <p class="invalid-feedback" *ngIf="form.getError('validation', 'address2') as error">
+                          {{ error }}
+                        </p>
+                      </div>
+                    </div>
+                    <div class="col-lg-6">
+                      <div class="form-group">
+                        <input
+                          type="text"
+                          formControlName="city"
+                          class="form-control form-control-alternative"
+                          placeholder="Ville"
+                          [class.is-invalid]="(form.getError('validation', 'city') || form.getError('required', 'city')) && isSubmited">
+                        <p class="invalid-feedback" *ngIf="form.getError('required', 'city')">Ce champ est requis !
+                        </p>
+                        <p class="invalid-feedback" *ngIf="form.getError('validation', 'city') as error">
+                          {{ error }}
+                        </p>
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div class="row">
-                <div class="col-lg-6">
-                  <div class="form-group">
-                    <input
-                      formControlName="address2"
-                      class="form-control form-control-alternative"
-                      placeholder="Complément d'adresse"
-                      value="" type="text">
+                <hr class="my-4" />
+                <!-- Description -->
+                <h6 class="heading-small text-muted mb-4">A propos de vous</h6>
+                <div class="row">
+                  <div class="col-lg-4">
+                    <div class="form-group">
+                      <select
+                        class="form-control"
+                        formControlName="job"
+                        [class.is-invalid]="(form.getError('validation', 'job') || form.getError('required', 'job')) && isSubmited">
+                        <option [ngValue]="" selected>-- Choisissez votre Profession --</option>
+                        <option [ngValue]="job.id" *ngFor="let job of jobs">{{ job.title }}</option>
+                      </select>
+                      <p class="invalid-feedback" *ngIf="form.getError('required', 'job')">Vous devez rentrer votre
+                        profession !</p>
+                      <p class="invalid-feedback" *ngIf="form.getError('validation', 'job') as error">
+                        {{ error }}
+                      </p>
+                    </div>
+                  </div>
+                  <div class="col-lg-4">
+                    <div class="form-group">
+                      <input
+                        type="text"
+                        class="form-control"
+                        formControlName="adeli"
+                        placeholder="Votre numéro ADELI"
+                        [class.is-invalid]="(form.getError('validation', 'adeli') || form.getError('minLength', 'lastName') || form.getError('required', 'adeli')) && isSubmited">
+                      <p class="invalid-feedback" *ngIf="form.getError('required', 'adeli')">Ce champ est requis !</p>
+                      <p class="invalid-feedback" *ngIf="form.getError('minLength', 'adeli')">
+                        Votre N° ADELI doit comporter 9 chiffres !
+                      </p>
+                      <p class="invalid-feedback" *ngIf="form.getError('validation', 'adeli') as error">
+                        {{ error }}
+                      </p>
+                    </div>
+                  </div>
+                  <div class="col-lg-4">
+                    <div class="form-group">
+                      <input
+                        type="text"
+                        class="form-control"
+                        formControlName="phone"
+                        placeholder="Votre numéro de téléphone"
+                        [class.is-invalid]="(form.getError('validation', 'phone') || form.getError('required', 'phone') || form.getError('minLength', 'lastName')) && isSubmited">
+                      <p class="invalid-feedback" *ngIf="form.getError('required', 'phone')">Ce champ est requis !
+                      </p>
+                      <p class="invalid-feedback" *ngIf="form.getError('required', 'phone')">
+                        Le numéro de téléphone comprend 10 chiffres :(
+                      </p>
+                      <p class="invalid-feedback" *ngIf="form.getError('validation', 'phone') as error">
+                        {{ error }}
+                      </p>
+                    </div>
                   </div>
                 </div>
-                <div class="col-lg-6">
-                  <div class="form-group">
-                    <input
-                      type="text"
-                      formControlName="city"
-                      class="form-control form-control-alternative"
-                      placeholder="Ville"
-                      [class.is-invalid]="">
+                <!--div class="text-muted font-italic"><small>password strength: <span class="text-success font-weight-700">strong</span></small></div-->
+                <div class="row my-4">
+                  <div class="col-12">
+                    <div class="custom-control custom-control-alternative custom-checkbox">
+                      <input class="custom-control-input" id="customCheckRegister" type="checkbox">
+                      <label class="custom-control-label" for="customCheckRegister">
+                        <span class="text-muted">J'accepte la <a href="#!">politique de confidentialité</a></span>
+                      </label>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </div>
-            <hr class="my-4" />
-            <!-- Description -->
-            <h6 class="heading-small text-muted mb-4">A propos de vous</h6>
-            <div class="row">
-              <div class="col-lg-4">
-                <div class="form-group">
-                  <select
-                    class="form-control"
-                    formControlName="job"
-                    [class.is-invalid]="form.getError('validation', 'job') || form.getError('required', 'job') && form.touched">
-                    <option [ngValue]="" selected>-- Choisissez votre Profession --</option>
-                    <option [ngValue]="job.id" *ngFor="let job of jobs">{{ job.title }}</option>
-                  </select>
-                  <p class="invalid-feedback" *ngIf="form.getError('required', 'job')">Vous devez rentrer votre
-                    profession !</p>
-                  <p class="invalid-feedback" *ngIf="form.getError('validation', 'job') as error">
-                    {{ error }}
-                  </p>
+                <div class="text-center">
+                  <button type="submit" class="btn btn-primary mt-4">Inscription</button>
                 </div>
-              </div>
-              <div class="col-lg-4">
-                <div class="form-group">
-                  <input
-                    type="text"
-                    class="form-control"
-                    formControlName="adeli"
-                    placeholder="Votre numéro ADELI"
-                    [class.is-invalid]="form.getError('validation', 'adeli') || form.getError('maxLength', 'adeli') || form.getError('required', 'adeli') && form.touched">
-                  <p class="invalid-feedback" *ngIf="form.getError('required', 'adeli')">Ce champ est requis !</p>
-                  <p class="invalid-feedback" *ngIf="form.getError('maxLength', 'adeli')">Votre N° ADELI ne peut pas
-                    comporter plus de 9 chiffres !</p>
-                  <p class="invalid-feedback" *ngIf="form.getError('validation', 'adeli') as error">
-                    {{ error }}
-                  </p>
-                </div>
-              </div>
-              <div class="col-lg-4">
-                <div class="form-group">
-                  <input
-                    type="text"
-                    class="form-control"
-                    formControlName="phone"
-                    placeholder="Votre numéro de téléphone"
-                    [class.is-invalid]="form.getError('validation', 'phone') && form.getError('required', 'phone') || form.getError('maxLength', 'phone') && form.touched">
-                </div>
-              </div>
+              </form>
             </div>
-            <!--div class="text-muted font-italic"><small>password strength: <span class="text-success font-weight-700">strong</span></small></div-->
-            <div class="row my-4">
-              <div class="col-12">
-                <div class="custom-control custom-control-alternative custom-checkbox">
-                  <input class="custom-control-input" id="customCheckRegister" type="checkbox">
-                  <label class="custom-control-label" for="customCheckRegister">
-                    <span class="text-muted">J'accepte la <a href="#!">politique de confidentialité</a></span>
-                  </label>
-                </div>
-              </div>
-            </div>
-            <div class="text-center">
-              <button type="submit" class="btn btn-primary mt-4">Inscription</button>
-            </div>
-          </form>
+          </div>
         </div>
       </div>
     </div>
   </div>
-
 </div>

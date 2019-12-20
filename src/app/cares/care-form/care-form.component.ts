@@ -16,7 +16,7 @@ import * as moment from 'moment';
 export class CareFormComponent implements OnInit {
 
   error = false;
-  create = true;
+  create = false;
   result: any;
 
   patients: Patient[] = [];
@@ -55,16 +55,17 @@ export class CareFormComponent implements OnInit {
     } else if (url[0].path === 'soins' && url[1].path !== 'nouveau') {
       const careId = +url[1];
       this.careService.find(careId).subscribe(care => {
+        this.create = false;
         this.care = care;
         this.careForm.patchValue(this.care);
         if (care.endedAt) {
           this.careForm.patchValue({
-            createdAt: this.care.createdAt.substr(0, 10),
-            endedAt: this.care.endedAt.substr(0, 10)
+            createdAt: moment(this.care.createdAt).format('YYYY-MM-DD'),
+            endedAt: moment(this.care.endedAt).format('YYYY-MM-DD')
           });
         }
         this.careForm.patchValue({
-          createdAt: this.care.createdAt.substr(0, 10)
+          createdAt: moment(this.care.createdAt).format('YYYY-MM-DD')
         });
 
         // Si on a un careId, il faut récupérer le patient
@@ -105,7 +106,7 @@ export class CareFormComponent implements OnInit {
 
     if (this.care) {
       updatedCare.id = this.care.id;
-
+      updatedCare.patient = '/api/patients/' + updatedCare.patient;
       this.careService.update(updatedCare).subscribe(this.onSuccess, this.onError);
       return;
     }
