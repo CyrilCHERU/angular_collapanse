@@ -1,0 +1,49 @@
+<div class="container" *ngIf="(intervention || create === true) && cares">
+  <div class="row mt-4">
+    <div class="alert alert-light">
+      <h1 class="alert-title" *ngIf="create; else modification">
+        {{ care.patient.fullName}} - <em class="moreSmall">Nouvelle intervention :</em>
+      </h1>
+      <ng-template #modification>
+        <h1>{{ care.patient.fullName}} - <em class="moreSmall">Modifier une intervention :</em>
+        </h1>
+      </ng-template>
+    </div>
+  </div>
+
+  <div class="col-8">
+
+    <form [formGroup]="interForm" (ngSubmit)="handleSubmit()" *ngIf="patients">
+      <div class="form-group">
+        <label for="">Date</label>
+        <input type="date" formControlName="date" class="form-control col-4"
+          [class.is-invalid]="(interForm.getError('validation', 'date') || interForm.getError('required', 'date')) && isSubmited">
+        <p class="invalid-feedback" *ngIf="interForm.getError('required', 'date')">
+          Ce champ est requis !
+        </p>
+        <p *ngIf="interForm.getError('validation', 'date') as error">
+          {{ error }}
+        </p>
+        <label for="">Commentaire</label>
+        <textarea formControlName="comment" class="form-control" cols="30" rows="10"
+          placeholder="Ici, votre commentaire"
+          [class.is-invalid]="(interForm.getError('validation', 'comment') || interForm.getError('required', 'comment')) && isSubmited"></textarea>
+        <p class="invalid-feedback" *ngIf="interForm.getError('required', 'comment')">
+          Vous devez saisir un commentaire !
+        </p>
+        <p *ngIf="interForm.getError('validation', 'date') as error">
+          {{ error }}
+        </p>
+      </div>
+      <!--button class="btn btn-warning" *ngIf="!plus" (click)="removeButton()">Ajouter une image</button-->
+      <ng-container>
+        <app-image-form *ngIf="plus"></app-image-form>
+      </ng-container>
+      <div class="row mt-4 ml-1">
+        <button type="submit" class="btn btn-success">Créer</button>
+      </div>
+    </form>
+
+  </div>
+
+</div>

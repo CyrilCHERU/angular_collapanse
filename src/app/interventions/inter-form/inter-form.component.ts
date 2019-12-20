@@ -136,5 +136,9 @@ export class InterFormComponent implements OnInit {
     this.plus = true;
   }
 
+  public cancel() {
+
+  }
+
 
 }

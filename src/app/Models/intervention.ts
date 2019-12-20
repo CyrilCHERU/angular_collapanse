@@ -7,5 +7,6 @@ export interface Intervention {
   date: string;
   comment: string;
   care: Care;
+  images: Image;
 }
 

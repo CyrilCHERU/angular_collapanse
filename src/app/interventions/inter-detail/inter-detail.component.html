@@ -1,64 +1,185 @@
-<div class="container mb-5" *ngIf="intervention">
+<div>
+  <!-- Header -->
+  <div class="header pb-2 pt-2 pt-lg-2 d-flex align-items-center"
+    style="min-height: 200px;">
+    <!-- Mask -->
+    <span class="mask bg-gradient-default opacity-8"></span>
+    <!-- Header container -->
+    <div class="container-fluid d-flex align-items-center">
+      <div class="row">
+        <div class="col-xl-3 mb-5 mb-xl-0">
+
+        </div>
+
+      </div>
+    </div>
+  </div>
   <div class="row justify-content-center" *ngIf="!intervention">
-    <div class="col-2 alert alert-info mt-200 text-center animated flip">
+    <div class="col-4 alert alert-default mt-200 text-center animated flip">
       <p>... Chargement en cours ....</p>
     </div>
   </div>
-  <div class="col mt-5 mb-5 alert alert-light">
-    <div class="alert alert-light">
-      <h1 class="alert-title">{{ intervention.care.patient.fullName }}</h1>
-      <hr>
-      <h3>Détails de l'intervention du :
-        {{ intervention.date | date:"dd/MM/yyyy"}}</h3>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-4">
-      <h3>Plaie</h3>
-      <hr>
-      <strong class="alert-title">{{ intervention.care.woundType }}</strong>
-      <br>
-      <a routerLink="/interventions/{{ intervention.id }}/edition" class="btn btn-warning mt-2">
-        Modifier
-      </a>
-      <button class="btn btn-danger mt-2 ml-2 text-light" (click)="remove(intervention.id)">
-        Supprimer
-      </button>
-      <br>
-      <a routerLink="/soins/suivi/{{ intervention.care.id }}/detail" class="btn btn-info mt-2">Retour Fiche Soin</a>
+  <div *ngIf="intervention">
+    <div class="container">
+      <!-- Page content -->
+      <div class=" mt--7">
+        <div class="row">
+          <div class="col-xl-4 mb-5 mb-xl-0">
+            <div class="card card-profile shadow">
+              <div class="row justify-content-center">
+                <div class="col-lg-3 order-lg-2">
+                  <div class="card-profile-image">
+                    <a href="#">
+                      <img src="{{ intervention.care.patient.avatar }}" class="rounded-circle">
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <div class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
 
-    </div>
-    <div class="col-8">
-      <h3>Commentaire</h3>
-      <hr>
-      <p>{{ intervention.comment }}</p>
-    </div>
-  </div>
-  <div class="row mt-3 alert alert-light justify-content-between" *ngIf="intervention.images">
-    <h2 class="thead-dark alert-light">Image(s) :</h2>
-    <a routerLink="/interventions/{{ intervention.id }}/images/ajout" class="btn btn-primary mt-2" *ngIf="!plus">
-      <i class="fas fa-plus"></i>
-      Ajouter une image
-    </a>
-  </div>
-  <div class="mb-5">
-    <div class="row mb-3">
-      <div class="card ml-2" style="width: 18rem;" *ngFor="let image of intervention.images">
-        <div class="card-title p-3">
-          <h5 class="card-title">
-            <strong>Légende :</strong>
-            {{ image.caption }}</h5>
-        </div>
-        <img src="{{ image.url }}" class="card-img-top img-fluid" alt="...">
-        <div class="card-body">
-          <p>
-            <button class="btn btn-danger align-items-right" (click)="removeImage(image.id)">
-              <i class="fas fa-trash"></i>
-            </button>
-          </p>
+              </div>
+              <div class="card-body pt-0 pt-md-4">
+                <div class="row">
+                  <div class="col">
+                    <div class="card-profile-stats d-flex justify-content-center mt-md-5">
+                      <div>
+                        <span class="heading">Patient</span>
+                        <span class="description">
+                          {{ intervention.care.patient.fullName }},
+                          {{ intervention.care.patient.birthDate | age }} ans
+                        </span>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="text-center">
+                  <h3>
+                    Plaie
+                  </h3>
+                  <div class="h5 font-weight-300">
+                    <span class="font-weight-light">{{ intervention.care.woundType }}</span>
+                  </div>
+                  <div class="h5 mt-4">
+
+                  </div>
+                  <div>
+
+                  </div>
+                  <hr class="my-4" />
+                  <a routerLink="/soins/{{ intervention.care.id }}/interventions/nouveau" class="btn btn-default">
+                    <i class="fas fa-plus">
+                      Nouvelle intervention
+                    </i>
+                  </a>
+                  <a routerLink="/soins/suivi/{{ intervention.care.id }}/detail" class="btn btn-primary mt-2">
+                    <i class="far fa-eye text-white"></i> Retour soin
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-8">
+            <div class="card shadow">
+              <div class="card-header border-0">
+                <div class="row align-items-center">
+                  <div class="col">
+                    <h3 class="mb-0">
+                      Détail de l'intervention du : {{ intervention.date | date:"dd/MM/yyyy" }}</h3>
+                  </div>
+                  <a routerLink="/interventions/{{ intervention.id }}/images/ajout">+ Image</a>
+
+                </div>
+              </div>
+              <div class="table-responsive">
+                <!-- Projects table -->
+                <table class="table align-items-center table-flush">
+                  <thead class="thead-light">
+                    <tr>
+                      <th scope="col" width="80%">Commentaire</th>
+                      <th scope="col"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td width="80%">
+                        {{ intervention.comment }}
+                      </td>
+                      <td>
+                        <div class="dropdown border-light">
+                          <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-ellipsis-v"></i>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+
+                            <a routerLink="/interventions/{{ intervention.id }}/edition" class="dropdown-item">
+                              <i class="far fa-edit text-light"></i> Modifier
+                            </a>
+                            <button class="dropdown-item" (click)="remove(intervention.id)">
+                              <i class="fas fa-trash text-light"></i> Supprimer
+                            </button>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
 
+  <!-- Header -->
+  <div class="header pb-2 pt-2 pt-lg-2 d-flex align-items-center mt-4"
+    style="min-height: 100px;" *ngIf="intervention.images">
+    <!-- Mask -->
+    <span class="mask bg-gradient-default opacity-8"></span>
+    <!-- Header container -->
+    <div class="container-fluid d-flex align-items-center">
+      <div class="col-xl-3 mb-5 mb-xl-0">
+        <h2 class="text-white">Image(s) : </h2>
+      </div>
+
+    </div>
+  </div>
+  <div *ngIf="intervention.images">
+    <div class="container">
+      <!-- Page content -->
+      <div class=" mt--7">
+        <div class="row mb-4">
+          <div class="col-xl-4 mb-5 mt-4 mb-xl-0" *ngFor="let image of intervention.images">
+            <div class="card card-stats mb-4 mb-xl-0">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col">
+                    <h5 class="card-title text-uppercase text-muted mb-0">{{ image.date | date:"dd/MM/yyyy"}}</h5>
+                    <span class="h2 font-weight-bold mb-0">{{ image.caption }}</span>
+                  </div>
+                  <div class="col-auto">
+                    <div class="icon icon-shape bg-danger text-white rounded-circle shadow">
+                      <i class="ni ni-album-2"></i>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+
+                  <div class="col">
+
+                    <img src="{{ image.url }}" alt="{{ image.caption }}" class="image-fluid">
+                  </div>
+                </div>
+                <div class="row">
+                  <button>Supprimer</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
