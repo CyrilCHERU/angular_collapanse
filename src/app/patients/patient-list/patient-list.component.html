@@ -1,115 +1,117 @@
-  <!-- Header -->
-  <div class="header bg-gradient-primary pb-8 pt-2 pt-md-2">
-    <div class="container-fluid">
+<!-- Header -->
+<div class="header bg-gradient-primary pb-8 pt-2 pt-md-2">
+  <div class="container-fluid">
 
-      <div class="header-body">
-        <div class="row justify-content-center" *ngIf="deleteMsg">
-          <div class="col-3 alert alert-success mt-150 text-center">
-            <p>... Ce patient a été supprimé ....</p>
+    <div class="header-body">
+      <div class="row justify-content-center" *ngIf="deleteMsg">
+        <div class="col-3 alert alert-success mt-150 text-center">
+          <p>... Ce patient a été supprimé ....</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row justify-content-center" *ngIf="patients.length === 0">
+  <div class="col-4 alert alert-primary mt-200 text-center animated flip">
+    <p>... Chargement en cours ....</p>
+  </div>
+</div>
+<div class="container-fluid mt--7" *ngIf="patients.length > 0 || noPatient">
+
+  <!-- Table -->
+  <div class="row">
+    <div class="col">
+      <div class="card shadow">
+        <div class="card-header d-flex border-0 justify-content-between align-items-center">
+          <h3 class="mb-0">Liste de vos patients</h3>
+          <a routerLink="/patients/nouveau" class="btn btn-primary"><i class="fas fa-plus"> Nouveau
+              patient</i></a>
+        </div>
+        <div class="table-responsive">
+          <table class="table align-items-center table-flush">
+            <thead class="thead-light">
+              <tr>
+                <th scope="col">Patient</th>
+                <th scope="col">Date de naissance</th>
+                <th scope="col">Adresse</th>
+                <th scope="col" *ngIf="job!='Docteur'">Docteur</th>
+                <th scope="col" *ngIf="job!='Infirmier(e)'">Infirmier(e)s</th>
+                <th scope="col">Soin(s)</th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let p of patients | paginate: currentPage:itemsPerPage">
+                <th scope="row">
+                  <div class="media align-items-center">
+                    <a href="#" class="avatar rounded-circle mr-3">
+                      <img alt="Image placeholder" src="{{ p.avatar }}">
+                    </a>
+                    <div class="media-body">
+                      <a routerLink="/patients/{{ p.id }}">
+                        <span class="mb-0 text-sm">{{ p.fullName }}</span>
+                      </a>
+                    </div>
+                  </div>
+                </th>
+                <td>
+                  {{ p.birthDate | date:"dd/MM/yyyy"}}
+                </td>
+                <td>
+                  <span class="badge badge-dot mr-4">
+                    {{ p.address1 }}
+                    {{ p.address2 }}
+                    {{ p.zipCode }}
+                    {{ p.city }}
+                  </span>
+                </td>
+                <td *ngIf="job!='Docteur'">Dr
+                  {{ p.doctor.lastName }}
+                  {{ p.doctor.firstName }}
+                </td>
+                <td *ngIf="job!='Infirmier(e)'">
+                  <p *ngFor="let n of p.nurses">
+                    {{ n.lastName}}
+                    {{ n.firstName}}</p>
+                </td>
+                <td>
+                  {{ p.cares.length }}
+                </td>
+                <td class="text-right">
+                  <div class="dropdown">
+                    <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false">
+                      <i class="fas fa-ellipsis-v"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                      <a routerLink="/patients/{{ p.id }}" class="dropdown-item">
+                        <i class="far fa-eye text-light"></i> Voir ce patient
+                      </a>
+                      <a routerLink="/patients/{{ p.id }}/edit" class="dropdown-item">
+                        <i class="far fa-edit text-light"></i> Modifier la fiche patient
+                      </a>
+                      <button class="dropdown-item" (click)="remove(p.id)">
+                        <i class="fas fa-trash text-light"></i> Supprimer ce patient
+                      </button>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card-footer py-4 text-center">
+          <app-bootstrap-pagination [items]="patients" [currentPage]="currentPage" [itemsPerPage]="itemsPerPage"
+            (pageChanged)="handlePageChanged($event)"></app-bootstrap-pagination>
+        </div>
+        <div class="row d-flex justify-content-center">
+          <div class="col-6 text-center alert alert-warning" *ngIf="patients.length === 0">
+
+
+            Désolé, vous n'avez encore aucun patient enregistré en base de données ;(
           </div>
         </div>
       </div>
     </div>
   </div>
-  <div class="row justify-content-center" *ngIf="patients.length === 0">
-    <div class="col-4 alert alert-primary mt-200 text-center animated flip">
-      <p>... Chargement en cours ....</p>
-    </div>
-  </div>
-  <div class="container-fluid mt--7" *ngIf="patients.length > 0">
-
-    <!-- Table -->
-    <div class="row">
-      <div class="col">
-        <div class="card shadow">
-          <div class="card-header d-flex border-0 justify-content-between align-items-center">
-            <h3 class="mb-0">Liste de vos patients</h3>
-            <a routerLink="/patients/nouveau" class="btn btn-primary"><i class="fas fa-plus"> Nouveau
-                patient</i></a>
-          </div>
-          <div class="table-responsive">
-            <table class="table align-items-center table-flush">
-              <thead class="thead-light">
-                <tr>
-                  <th scope="col">Patient</th>
-                  <th scope="col">Date de naissance</th>
-                  <th scope="col">Adresse</th>
-                  <th scope="col" *ngIf="job!='Docteur'">Docteur</th>
-                  <th scope="col" *ngIf="job!='Infirmier(e)'">Infirmier(e)s</th>
-                  <th scope="col">Soin(s)</th>
-                  <th scope="col"></th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let p of patients | paginate: currentPage:itemsPerPage">
-                  <th scope="row">
-                    <div class="media align-items-center">
-                      <a href="#" class="avatar rounded-circle mr-3">
-                        <img alt="Image placeholder" src="{{ p.avatar }}">
-                      </a>
-                      <div class="media-body">
-                        <a routerLink="/patients/{{ p.id }}">
-                          <span class="mb-0 text-sm">{{ p.fullName }}</span>
-                        </a>
-                      </div>
-                    </div>
-                  </th>
-                  <td>
-                    {{ p.birthDate | date:"dd/MM/yyyy"}}
-                  </td>
-                  <td>
-                    <span class="badge badge-dot mr-4">
-                      {{ p.address1 }}
-                      {{ p.address2 }}
-                      {{ p.zipCode }}
-                      {{ p.city }}
-                    </span>
-                  </td>
-                  <td *ngIf="job!='Docteur'">Dr
-                    {{ p.doctor.lastName }}
-                    {{ p.doctor.firstName }}
-                  </td>
-                  <td *ngIf="job!='Infirmier(e)'">
-                    <p *ngFor="let n of p.nurses">
-                      {{ n.lastName}}
-                      {{ n.firstName}}</p>
-                  </td>
-                  <td>
-                    {{ p.cares.length }}
-                  </td>
-                  <td class="text-right">
-                    <div class="dropdown">
-                      <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="false">
-                        <i class="fas fa-ellipsis-v"></i>
-                      </a>
-                      <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                        <a routerLink="/patients/{{ p.id }}" class="dropdown-item">
-                          <i class="far fa-eye text-light"></i> Voir ce patient
-                        </a>
-                        <a routerLink="/patients/{{ p.id }}/edit" class="dropdown-item">
-                          <i class="far fa-edit text-light"></i> Modifier la fiche patient
-                        </a>
-                        <button class="dropdown-item" (click)="remove(p.id)">
-                          <i class="fas fa-trash text-light"></i> Supprimer ce patient
-                        </button>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <div class="card-footer py-4 text-center">
-            <app-bootstrap-pagination [items]="patients" [currentPage]="currentPage" [itemsPerPage]="itemsPerPage"
-              (pageChanged)="handlePageChanged($event)"></app-bootstrap-pagination>
-          </div>
-          <div class="col-6 text-center alert alert-warning mt-5" *ngIf="patients.length === 0">
-            <div class="row justify-content-center">
-              Désolé, vous n'avez encore aucun
-              patient enregistré en base de données ;(</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+</div>

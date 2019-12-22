@@ -33,7 +33,6 @@ export class InterFormComponent implements OnInit {
     date: new FormControl('', Validators.required),
     comment: new FormControl('', Validators.required),
     care: new FormControl(),
-    images: new FormControl()
   });
 
   constructor(

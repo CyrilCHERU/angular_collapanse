@@ -1,3 +1,4 @@
+import { Patient } from './../Models/patient';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ImageService } from './../services/image.service';
 import { Image } from './../Models/image';
@@ -22,11 +23,12 @@ export class ImageFormComponent implements OnInit {
     private router: Router
   ) { }
 
+  isSubmited = false;
   create = true;
   error = false;
   intervention: Intervention;
   wound: string;
-  patient: string;
+  patient: Patient;
   image: Image;
 
   imageForm = new FormGroup({
@@ -37,16 +39,36 @@ export class ImageFormComponent implements OnInit {
   });
 
   ngOnInit() {
-    const interId = +this.route.snapshot.paramMap.get('id');
-    this.interService.find(interId).subscribe(intervention => {
-      this.intervention = intervention;
-      this.wound = intervention.care.woundType;
-      this.patient = intervention.care.patient.fullName;
-      this.imageForm.patchValue({
-        intervention: '/api/interventions/' + this.intervention.id
+    // Récupération de la route et Analyse de la route
+    const url = this.route.snapshot.url;
+    if (url[0].path === 'images') {
+      const imageId = +url[1];
+      this.imageService.find(imageId).subscribe(image => {
+        this.image = image;
+        this.imageForm.patchValue({
+          date: moment(this.image.date).format('YYYY-MM-DD'),
+          caption: this.image.caption,
+          url: this.image.url,
+          intervention: '/api/interventions/' + this.image.intervention.id
+        });
+        console.log(this.imageForm.value);
+        this.patient = image.intervention.care.patient;
+        console.log(this.image.intervention.id);
+        this.create = false;
       });
-    });
-    this.create = false;
+    } else if (url[0].path === 'interventions') {
+      const interId = +url[1];
+      this.interService.find(interId).subscribe(intervention => {
+        this.intervention = intervention;
+        this.wound = intervention.care.woundType;
+        this.patient = intervention.care.patient;
+        this.imageForm.patchValue({
+          intervention: '/api/interventions/' + this.intervention.id
+        });
+        this.create = true;
+        console.log(this.intervention.id);
+      });
+    }
     // Création de la date du jour par défaut
     const today = new Date();
     this.imageForm.patchValue({
@@ -55,7 +77,17 @@ export class ImageFormComponent implements OnInit {
   }
 
   public handleSubmit() {
+    this.isSubmited = true;
+
     if (this.imageForm.invalid) {
+      return;
+    }
+
+    if (this.image) {
+      const updatedImage = this.imageForm.value;
+      updatedImage.id = this.image.id;
+      console.log(updatedImage);
+      this.imageService.update(updatedImage).subscribe(this.onSuccess, this.onError);
       return;
     }
 
@@ -63,14 +95,15 @@ export class ImageFormComponent implements OnInit {
     console.log(this.imageForm.value);
 
     this.imageService.insert(image).subscribe(this.onSuccess, this.onError);
-
-
-
   }
 
   private onSuccess = (image: Image) => {
     this.error = false;
-    this.router.navigateByUrl('/interventions/' + this.intervention.id + '/detail');
+    if (this.image) {
+      this.router.navigateByUrl('/interventions/' + this.image.intervention.id + '/detail');
+    } else {
+      this.router.navigateByUrl('/interventions/' + this.intervention.id + '/detail');
+    }
   }
 
   private onError = (httpError: HttpErrorResponse) => {
@@ -90,6 +123,10 @@ export class ImageFormComponent implements OnInit {
         validation: violation.message
       });
     });
+  }
+
+  public cancel(id: number) {
+    this.router.navigateByUrl('/interventions/' + id + '/detail');
   }
 
 }

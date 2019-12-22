@@ -18,6 +18,7 @@ export class PatientListComponent implements OnInit {
   deleteMsg = false;
   result: any;
   patients: Patient[] = [];
+  noPatient = false;
 
   itemsPerPage = 5;
   currentPage = 1;
@@ -32,6 +33,9 @@ export class PatientListComponent implements OnInit {
     this.patientService.findAll().subscribe(response => {
       console.log(response);
       this.patients = response;
+      if (this.patients.length === 0) {
+        this.noPatient = true;
+      }
     });
     this.user = this.auth.getUser();
     this.job = this.user.jobTitle;

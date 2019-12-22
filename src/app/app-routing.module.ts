@@ -44,8 +44,9 @@ const routes: Routes = [
   { path: 'interventions/:id/detail', component: InterDetailComponent, canActivate: [AuthGuard] },
   { path: 'interventions/:id/edition', component: InterFormComponent, canActivate: [AuthGuard] },
   { path: 'interventions/:id/images/ajout', component: ImageFormComponent, canActivate: [AuthGuard] },
-  { path: 'profile/password/edit', component: UserPasswordEditComponent, canActivate: [AuthGuard] },
-  { path: 'profile/edit', component: UserEditComponent, canActivate: [AuthGuard] }
+  { path: 'images/:id/edition', component: ImageFormComponent, canActivate: [AuthGuard] },
+  { path: 'profile/password/edition', component: UserPasswordEditComponent, canActivate: [AuthGuard] },
+  { path: 'profile/edit', component: UserEditComponent, canActivate: [AuthGuard] },
 ];
 
 @NgModule({

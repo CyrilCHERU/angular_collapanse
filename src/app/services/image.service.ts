@@ -16,4 +16,12 @@ export class ImageService {
   public insert(img: Image) {
     return this.http.post<Image>('http://localhost:8000/api/images', img);
   }
+
+  public find(id: number) {
+    return this.http.get<Image>('http://localhost:8000/api/images/' + id);
+  }
+
+  public update(image: Image) {
+    return this.http.put('http://localhost:8000/api/images/' + image.id, image);
+  }
 }

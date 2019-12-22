@@ -1,33 +1,81 @@
-<div class="container" *ngIf="intervention">
-  <div class="row">
-  </div>
-  <div class="row m-4" *ngIf="intervention">
-    <div class="row d-flex flex-column mt-3">
-      <div class="col align-self-start alert alert-light" *ngIf="create">
-        <h1 class="alert-title">Vous allez ajouter une image pour {{ patient }}</h1>
+<div class="bg-primary" style="min-height: 900px;">
+  <div class="main-content">
+    <!-- Header -->
+    <div class="header bg-gradient-warning py-4 py-lg-4">
+      <div class="container">
+        <div class="header-body text-center mb-7">
+          <div class="row justify-content-center">
+            <div class="col-lg-6 col-md-7" *ngIf="create && intervention.care.patient; else modification">
+              <h1 class="text-white" *ngIf="create; else modification">
+                {{ intervention.care.patient.fullName}}
+              </h1>
+              <h2>
+                <em class="moreSmall">Ajouter une image pour le soin :</em>
+              </h2>
+              <h3 class="text-white">{{ intervention.care.woundType}}</h3>
+            </div>
+            <ng-template #modification>
+              <div class="col-lg-6 col-md-7">
+                <h1 class="text-white">{{ image.intervention.care.patient.fullName}}</h1>
+                <h3>
+                  <em class="moreSmall">
+                    Modifier les détails de cette image :
+                  </em>
+                </h3>
+                <br>
+                <h3 class="text-white text-center">{{ image.intervention.care.woundType }}</h3>
+              </div>
+            </ng-template>
+          </div>
+        </div>
       </div>
-      <div>
-        <h3 class="alert-title">Intervention du : {{ intervention.date | date:"dd/MM/yyyy"}}</h3>
+      <div class="separator separator-bottom separator-skew zindex-100">
+        <svg x="0" y="0" viewBox="0 0 2560 100" preserveAspectRatio="none" version="1.1"
+          xmlns="http://www.w3.org/2000/svg">
+          <polygon class="fill-primary" points="2560 0 2560 100 0 100"></polygon>
+        </svg>
       </div>
-      <div class="col text-center mb-3">
-        <em class="h4">{{ wound }}</em>
+    </div>
+    <!-- Page content -->
+    <div class="container mt--6 pb-8">
+      <div class="row d-flex justify-content-center">
+        <div class="col-6 alert alert-danger text-center" *ngIf="error">
+          Une erreur est survenue, merci de réessayer plus tard :(
+        </div>
+      </div>
+      <div class="row justify-content-center" *ngIf="patient || intervention">
+        <div class="col-lg-8 col-md-10">
+          <div class="card bg-secondary shadow border-0">
+            <div class="card-body px-lg-5 py-lg-4">
+              <form [formGroup]="imageForm" (ngSubmit)="handleSubmit()" *ngIf="patient || intervention">
+                <div class="row">
+                  <div class="col-4 mb-3">
+                    <input type="date" class="form-control" formControlName="date">
+                  </div>
+                  <div class="col mb-3">
+                    <input type="text" class="form-control" formControlName="caption" placeholder="légende">
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <input type="url" class="form-control" formControlName="url" placeholder="Url de votre image">
+                  </div>
+                </div>
+                <!--button class="btn btn-warning" *ngIf="!plus" (click)="removeButton()">Ajouter une image</button-->
+                <ng-container>
+                  <app-image-form *ngIf="plus"></app-image-form>
+                </ng-container>
+                <div class="row mt-4 ml-1">
+                  <button type="submit" class="btn btn-success" *ngIf="create">Ajouter</button>
+                  <button type="submit" class="btn btn-success" *ngIf="!create">Modifier</button>
+                  <button (click)="cancel(image.intervention.id)" class="btn btn-danger"
+                    *ngIf="!create">Annuler</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-  <form [formGroup]="imageForm" class="form-group" (ngSubmit)="handleSubmit()">
-    <div class="row">
-      <div class="col-4 mb-3">
-        <input type="date" class="form-control" formControlName="date">
-      </div>
-      <div class="col mb-3">
-        <input type="text" class="form-control" formControlName="caption" placeholder="légende">
-      </div>
-    </div>
-    <div class="row">
-      <div class="col">
-        <input type="url" class="form-control" formControlName="url" placeholder="Url de votre image">
-      </div>
-    </div>
-    <button type="submit" class="btn btn-success mt-3">Valider</button>
-  </form>
 </div>

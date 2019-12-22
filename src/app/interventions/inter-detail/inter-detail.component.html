@@ -87,8 +87,10 @@
                     <h3 class="mb-0">
                       Détail de l'intervention du : {{ intervention.date | date:"dd/MM/yyyy" }}</h3>
                   </div>
-                  <a routerLink="/interventions/{{ intervention.id }}/images/ajout">+ Image</a>
-
+                  <a routerLink="/interventions/{{ intervention.id }}/images/ajout" class="btn btn-warning">
+                    <i class="fa fa-plus"></i>
+                    Ajouter une image
+                  </a>
                 </div>
               </div>
               <div class="table-responsive">
@@ -100,31 +102,10 @@
                       <th scope="col"></th>
                     </tr>
                   </thead>
-                  <tbody>
-                    <tr>
-                      <td width="80%">
-                        {{ intervention.comment }}
-                      </td>
-                      <td>
-                        <div class="dropdown border-light">
-                          <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-ellipsis-v"></i>
-                          </a>
-                          <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-
-                            <a routerLink="/interventions/{{ intervention.id }}/edition" class="dropdown-item">
-                              <i class="far fa-edit text-light"></i> Modifier
-                            </a>
-                            <button class="dropdown-item" (click)="remove(intervention.id)">
-                              <i class="fas fa-trash text-light"></i> Supprimer
-                            </button>
-                          </div>
-                        </div>
-                      </td>
-                    </tr>
-                  </tbody>
                 </table>
+                <div class="p-4">
+                  <p>{{ intervention.comment }}</p>
+                </div>
               </div>
             </div>
           </div>
@@ -141,12 +122,12 @@
     <!-- Header container -->
     <div class="container-fluid d-flex align-items-center">
       <div class="col-xl-3 mb-5 mb-xl-0">
-        <h2 class="text-white">Image(s) : </h2>
+        <h2 class="text-white">Image(s) </h2>
       </div>
 
     </div>
   </div>
-  <div *ngIf="intervention.images">
+  <div *ngIf="intervention.images" class="pb-5">
     <div class="container">
       <!-- Page content -->
       <div class=" mt--7">
@@ -167,13 +148,21 @@
                 </div>
                 <div class="row">
 
-                  <div class="col">
+                  <div class="col mt-3">
 
-                    <img src="{{ image.url }}" alt="{{ image.caption }}" class="image-fluid">
+                    <img src="{{ image.url }}" alt="{{ image.caption }}" class="img-fluid">
                   </div>
                 </div>
-                <div class="row">
-                  <button>Supprimer</button>
+                <div class="row text-right">
+                  <div class="col mt-3 mb-5">
+                    <a class="btn btn-warning"
+                      routerLink="/images/{{ image.id }}/edition">
+                      <i class="fa fa-edit"></i>
+                      Modifier</a>
+                    <button class="btn btn-danger" (click)="removeImage(image.id)">
+                      <i class="fa fa-trash"></i>
+                      Supprimer</button>
+                  </div>
                 </div>
               </div>
             </div>

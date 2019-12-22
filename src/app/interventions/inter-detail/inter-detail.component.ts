@@ -1,3 +1,4 @@
+import { Image } from './../../Models/image';
 import { ImageService } from '../../services/image.service';
 import { Intervention } from '../../Models/intervention';
 import { InterventionService } from '../../services/intervention.service';
@@ -13,6 +14,8 @@ export class InterDetailComponent implements OnInit {
 
   result: any;
   intervention: Intervention;
+  images: Image = [];
+
   constructor(
     private route: ActivatedRoute,
     private interService: InterventionService,
@@ -21,14 +24,24 @@ export class InterDetailComponent implements OnInit {
   ngOnInit() {
     const id = +this.route.snapshot.paramMap.get('id');
 
-    this.interService.find(id).subscribe(response => this.intervention = response);
+    this.interService.find(id).subscribe(response => {
+      this.intervention = response;
+      this.images = response.images;
+      console.log(this.images);
+    });
   }
 
   public remove(id: number) {
-    this.interService.delete(id).subscribe(response => this.result = response);
+    this.interService.delete(id).subscribe(response => {
+      this.result = response;
+    });
   }
 
   public removeImage(id: number) {
-    this.imageService.delete(id).subscribe(response => this.result = response);
+    this.imageService.delete(id).subscribe(response => {
+      this.result = response;
+      const deleteImageId = this.images.findIndex(image => image.id === id);
+      this.images.splice(deleteImageId, 1);
+    });
   }
 }
