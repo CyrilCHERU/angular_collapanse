@@ -91,7 +91,7 @@
                 <thead class="thead-light">
                   <tr>
                     <th scope="col">Type de plaie</th>
-                    <th scope="col">Intervention(s)</th>
+                    <th scope="col" class="cls">Intervention(s)</th>
                     <th scope="col"></th>
                   </tr>
                 </thead>
@@ -100,12 +100,12 @@
                     <td>
                       {{ care.woundType }}
                     </td>
-                    <td>
+                    <td class="cls">
                       <div class="d-flex align-items-center">
                         <span class="mr-2">{{ care.interventions.length }}</span>
                       </div>
                     </td>
-                    <td>
+                    <td width="5%">
                       <div class="dropdown border-light">
                         <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown"
                           aria-haspopup="true" aria-expanded="false">

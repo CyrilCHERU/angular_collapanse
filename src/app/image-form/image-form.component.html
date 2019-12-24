@@ -5,7 +5,7 @@
       <div class="container">
         <div class="header-body text-center mb-7">
           <div class="row justify-content-center">
-            <div class="col-lg-6 col-md-7" *ngIf="create && intervention.care.patient; else modification">
+            <div class="col-lg-6 col-md-7" *ngIf="create && intervention?.care.patient; else modification">
               <h1 class="text-white" *ngIf="create; else modification">
                 {{ intervention.care.patient.fullName}}
               </h1>
@@ -16,14 +16,14 @@
             </div>
             <ng-template #modification>
               <div class="col-lg-6 col-md-7">
-                <h1 class="text-white">{{ image.intervention.care.patient.fullName}}</h1>
+                <h1 class="text-white">{{ image?.intervention.care.patient.fullName}}</h1>
                 <h3>
                   <em class="moreSmall">
                     Modifier les détails de cette image :
                   </em>
                 </h3>
                 <br>
-                <h3 class="text-white text-center">{{ image.intervention.care.woundType }}</h3>
+                <h3 class="text-white text-center">{{ image?.intervention.care.woundType }}</h3>
               </div>
             </ng-template>
           </div>

@@ -43,7 +43,7 @@
               <form [formGroup]="interForm" (ngSubmit)="handleSubmit()" *ngIf="patients">
                 <div class="form-group">
                   <label for="">Date</label>
-                  <input type="date" formControlName="date" class="form-control col-5"
+                  <input type="date" formControlName="date" class="form-control col-6"
                     [class.is-invalid]="(interForm.getError('validation', 'date') || interForm.getError('required', 'date')) && isSubmited">
                   <p class="invalid-feedback" *ngIf="interForm.getError('required', 'date')">
                     Ce champ est requis !

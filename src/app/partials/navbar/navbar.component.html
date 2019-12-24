@@ -11,7 +11,7 @@
     </a>
     <!-- User -->
     <ul class="nav align-items-center d-md-none">
-      <li class="nav-item dropdown">
+      <!--li class="nav-item dropdown">
         <a class="nav-link nav-link-icon" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
           aria-expanded="false">
           <i class="ni ni-bell-55"></i>
@@ -22,39 +22,36 @@
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="#">Something else here</a>
         </div>
-      </li>
-      <li class="nav-item dropdown">
+      </li-->
+      <li class="nav-item dropdown" *ngIf="isAuthenticated">
         <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <div class="media align-items-center">
             <span class="avatar avatar-sm rounded-circle">
-              <img alt="Image placeholder" src="./assets/img/theme/team-1-800x800.jpg">
+              <img *ngIf="user.gender === 'Homme'" alt="profile" src="./assets/img/user_profile/male_4.png">
+              <img *ngIf="user.gender === 'Femme'" alt="profile" src="./assets/img/user_profile/female_4.png">
             </span>
           </div>
         </a>
         <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
           <div class=" dropdown-header noti-title">
-            <h6 class="text-overflow m-0">Welcome!</h6>
+            <h6 class="text-overflow m-0">{{ user.fullName }}</h6>
           </div>
-          <a href="./examples/profile.html" class="dropdown-item">
+          <a routerLink="/profile" class="dropdown-item">
             <i class="ni ni-single-02"></i>
-            <span>My profile</span>
+            <span>Mon compte</span>
           </a>
-          <a href="./examples/profile.html" class="dropdown-item">
+          <a routerLink="/profile/edition" class="dropdown-item">
             <i class="ni ni-settings-gear-65"></i>
-            <span>Settings</span>
+            <span>Modifier mon profile</span>
           </a>
-          <a href="./examples/profile.html" class="dropdown-item">
+          <a routerLink="/profile/password/modification" class="dropdown-item">
             <i class="ni ni-calendar-grid-58"></i>
-            <span>Activity</span>
-          </a>
-          <a href="./examples/profile.html" class="dropdown-item">
-            <i class="ni ni-support-16"></i>
-            <span>Support</span>
+            <span>Modifier mon mot de passe</span>
           </a>
           <div class="dropdown-divider"></div>
-          <a href="#!" class="dropdown-item">
+          <a href="#" (click)="handleLogout()" class="dropdown-item">
             <i class="ni ni-user-run"></i>
-            <span>Logout</span>
+            <span>Déconnexion</span>
           </a>
         </div>
       </li>
@@ -145,17 +142,17 @@
         <ul class="navbar-nav mb-md-3">
           <li class="nav-item">
             <a class="nav-link"
-              href="">
+              routerLink="/profile">
               <i class="fa fa-user text-warning"></i> {{ user.fullName }}
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLink="/profile/edit">
+            <a class="nav-link" routerLink="/profile/edition">
               <i class="fas fa-address-card"></i> Modifiez votre profile
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLink="/profile/password/edit">
+            <a class="nav-link" routerLink="/profile/password/modification">
               <i class="fas fa-key"></i> Modifiez votre mot de passe
             </a>
           </li>

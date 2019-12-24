@@ -1,4 +1,4 @@
-import { Job } from './job';
+import { Job } from "./../Models/job";
 
 export interface User {
   id: number;
@@ -16,4 +16,5 @@ export interface User {
   zipCode: string;
   city: string;
   slug: string;
+  jobTitle: string;
 }

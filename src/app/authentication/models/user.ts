@@ -5,4 +5,5 @@ export interface User {
   roles: string;
   exp?: number;
   jobTitle: string;
+  gender: string;
 }

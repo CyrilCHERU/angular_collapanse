@@ -32,11 +32,11 @@
             <thead class="thead-light">
               <tr>
                 <th scope="col">Patient</th>
-                <th scope="col">Date de naissance</th>
-                <th scope="col">Adresse</th>
-                <th scope="col" *ngIf="job!='Docteur'">Docteur</th>
-                <th scope="col" *ngIf="job!='Infirmier(e)'">Infirmier(e)s</th>
-                <th scope="col">Soin(s)</th>
+                <th scope="col" class="cls">Date de naissance</th>
+                <th scope="col" class="cls">Adresse</th>
+                <th scope="col" class="cls" *ngIf="job!='Docteur'">Docteur</th>
+                <th scope="col" class="cls" *ngIf="job!='Infirmier(e)'">Infirmier(e)s</th>
+                <th scope="col" class="cls">Soin(s)</th>
                 <th scope="col"></th>
               </tr>
             </thead>
@@ -54,10 +54,10 @@
                     </div>
                   </div>
                 </th>
-                <td>
+                <td class="cls">
                   {{ p.birthDate | date:"dd/MM/yyyy"}}
                 </td>
-                <td>
+                <td class="cls">
                   <span class="badge badge-dot mr-4">
                     {{ p.address1 }}
                     {{ p.address2 }}
@@ -65,19 +65,19 @@
                     {{ p.city }}
                   </span>
                 </td>
-                <td *ngIf="job!='Docteur'">Dr
+                <td class="cls" *ngIf="job!='Docteur'">Dr
                   {{ p.doctor.lastName }}
                   {{ p.doctor.firstName }}
                 </td>
-                <td *ngIf="job!='Infirmier(e)'">
+                <td class="cls" *ngIf="job!='Infirmier(e)'">
                   <p *ngFor="let n of p.nurses">
                     {{ n.lastName}}
                     {{ n.firstName}}</p>
                 </td>
-                <td>
+                <td class="cls">
                   {{ p.cares.length }}
                 </td>
-                <td class="text-right">
+                <td class="text-right" width="5%">
                   <div class="dropdown">
                     <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown"
                       aria-haspopup="true" aria-expanded="false">

@@ -35,6 +35,7 @@ import fr from '@angular/common/locales/fr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { UserEditComponent } from './users/user-edit/user-edit.component';
 import { UserPasswordEditComponent } from './users/user-password-edit/user-password-edit.component';
+import { UserShowComponent } from './users/user-show/user-show.component';
 
 
 registerLocaleData(fr);
@@ -63,7 +64,8 @@ registerLocaleData(fr);
     InterDetailComponent,
     ImageFormComponent,
     UserEditComponent,
-    UserPasswordEditComponent
+    UserPasswordEditComponent,
+    UserShowComponent
   ],
   imports: [
     BrowserModule,

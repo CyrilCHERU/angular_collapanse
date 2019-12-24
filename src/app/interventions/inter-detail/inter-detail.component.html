@@ -84,7 +84,7 @@
               <div class="card-header border-0">
                 <div class="row align-items-center">
                   <div class="col">
-                    <h3 class="mb-0">
+                    <h3 class="mb-2">
                       Détail de l'intervention du : {{ intervention.date | date:"dd/MM/yyyy" }}</h3>
                   </div>
                   <a routerLink="/interventions/{{ intervention.id }}/images/ajout" class="btn btn-warning">
@@ -116,18 +116,19 @@
 
   <!-- Header -->
   <div class="header pb-2 pt-2 pt-lg-2 d-flex align-items-center mt-4"
-    style="min-height: 100px;" *ngIf="intervention.images">
+    style="min-height: 100px;" *ngIf="intervention?.images.length > 0">
     <!-- Mask -->
     <span class="mask bg-gradient-default opacity-8"></span>
     <!-- Header container -->
     <div class="container-fluid d-flex align-items-center">
       <div class="col-xl-3 mb-5 mb-xl-0">
-        <h2 class="text-white">Image(s) </h2>
+
+        <h2 class="text-white mb-2">{{ intervention.images.length }} Image(s) </h2>
       </div>
 
     </div>
   </div>
-  <div *ngIf="intervention.images" class="pb-5">
+  <div *ngIf="intervention?.images" class="mt-2 pb-5">
     <div class="container">
       <!-- Page content -->
       <div class=" mt--7">

@@ -1,12 +1,10 @@
-import { Image } from './image';
-import { Care } from './care';
+import { Image } from "./image";
+import { Care } from "./care";
 
 export interface Intervention {
-
   id: number;
   date: string;
   comment: string;
   care: Care;
-  images: Image;
+  images: Image[];
 }
-
