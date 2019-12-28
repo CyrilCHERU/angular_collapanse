@@ -27,7 +27,6 @@ export class InterDetailComponent implements OnInit {
     this.interService.find(id).subscribe(response => {
       this.intervention = response;
       this.images = response.images;
-      console.log(this.images);
     });
   }
 

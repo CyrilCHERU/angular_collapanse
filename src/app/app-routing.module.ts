@@ -116,7 +116,7 @@ const routes: Routes = [
   { path: "profile", component: UserShowComponent, canActivate: [AuthGuard] },
   {
     path: "profile/edition",
-    component: UserFormComponent,
+    component: UserEditComponent,
     canActivate: [AuthGuard]
   },
   {

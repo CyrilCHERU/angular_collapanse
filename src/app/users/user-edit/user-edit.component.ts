@@ -1,3 +1,4 @@
+import { Job } from "./../../Models/job";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { HttpErrorResponse } from "@angular/common/http";
 import { User } from "./../../Models/user";
@@ -33,7 +34,6 @@ export class UserEditComponent implements OnInit {
       Validators.required,
       Validators.minLength(4)
     ]),
-    job: new FormControl("", Validators.required),
     email: new FormControl("", [Validators.required, Validators.email]),
     address1: new FormControl("", Validators.required),
     address2: new FormControl(),
@@ -64,8 +64,18 @@ export class UserEditComponent implements OnInit {
       this.userService.find(userId).subscribe(user => {
         this.user = user;
 
-        this.form.patchValue(this.user);
-        console.log(this.form.value);
+        this.form.patchValue({
+          gender: this.user.gender,
+          lastName: this.user.lastName,
+          firstName: this.user.firstName,
+          email: this.user.email,
+          address1: this.user.address1,
+          address2: this.user.address2,
+          zipCode: this.user.zipCode,
+          city: this.user.city,
+          phone: this.user.phone,
+          adeli: this.user.adeli
+        });
       });
     }
     this.create = true;
@@ -74,6 +84,7 @@ export class UserEditComponent implements OnInit {
   handleSubmit() {
     // Passage à soumission
     this.isSubmited = true;
+    console.log(this.form.value);
 
     // vérification du formulaire
     this.form.markAllAsTouched();
@@ -83,39 +94,29 @@ export class UserEditComponent implements OnInit {
       return;
     }
 
-    console.log(
-      this.form.get("password").value,
-      this.form.get("confirmPassword").value
-    );
-
-    if (
-      this.form.get("password").value !== this.form.get("confirmPassword").value
-    ) {
-      this.error = true;
-      this.errormsg = "Les deux mots de passe doivent être identiques !";
-      return;
-    }
-
     // extraction des Données
-    const user: User = this.form.value;
-    user.job = "api/jobs/" + user.job;
-    console.log(user);
+    const userUpdated: User = this.form.value;
+    console.log(userUpdated);
 
     // si on a un utilisateur (édition)
     if (this.user) {
-      user.id = this.user.id;
+      userUpdated.id = this.user.id;
       // on update le patient
-      this.userService.update(user).subscribe(this.onSuccess, this.onError);
+      this.userService
+        .update(userUpdated)
+        .subscribe(this.onSuccess, this.onError);
       return;
     }
     // sinon, création d'un nouvel utilisateur
-    this.userService.create(user).subscribe(this.onSuccess, this.onError);
+    this.userService
+      .create(userUpdated)
+      .subscribe(this.onSuccess, this.onError);
   }
 
   private onSuccess = (updatedUser: User) => {
     this.error = false;
     // Redirection vers la page de login
-    this.router.navigateByUrl("/login");
+    this.router.navigateByUrl("/profile");
   };
 
   private onError = (httpError: HttpErrorResponse) => {

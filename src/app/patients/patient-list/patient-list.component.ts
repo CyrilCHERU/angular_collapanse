@@ -1,18 +1,16 @@
-import { User } from './../../authentication/models/user';
-import { JwtAuthService } from './../../authentication/jwt-auth.service';
-import { PatientService } from '../../services/patient.service';
-import { Patient } from '../../Models/patient';
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-
+import { User } from "./../../authentication/models/user";
+import { JwtAuthService } from "./../../authentication/jwt-auth.service";
+import { PatientService } from "../../services/patient.service";
+import { Patient } from "../../Models/patient";
+import { Component, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
 
 @Component({
-  selector: 'app-patient-list',
-  templateUrl: './patient-list.component.html',
-  styleUrls: ['./patient-list.component.css']
+  selector: "app-patient-list",
+  templateUrl: "./patient-list.component.html",
+  styleUrls: ["./patient-list.component.css"]
 })
 export class PatientListComponent implements OnInit {
-
   user: User;
   job: string;
   deleteMsg = false;
@@ -26,10 +24,10 @@ export class PatientListComponent implements OnInit {
   constructor(
     private patientService: PatientService,
     private router: Router,
-    public auth: JwtAuthService) { }
+    public auth: JwtAuthService
+  ) {}
 
   ngOnInit() {
-
     this.patientService.findAll().subscribe(response => {
       console.log(response);
       this.patients = response;
@@ -39,8 +37,6 @@ export class PatientListComponent implements OnInit {
     });
     this.user = this.auth.getUser();
     this.job = this.user.jobTitle;
-    console.log(this.job);
-
   }
 
   handlePageChanged(page: number) {
@@ -48,14 +44,12 @@ export class PatientListComponent implements OnInit {
   }
 
   remove(id: number) {
-    console.log(this.patients);
     this.patientService.remove(id).subscribe(response => {
       this.result = response;
-      const deletePatientId = this.patients.findIndex(patient => patient.id === id);
+      const deletePatientId = this.patients.findIndex(
+        patient => patient.id === id
+      );
       this.patients.splice(deletePatientId, 1);
     });
-
-    console.log(this.patients);
   }
-
 }

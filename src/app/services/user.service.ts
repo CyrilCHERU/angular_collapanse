@@ -46,7 +46,7 @@ export class UserService {
 
   public update(user: User) {
     return this.http.put<User>(
-      "http://localhost/8000/api/users/" + user.id,
+      "http://localhost:8000/api/users/" + user.id,
       user
     );
   }

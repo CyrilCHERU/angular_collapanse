@@ -1,7 +1,7 @@
 <div class="bg-default">
   <!-- Header -->
   <div class="header bg-gradient-primary py-4 py-lg-4">
-    <div class="container" *ngIf="patient || create">
+    <div class="container" *ngIf="(patient || create)">
       <div class="header-body text-center mb-7">
         <div class="row justify-content-center">
           <div class="col-lg-5 col-md-6">
@@ -237,13 +237,13 @@
                         </nz-select>
                       </nz-form-control>
                     </nz-form-item>
-                    <p class="invalid-feedback" *ngIf="patientForm.getError('required', 'doctor')">Ce champ est requis !
-                    </p>
-                    <p class="invalid-feedback" *ngIf="patientForm.getError('validation', 'doctor') as error">
-                      {{ error }}
-                    </p>
-
                   </div>
+                  <p class="invalid-feedback" *ngIf="patientForm.getError('required', 'doctor')">Ce champ est requis !
+                  </p>
+                  <p class="invalid-feedback" *ngIf="patientForm.getError('validation', 'doctor') as error">
+                    {{ error }}
+                  </p>
+
                 </div>
                 <div class="col-lg-6">
                   <div class="form-group">

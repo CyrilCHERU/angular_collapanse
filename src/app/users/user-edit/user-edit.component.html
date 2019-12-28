@@ -1,17 +1,11 @@
-<div class="bg-default" *ngIf="user || create">
+<div class="bg-default" *ngIf="user">
   <div class="main-content">
     <!-- Header -->
     <div class="header bg-gradient-primary py-7 py-lg-5">
       <div class="container">
         <div class="header-body text-center mb-2">
           <div class="row justify-content-center">
-            <div class="col-lg-6 col-md-6 mb-5" *ngIf="!user">
-              <h1 class="text-white">Bienvenue !</h1>
-              <p class="text-lead text-light">
-                Inscrivez-vous pour profiter de toutes les fonctionnalités de cette
-                application.</p>
-            </div>
-            <div class="col-lg-6 col-md-6 mb-5" *ngIf="user">
+            <div class="col-lg-6 col-md-6 mb-5">
               <h1 class="text-white">Modifiez vos informations</h1>
             </div>
           </div>
@@ -40,7 +34,7 @@
             <div class="card-body px-lg-5 py-lg-4">
               <div class="row align-items-center">
                 <div class="col-8">
-                  <h3 class="mb-0">Merci de remplir le formulaire d'inscription</h3>
+                  <h3 class="mb-0">Modifiez vos informations</h3>
                 </div>
               </div>
             </div>
@@ -99,23 +93,7 @@
                         </p>
                       </div>
                     </div>
-                    <div class="col-lg-6" *ngIf="!user">
-                      <div class="form-group">
-                        <input
-                          type="password"
-                          class="form-control"
-                          formControlName="password"
-                          placeholder="Choisissez un mot de passe assez sûr"
-                          [class.is-invalid]="(form.getError('validation', 'password') || form.getError('required', 'password') || form.getError('minLength', 'password')) && isSubmited">
-                        <p class="invalid-feedback" *ngIf="form.getError('required', 'password')">Sans mot de passe
-                          l'ami, pas d'identification possible ;)</p>
-                        <p class="invalid-feedback" *ngIf="form.getError('minLength', 'password')">
-                          Votre mot de passe doit comporter au moins 8 caractères !</p>
-                        <p class="invalid-feedback" *ngIf="form.getError('validation', 'password') as error">
-                          {{ error }}
-                        </p>
-                      </div>
-                    </div>
+
                     <div class="col-lg-6">
                       <div class="form-group">
                         <input
@@ -131,21 +109,7 @@
                         </p>
                       </div>
                     </div>
-                    <div class=" col-lg-6" *ngIf="!user">
-                      <div class="form-group">
-                        <input
-                          type="password"
-                          class="form-control"
-                          formControlName="confirmPassword"
-                          placeholder="Merci de confirmer votre mot de passe"
-                          [class.is-invalid]="(form.getError('validation', 'confirmPassword') || form.getError('required', 'confirmPassword') || form.getError('minLength', 'confirmPassword')) && isSubmited">
-                        <p class="invalid-feedback" *ngIf="form.getError('required', 'confirmPassword')">
-                          Vous devez confirmez votre mot de passe ;)
-                        </p>
-                        <p class="invalid-feedback" *ngIf="form.getError('minLength', 'confirmPassword')">
-                          Votre mot de passe doit comporter au moins 8 caractères !</p>
-                      </div>
-                    </div>
+
                   </div>
                 </div>
                 <hr class="my-4" />
@@ -226,20 +190,7 @@
                 <div class="row">
                   <div class="col-lg-4">
                     <div class="form-group">
-                      <input class="form-control disabled" type="text" *ngIf="user" value="{{ user.jobTitle }}">
-                      <select
-                        *ngIf="!user"
-                        class="form-control"
-                        formControlName="job"
-                        [class.is-invalid]="(form.getError('validation', 'job') || form.getError('required', 'job')) && isSubmited">
-                        <option [ngValue]="" selected>-- Choisissez votre Profession --</option>
-                        <option [ngValue]="job.id" *ngFor="let job of jobs">{{ job.title }}</option>
-                      </select>
-                      <p class="invalid-feedback" *ngIf="form.getError('required', 'job')">Vous devez rentrer votre
-                        profession !</p>
-                      <p class="invalid-feedback" *ngIf="form.getError('validation', 'job') as error">
-                        {{ error }}
-                      </p>
+                      <input class="form-control disabled" type="text" aria-disabled="true" value="{{ user.jobTitle }}">
                     </div>
                   </div>
                   <div class="col-lg-4">
@@ -291,7 +242,8 @@
                 </div>
                 <div class="text-center">
                   <button *ngIf="!user" type="submit" class="btn btn-primary mt-4">Inscription</button>
-                  <button *ngIf="user" type="submit" class="btn btn-warning mt-4">Modifier</button>
+                  <button *ngIf="user" type="submit" aria-disabled="true"
+                    class="btn btn-warning mt-4 disabled">Modifier</button>
                 </div>
               </form>
             </div>

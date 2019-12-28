@@ -1,23 +1,22 @@
-import { PatientService } from './../../services/patient.service';
-import { Image } from '../../Models/image';
-import { Patient } from '../../Models/patient';
-import { HttpErrorResponse } from '@angular/common/http';
-import { CareService } from '../../services/care.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Intervention } from '../../Models/intervention';
-import { Component, OnInit } from '@angular/core';
-import { Care } from '../../Models/care';
-import { InterventionService } from '../../services/intervention.service';
-import * as moment from 'moment';
+import { PatientService } from "./../../services/patient.service";
+import { Image } from "../../Models/image";
+import { Patient } from "../../Models/patient";
+import { HttpErrorResponse } from "@angular/common/http";
+import { CareService } from "../../services/care.service";
+import { ActivatedRoute, Router } from "@angular/router";
+import { FormGroup, FormControl, Validators } from "@angular/forms";
+import { Intervention } from "../../Models/intervention";
+import { Component, OnInit } from "@angular/core";
+import { Care } from "../../Models/care";
+import { InterventionService } from "../../services/intervention.service";
+import * as moment from "moment";
 
 @Component({
-  selector: 'app-inter-form',
-  templateUrl: './inter-form.component.html',
-  styleUrls: ['./inter-form.component.css']
+  selector: "app-inter-form",
+  templateUrl: "./inter-form.component.html",
+  styleUrls: ["./inter-form.component.css"]
 })
 export class InterFormComponent implements OnInit {
-
   create = false;
   error = false;
   isSubmited = false;
@@ -30,9 +29,9 @@ export class InterFormComponent implements OnInit {
   images: Image[] = [];
 
   interForm = new FormGroup({
-    date: new FormControl('', Validators.required),
-    comment: new FormControl('', Validators.required),
-    care: new FormControl(),
+    date: new FormControl("", Validators.required),
+    comment: new FormControl("", Validators.required),
+    care: new FormControl()
   });
 
   constructor(
@@ -40,27 +39,27 @@ export class InterFormComponent implements OnInit {
     private careService: CareService,
     private interService: InterventionService,
     private patientService: PatientService,
-    private router: Router) { }
+    private router: Router
+  ) {}
 
   ngOnInit() {
-
     // Récupération de la route et Analyse de la route
     const url = this.route.snapshot.url;
-    if (url[0].path === 'soins') {
+    if (url[0].path === "soins") {
       const careId = +url[1];
       this.careService.find(careId).subscribe(care => {
         this.care = care;
         this.create = true;
         console.log(care);
       });
-    } else if (url[0].path === 'interventions' && url[1].path !== 'nouveau') {
+    } else if (url[0].path === "interventions" && url[1].path !== "nouveau") {
       const interId = +url[1];
       this.interService.find(interId).subscribe(intervention => {
         this.intervention = intervention;
         this.interForm.patchValue(this.intervention);
         if (intervention.date) {
           this.interForm.patchValue({
-            date: this.intervention.date.substr(0, 10),
+            date: this.intervention.date.substr(0, 10)
           });
         }
 
@@ -68,25 +67,23 @@ export class InterFormComponent implements OnInit {
         this.care = this.intervention.care;
         this.patient = this.care.patient;
       });
-    }
-    else if (url[0].path === 'soins' && url[1].path === 'nouveau') {
-      this.patientService.findAll().subscribe(response => {
-        this.patients = response;
-        console.log(response);
-      });
+    } else if (url[0].path === "soins" && url[1].path === "nouveau") {
+      this.patientService
+        .findAll()
+        .subscribe(response => (this.patients = response));
     }
 
     // Création de la date du jour par défaut
     const today = new Date();
     this.interForm.patchValue({
-      date: moment(today).format('YYYY-MM-DD')
+      date: moment(today).format("YYYY-MM-DD")
     });
   }
 
   public handleSubmit() {
     // Extraction des données
     this.interForm.patchValue({
-      care: '/api/cares/' + this.care.id,
+      care: "/api/cares/" + this.care.id,
       images: this.images
     });
     this.isSubmited = true;
@@ -98,19 +95,22 @@ export class InterFormComponent implements OnInit {
 
     if (this.intervention) {
       updatedInter.id = this.intervention.id;
-      this.interService.update(updatedInter).subscribe(this.onSuccess, this.onError);
+      this.interService
+        .update(updatedInter)
+        .subscribe(this.onSuccess, this.onError);
       return;
     }
     // Création de l'intervention
-    this.interService.create(updatedInter).subscribe(this.onSuccess, this.onError);
-
+    this.interService
+      .create(updatedInter)
+      .subscribe(this.onSuccess, this.onError);
   }
 
   private onSuccess = (updatedInter: Intervention) => {
     const newInterId = updatedInter.id;
     this.error = false;
-    this.router.navigateByUrl('/interventions/' + newInterId + '/detail');
-  }
+    this.router.navigateByUrl("/interventions/" + newInterId + "/detail");
+  };
 
   private onError = (httpError: HttpErrorResponse) => {
     // si ce n'est pas une erreur 400 => message d'alerte
@@ -129,15 +129,11 @@ export class InterFormComponent implements OnInit {
         validation: violation.message
       });
     });
-  }
+  };
 
   public removeButton() {
     this.plus = true;
   }
 
-  public cancel() {
-
-  }
-
-
+  public cancel() {}
 }

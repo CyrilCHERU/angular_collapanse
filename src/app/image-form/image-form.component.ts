@@ -50,9 +50,7 @@ export class ImageFormComponent implements OnInit {
           url: this.image.url,
           intervention: "/api/interventions/" + this.image.intervention.id
         });
-        console.log(this.imageForm.value);
         this.patient = image.intervention.care.patient;
-        console.log(this.image.intervention.id);
         this.create = false;
       });
     } else if (url[0].path === "interventions") {
@@ -65,7 +63,6 @@ export class ImageFormComponent implements OnInit {
           intervention: "/api/interventions/" + this.intervention.id
         });
         this.create = true;
-        console.log(this.intervention.id);
       });
     }
     // Création de la date du jour par défaut
@@ -85,7 +82,6 @@ export class ImageFormComponent implements OnInit {
     if (this.image) {
       const updatedImage = this.imageForm.value;
       updatedImage.id = this.image.id;
-      console.log(updatedImage);
       this.imageService
         .update(updatedImage)
         .subscribe(this.onSuccess, this.onError);
@@ -93,8 +89,6 @@ export class ImageFormComponent implements OnInit {
     }
 
     const image = this.imageForm.value;
-    console.log(this.imageForm.value);
-
     this.imageService.insert(image).subscribe(this.onSuccess, this.onError);
   }
 
