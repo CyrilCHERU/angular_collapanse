@@ -1,9 +1,8 @@
-import jwtDecode from 'jwt-decode';
-import { map } from 'rxjs/operators';
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
-
+import jwtDecode from "jwt-decode";
+import { map } from "rxjs/operators";
+import { HttpClient } from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import { Subject } from "rxjs";
 
 export interface Credentials {
   email: string;
@@ -17,16 +16,15 @@ export interface LogUser {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class AuthService {
-
   authChanged = new Subject<boolean>();
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   getLogUser(): LogUser {
-    return jwtDecode(window.localStorage.getItem('token'));
+    return jwtDecode(window.localStorage.getItem("token"));
   }
 
   /**
@@ -34,11 +32,12 @@ export class AuthService {
    *
    */
   login(credentials: Credentials) {
-    return this.http.post('http://localhost:8000/api/login', credentials)
+    return this.http
+      .post("http://api-collapanse.cyrilcheru.fr/public/api/login", credentials)
       .pipe(
         map((resultat: any) => {
           this.authChanged.next(true);
-          window.localStorage.setItem('user', JSON.stringify(resultat.user));
+          window.localStorage.setItem("user", JSON.stringify(resultat.user));
           return resultat.user;
         })
       );
@@ -49,10 +48,11 @@ export class AuthService {
   }
 
   logout() {
-    return this.http.get('http://localhost:8000/api/logout')
+    return this.http
+      .get("http://api-collapanse.cyrilcheru.fr/public/api/logout")
       .pipe(
         map(resultat => {
-          window.localStorage.removeItem('user');
+          window.localStorage.removeItem("user");
           this.authChanged.next(false);
           return resultat;
         })

@@ -29,6 +29,7 @@ export class ImageFormComponent implements OnInit {
   wound: string;
   patient: Patient;
   image: Image;
+  plus = false;
 
   imageForm = new FormGroup({
     date: new FormControl(),

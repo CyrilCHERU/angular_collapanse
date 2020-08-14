@@ -12,41 +12,50 @@ export class UserService {
 
   public findAll() {
     return this.http
-      .get<User>("http://localhost:8000/api/users")
+      .get<User>("http://api-collapanse.cyrilcheru.fr/public/api/users")
       .pipe(map(response => response["hydra:member"] as User[]));
   }
 
   public find(id: number) {
-    return this.http.get<User>("http://localhost:8000/api/users/" + id);
+    return this.http.get<User>(
+      "http://api-collapanse.cyrilcheru.fr/public/api/users/" + id
+    );
   }
 
   public findAllDoctors() {
-    return this.http.get<Professional>("http://localhost:8000/api/users").pipe(
-      map(
-        (response: Professional) => response["hydra:member"] as Professional[]
-      ),
-      map(professionals =>
-        professionals.filter(pro => pro.jobTitle === "Docteur")
-      )
-    );
+    return this.http
+      .get<Professional>("http://api-collapanse.cyrilcheru.fr/public/api/users")
+      .pipe(
+        map(
+          (response: Professional) => response["hydra:member"] as Professional[]
+        ),
+        map(professionals =>
+          professionals.filter(pro => pro.jobTitle === "Docteur")
+        )
+      );
   }
 
   public findAllNurses() {
-    return this.http.get<Professional>("http://localhost:8000/api/users").pipe(
-      map(response => response["hydra:member"] as Professional[]),
-      map(professionals =>
-        professionals.filter(pro => pro.jobTitle === "Infirmier(e)")
-      )
-    );
+    return this.http
+      .get<Professional>("http://api-collapanse.cyrilcheru.fr/public/api/users")
+      .pipe(
+        map(response => response["hydra:member"] as Professional[]),
+        map(professionals =>
+          professionals.filter(pro => pro.jobTitle === "Infirmier(e)")
+        )
+      );
   }
 
   public create(user: User) {
-    return this.http.post<User>("http://localhost:8000/api/users", user);
+    return this.http.post<User>(
+      "http://api-collapanse.cyrilcheru.fr/public/api/users",
+      user
+    );
   }
 
   public update(user: User) {
     return this.http.put<User>(
-      "http://localhost:8000/api/users/" + user.id,
+      "http://api-collapanse.cyrilcheru.fr/public/api/users/" + user.id,
       user
     );
   }

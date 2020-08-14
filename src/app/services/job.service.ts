@@ -11,7 +11,7 @@ export class JobService {
   constructor(private http: HttpClient) { }
 
   public findJobs() {
-    return this.http.get<Job>('http://localhost:8000/api/jobs')
+    return this.http.get<Job>('http://api-collapanse.cyrilcheru.fr/public/api/jobs')
       .pipe(
         map(response => response['hydra:member'] as Job[])
       );

@@ -16,23 +16,27 @@ export class JwtAuthService {
   constructor(private http: HttpClient) {}
 
   public login(credentials: Credentials) {
-    return this.http.post("http://localhost:8000/api/login", credentials).pipe(
-      map((resultat: any) => {
-        console.log(resultat);
-        window.localStorage.setItem("token", resultat.token);
-        this.authChanged.next(true);
-        return jwtDecode(resultat.token) as User;
-      })
-    );
+    return this.http
+      .post("http://api-collapanse.cyrilcheru.fr/public/api/login", credentials)
+      .pipe(
+        map((resultat: any) => {
+          console.log(resultat);
+          window.localStorage.setItem("token", resultat.token);
+          this.authChanged.next(true);
+          return jwtDecode(resultat.token) as User;
+        })
+      );
   }
 
   public logout() {
-    return this.http.get("http://localhost:8000/api/logout").pipe(
-      map(resultat => {
-        this.deleteToken();
-        return resultat;
-      })
-    );
+    return this.http
+      .get("http://api-collapanse.cyrilcheru.fr/public/api/logout")
+      .pipe(
+        map(resultat => {
+          this.deleteToken();
+          return resultat;
+        })
+      );
   }
 
   public getUser() {

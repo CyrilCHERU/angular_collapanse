@@ -91,23 +91,25 @@
       <ul class="navbar-nav">
         <ng-container *ngIf="isAuthenticated">
           <li class="nav-item">
-            <a class="nav-link " routerLink="/patients">
+            <a class="nav-link " routerLink="/patients" routerLinkActive="active"
+              [routerLinkActiveOptions]="{exact: true}">
               <i class="fas fa-users text-orange"></i> Liste des Patients
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link " routerLink="/soins">
+            <a class="nav-link " routerLink="/soins" routerLinkActive="active">
               <i class="fas fa-notes-medical text-red"></i> Liste des Soins
             </a>
           </li>
         </ng-container>
-        <li class="nav-item active">
-          <a class=" nav-link active" routerLink="/informations"><i class="fas fa-info-circle text-yellow"></i>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/informations" routerLinkActive="active"><i
+              class="fas fa-info-circle text-yellow"></i>
             Informations
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link " routerLink="/contact">
+          <a class="nav-link " routerLink="/contact" routerLinkActive="active">
             <i class="fas fa-envelope text-blue"></i>
             Contact
           </a>
@@ -115,12 +117,12 @@
         <hr class="my-3">
         <ng-container *ngIf="!isAuthenticated">
           <li class="nav-item">
-            <a class="nav-link" routerLink="/inscription">
+            <a class="nav-link" routerLink="/inscription" routerLinkActive="active">
               <i class="ni ni-circle-08 text-pink"></i> Inscription
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLink="/login">
+            <a class="nav-link" routerLink="/login" routerLinkActive="active">
               <i class="ni ni-key-25 text-info"></i> Connexion
             </a>
           </li>
